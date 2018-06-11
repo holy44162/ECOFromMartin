@@ -59,6 +59,7 @@ Webpage: http://users.isy.liu.se/cvl/marda26/
    Run the install script:
 
    |>> install
+    for gpu compiling, using "flags.mexlink = {'-lmwblas'} " instead of "flags.mexlink = {''-largeArrayDims','-lmwblas'} ;<br>
 
 4. Run the demo script to test the tracker:
 
