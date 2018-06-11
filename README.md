@@ -50,6 +50,9 @@ Webpage: http://users.isy.liu.se/cvl/marda26/
    In the repository directory, run the commands:
 
    $ git submodule init  
+   (then change content in ./.gitmodules and ./.git/config, make sure that ...
+    url = https://github.com/vlfeat/matconvnet.git, and ...
+    url = https://github.com/pdollar/toolbox.git)
    $ git submodule update
 
 3. Start Matlab and navigate to the repository.  
@@ -196,7 +199,7 @@ Tracking performance may vary slightly on different machines and whether GPU sup
 
 [8] J. van de Weijer, C. Schmid, J. J. Verbeek, and D. Larlus.  
     Learning color names for real-world applications.  
-    TIP, 18(7):1512â€“1524, 2009.  
+    TIP, 18(7):1512â€?1524, 2009.  
 
 [9] M. Felsberg.  
     Enhanced distribution field tracking using channel representations.  
