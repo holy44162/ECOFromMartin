@@ -50,9 +50,9 @@ Webpage: http://users.isy.liu.se/cvl/marda26/
    In the repository directory, run the commands:
 
    $ git submodule init  
-   (then change content in ./.gitmodules and ./.git/config, make sure that ...
-    url = https://github.com/vlfeat/matconvnet.git, and ...
-    url = https://github.com/pdollar/toolbox.git)
+   (then change content in ./.gitmodules and ./.git/config, make sure that ...<br>
+    url = https://github.com/vlfeat/matconvnet.git, and ...<br>
+    url = https://github.com/pdollar/toolbox.git)<br>
    $ git submodule update
 
 3. Start Matlab and navigate to the repository.  
