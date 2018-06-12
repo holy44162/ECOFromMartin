@@ -6,7 +6,9 @@
 setup_paths();
 
 % Load video information
-video_path = 'sequences/Crossing';
+% video_path = 'sequences/Crossing';
+% video_path = 'd:/data_seq/sequences/dog1';
+video_path = 'd:/baiduSyn/files/computerVision/windingRope/windingRope';
 [seq, ground_truth] = load_video_info(video_path);
 
 % Run ECO
