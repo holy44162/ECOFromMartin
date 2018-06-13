@@ -99,7 +99,9 @@ params.scale_learning_rate = 0.025;		% Scale filter learning rate
 params.number_of_scales_filter = 17;    % Number of scales
 params.number_of_interp_scales = 33;    % Number of interpolated scales
 params.scale_model_factor = 1.0;        % Scaling of the scale model
-params.scale_step_filter = 1.02;        % The scale factor for the scale filter
+% params.scale_model_factor = 20;        % added by Holy 1806130849
+% params.scale_step_filter = 1.02;        % The scale factor for the scale filter
+params.scale_step_filter = 1.05;        % added by Holy 1806130850
 params.scale_model_max_area = 32*16;    % Maximume area for the scale sample patch
 params.scale_feature = 'HOG4';          % Features for the scale filter (only HOG4 supported)
 params.s_num_compressed_dim = 'MAX';    % Number of compressed feature dimensions in the scale filter
@@ -112,6 +114,7 @@ params.debug = 0;                       % Do full debug visualization
 
 % GPU
 params.use_gpu = false;                 % Enable GPU or not
+% params.use_gpu = true;                 % added by Holy 1806130847
 params.gpu_id = [];                     % Set the GPU id, or leave empty to use default
 
 % Initialize

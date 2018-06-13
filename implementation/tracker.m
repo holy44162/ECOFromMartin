@@ -238,6 +238,7 @@ params.minimum_sample_weight = params.learning_rate*(1-params.learning_rate)^(2*
 res_norms = [];
 residuals_pcg = [];
 
+pause('on'); % added by Holy 1806130838
 while true
     % Read image
     if seq.frame > 0
@@ -646,9 +647,9 @@ while true
             figure(fig_handle);
 %                 set(fig_handle, 'Position', [100, 100, 100+size(im,2), 100+size(im,1)]);
             imagesc(im_to_show);
-            hold on;
-            resp_handle = imagesc(xs, ys, sampled_scores_display); colormap hsv;
-            alpha(resp_handle, 0.5);
+            hold on; % following two lines: hided by Holy 1806130843
+%             resp_handle = imagesc(xs, ys, sampled_scores_display); colormap hsv;
+%             alpha(resp_handle, 0.5);
             rectangle('Position',rect_position_vis, 'EdgeColor','g', 'LineWidth',2);
             text(10, 10, int2str(seq.frame), 'color', [0 1 1]);
             hold off;
@@ -656,7 +657,10 @@ while true
 %                 axis off;axis image;set(gca, 'Units', 'normalized', 'Position', [0 0 1 1])
         end
         
-        drawnow
+        drawnow;
+%         if seq.frame > 177 && seq.frame < 190 % added by Holy 1806130858
+%             pause(1); % added by Holy 1806130839
+%         end % added by Holy 1806130858
 %         if frame > 1
 %             if frame < inf
 %                 writeVideo(writer, getframe(gcf));

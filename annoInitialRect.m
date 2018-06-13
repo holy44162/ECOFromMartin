@@ -1,6 +1,6 @@
 addpath('d:\baiduSyn\files\phd\functions');
 
-folder_name = 'd:\baiduSyn\files\computerVision\windingRope\windingRope\imgs';
+folder_name = 'd:\data_seq\sequences\windingRope\imgs';
 gtFilePathName = [folder_name(1:end-4) 'groundtruth_rect.txt'];
 if exist(gtFilePathName, 'file') == 2
     msgbox('groundtruth_rect.txt already exists.');
