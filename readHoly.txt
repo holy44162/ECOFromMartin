@@ -1,0 +1,1 @@
+1. size of hog feature is proportional to the size of initial target size.
