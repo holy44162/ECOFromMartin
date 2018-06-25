@@ -16,6 +16,7 @@ end
 % Init position
 pos = seq.init_pos(:)';
 target_sz = seq.init_sz(:)';
+old_target_sz = target_sz; % added by Holy 1806191530
 params.init_sz = target_sz;
 
 % Feature settings
@@ -569,6 +570,14 @@ while true
     
     % Update the target size (only used for computing output box)
     target_sz = base_target_sz * currentScaleFactor;
+    
+    % added by Holy 1806191532
+    if max(old_target_sz) < max(target_sz)
+        old_target_sz = target_sz; % added by Holy 1806191527
+        disp(max(old_target_sz));
+        disp(seq.frame);
+    end
+    % end of addition 1806191532
     
     %save position and calculate FPS
     tracking_result.center_pos = double(pos);
