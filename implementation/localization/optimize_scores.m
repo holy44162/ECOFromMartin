@@ -67,7 +67,7 @@ end
 % Evaluate the Fourier series at the estimated locations to find the
 % corresponding scores.
 max_score = real(mtimesx(mtimesx(exp_iky, scores_fs, 'speed'), exp_ikx, 'speed'));
-
+% disp(max_score); % added by Holy 1806251543
 % check for scales that have not increased in score
 ind = max_score < init_max_score;
 max_score(ind) = init_max_score(ind);

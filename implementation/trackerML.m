@@ -1,5 +1,5 @@
 function results = trackerML(params)
-
+tagGetData = 0; % tag denote if we will get the training set for ML. added by Holy 1806251109
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Initialization
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -240,6 +240,19 @@ res_norms = [];
 residuals_pcg = [];
 
 pause('on'); % added by Holy 1806130838
+% added by Holy 1806251111
+if tagGetData
+    searchKey1 = 'windingRopeTotal';
+    searchKey2 = 'windingRopeVal';
+    if contains(seq.image_files{1}, searchKey1)
+        X = []; % added by Holy 1806251103
+    end
+    if contains(seq.image_files{1}, searchKey2)
+        Xval = [];
+        yval = [];
+    end
+end
+% end of addition 1806251111
 while true
     % Read image
     if seq.frame > 0
@@ -280,6 +293,26 @@ while true
             % Do windowing of features
             xt_proj = cellfun(@(feat_map, cos_window) bsxfun(@times, feat_map, cos_window), xt_proj, cos_window, 'uniformoutput', false);
             
+            % added by Holy 1806251121
+            if tagGetData
+                searchKey1 = 'windingRopeTotal';
+                searchKey2 = 'windingRopeVal';
+                if contains(seq.image_files{1}, searchKey1)
+                    hogData = xt_proj{2}(:);
+                    X = [X;hogData'];
+                end
+                if contains(seq.image_files{1}, searchKey2)
+                    hogData = xt_proj{2}(:);
+                    Xval = [Xval;hogData'];
+                    if seq.frame < 43
+                        yval = [yval;0];
+                    else
+                        yval = [yval;1];
+                    end
+                end
+            end
+            % end of addition 1806251121
+            
             % Compute the fourier series
             xtf_proj = cellfun(@cfft2, xt_proj, 'uniformoutput', false);
             
@@ -303,6 +336,24 @@ while true
             
             % Optimize the continuous score function with Newton's method.
             [trans_row, trans_col, scale_ind] = optimize_scores(scores_fs, params.newton_iterations);
+            
+            % added by Holy 1806260814
+            scores_fs_feat1{k1} = sum(bsxfun(@times, hf_full1{k1}, xtf_proj{k1}), 3);
+            scores_fs_sum1 = scores_fs_feat1{k1};
+            for k = block_inds
+                scores_fs_feat1{k} = sum(bsxfun(@times, hf_full1{k}, xtf_proj{k}), 3);
+                scores_fs_sum1(1+pad_sz{k}(1):end-pad_sz{k}(1), 1+pad_sz{k}(2):end-pad_sz{k}(2),1,:) = ...
+                    scores_fs_sum1(1+pad_sz{k}(1):end-pad_sz{k}(1), 1+pad_sz{k}(2):end-pad_sz{k}(2),1,:) + ...
+                    scores_fs_feat1{k};
+            end
+            
+            % Also sum over all feature blocks.
+            % Gives the fourier coefficients of the convolution response.
+            scores_fs1 = permute(gather(scores_fs_sum1), [1 2 4 3]);
+            
+            % Optimize the continuous score function with Newton's method.
+            [trans_row1, trans_col1, scale_ind1] = optimize_scores1(scores_fs1, params.newton_iterations);
+            % end of addition 1806260814
             
             % Compute the translation vector in pixel-coordinates and round
             % to the closest integer pixel.
@@ -557,7 +608,10 @@ while true
         
         % Reconstruct the full Fourier series
         hf_full = full_fourier_coeff(hf);
-        
+        if seq.frame == 1 % added by Holy 1806251633
+            hf_full1 = hf_full;
+        end % added by Holy 1806251633
+%         disp(real(hf_full{2}(20,20,1))); % added by Holy 1806251616
         frames_since_last_train = 0;
     else
         frames_since_last_train = frames_since_last_train+1;
@@ -574,8 +628,8 @@ while true
     % added by Holy 1806191532
     if max(old_target_sz) < max(target_sz)
         old_target_sz = target_sz; % added by Holy 1806191527
-        disp(max(old_target_sz));
-        disp(seq.frame);
+%         disp(max(old_target_sz));
+%         disp(seq.frame);
     end
     % end of addition 1806191532
     
@@ -687,3 +741,24 @@ end
 
 disp(['fps: ' num2str(results.fps)])
 
+% added by Holy 1806251139
+if tagGetData
+    dataMLFileName = 'dataML.mat';
+    searchKey1 = 'windingRopeTotal';
+    searchKey2 = 'windingRopeVal';
+    if contains(seq.image_files{1}, searchKey1)
+        if exist(dataMLFileName, 'file') == 2
+            save('dataML.mat','X','-append');
+        else
+            save('dataML.mat','X');
+        end
+    end
+    if contains(seq.image_files{1}, searchKey2)
+        if exist(dataMLFileName, 'file') == 2
+            save('dataML.mat','Xval','yval','-append');
+        else
+            save('dataML.mat','Xval','yval');
+        end        
+    end
+end
+% end of addition 1806251139
