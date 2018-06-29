@@ -1,5 +1,5 @@
 function results = trackerML(params)
-tagGetData = 0; % tag denote if we will get the training set for ML. added by Holy 1806251109
+tagGetData = 1; % tag denote if we will get the training set for ML. added by Holy 1806251109
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Initialization
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -242,14 +242,29 @@ residuals_pcg = [];
 pause('on'); % added by Holy 1806130838
 % added by Holy 1806251111
 if tagGetData
-    searchKey1 = 'windingRopeTotal';
-    searchKey2 = 'windingRopeVal';
+    searchKey1 = 'windingRopeTrain';
+    searchKey2 = 'windingRopeCV';
+    searchKey3 = 'windingRopeTest';
     if contains(seq.image_files{1}, searchKey1)
         X = []; % added by Holy 1806251103
     end
     if contains(seq.image_files{1}, searchKey2)
         Xval = [];
-        yval = [];
+        indKey2 = strfind(seq.image_files{1}, searchKey2);
+        yvalPathName = [seq.image_files{1}(1:indKey2+length(searchKey2)) 'y_CV.txt'];
+        yvalFileID = fopen(yvalPathName);
+        yvalCell = textscan(yvalFileID,'%d');
+        yval = cell2mat(yvalCell);
+        fclose(yvalFileID);
+    end
+    if contains(seq.image_files{1}, searchKey3)
+        Xtest = [];
+        indKey3 = strfind(seq.image_files{1}, searchKey3);
+        ytestPathName = [seq.image_files{1}(1:indKey3+length(searchKey3)) 'y_Test.txt'];
+        ytestFileID = fopen(ytestPathName);
+        ytestCell = textscan(ytestFileID,'%d');
+        ytest = cell2mat(ytestCell);
+        fclose(ytestFileID);
     end
 end
 % end of addition 1806251111
@@ -291,28 +306,8 @@ while true
             xt_proj = project_sample(xt, projection_matrix);
             
             % Do windowing of features
-            xt_proj = cellfun(@(feat_map, cos_window) bsxfun(@times, feat_map, cos_window), xt_proj, cos_window, 'uniformoutput', false);
-            
-            % added by Holy 1806251121
-            if tagGetData
-                searchKey1 = 'windingRopeTotal';
-                searchKey2 = 'windingRopeVal';
-                if contains(seq.image_files{1}, searchKey1)
-                    hogData = xt_proj{2}(:);
-                    X = [X;hogData'];
-                end
-                if contains(seq.image_files{1}, searchKey2)
-                    hogData = xt_proj{2}(:);
-                    Xval = [Xval;hogData'];
-                    if seq.frame < 43
-                        yval = [yval;0];
-                    else
-                        yval = [yval;1];
-                    end
-                end
-            end
-            % end of addition 1806251121
-            
+            xt_proj = cellfun(@(feat_map, cos_window) bsxfun(@times, feat_map, cos_window), xt_proj, cos_window, 'uniformoutput', false);           
+                        
             % Compute the fourier series
             xtf_proj = cellfun(@cfft2, xt_proj, 'uniformoutput', false);
             
@@ -337,23 +332,25 @@ while true
             % Optimize the continuous score function with Newton's method.
             [trans_row, trans_col, scale_ind] = optimize_scores(scores_fs, params.newton_iterations);
             
-            % added by Holy 1806260814
-            scores_fs_feat1{k1} = sum(bsxfun(@times, hf_full1{k1}, xtf_proj{k1}), 3);
-            scores_fs_sum1 = scores_fs_feat1{k1};
-            for k = block_inds
-                scores_fs_feat1{k} = sum(bsxfun(@times, hf_full1{k}, xtf_proj{k}), 3);
-                scores_fs_sum1(1+pad_sz{k}(1):end-pad_sz{k}(1), 1+pad_sz{k}(2):end-pad_sz{k}(2),1,:) = ...
-                    scores_fs_sum1(1+pad_sz{k}(1):end-pad_sz{k}(1), 1+pad_sz{k}(2):end-pad_sz{k}(2),1,:) + ...
-                    scores_fs_feat1{k};
-            end
-            
-            % Also sum over all feature blocks.
-            % Gives the fourier coefficients of the convolution response.
-            scores_fs1 = permute(gather(scores_fs_sum1), [1 2 4 3]);
-            
-            % Optimize the continuous score function with Newton's method.
-            [trans_row1, trans_col1, scale_ind1] = optimize_scores1(scores_fs1, params.newton_iterations);
-            % end of addition 1806260814
+%             % added by Holy 1806260814
+%             if seq.frame > 1
+%                 scores_fs_feat1{k1} = sum(bsxfun(@times, hf_full1{k1}, xtf_proj{k1}), 3);
+%                 scores_fs_sum1 = scores_fs_feat1{k1};
+%                 for k = block_inds
+%                     scores_fs_feat1{k} = sum(bsxfun(@times, hf_full1{k}, xtf_proj{k}), 3);
+%                     scores_fs_sum1(1+pad_sz{k}(1):end-pad_sz{k}(1), 1+pad_sz{k}(2):end-pad_sz{k}(2),1,:) = ...
+%                         scores_fs_sum1(1+pad_sz{k}(1):end-pad_sz{k}(1), 1+pad_sz{k}(2):end-pad_sz{k}(2),1,:) + ...
+%                         scores_fs_feat1{k};
+%                 end
+%                 
+%                 % Also sum over all feature blocks.
+%                 % Gives the fourier coefficients of the convolution response.
+%                 scores_fs1 = permute(gather(scores_fs_sum1), [1 2 4 3]);
+%                 
+%                 % Optimize the continuous score function with Newton's method.
+%                 [trans_row1, trans_col1, scale_ind1] = optimize_scores1(scores_fs1, params.newton_iterations);
+%             end
+%             % end of addition 1806260814
             
             % Compute the translation vector in pixel-coordinates and round
             % to the closest integer pixel.
@@ -608,9 +605,9 @@ while true
         
         % Reconstruct the full Fourier series
         hf_full = full_fourier_coeff(hf);
-        if seq.frame == 1 % added by Holy 1806251633
-            hf_full1 = hf_full;
-        end % added by Holy 1806251633
+%         if seq.frame == 1 || seq.frame == 3% added by Holy 1806251633
+%             hf_full1 = hf_full;            
+%         end % added by Holy 1806251633
 %         disp(real(hf_full{2}(20,20,1))); % added by Holy 1806251616
         frames_since_last_train = 0;
     else
@@ -624,6 +621,37 @@ while true
     
     % Update the target size (only used for computing output box)
     target_sz = base_target_sz * currentScaleFactor;
+    
+    % added by Holy 1806261042
+    if seq.frame >= 2
+        % added by Holy 1806251121
+        if tagGetData
+            rect_position = [pos([2,1]) - (target_sz([2,1]) - 1)/2, target_sz([2,1])];
+            windImg = imcrop(im,rect_position);
+            windImg = rgb2gray(windImg);
+            lbpWindRope = extractLBPFeatures(windImg,'Upright',false);
+            searchKey1 = 'windingRopeTrain';
+            searchKey2 = 'windingRopeCV';
+            searchKey3 = 'windingRopeTest';
+            if contains(seq.image_files{1}, searchKey1)
+                X = [X;lbpWindRope];
+            end
+            if contains(seq.image_files{1}, searchKey2)
+                Xval = [Xval;lbpWindRope];
+%                 if seq.frame < 43
+%                     yval = [yval;0];
+%                 else
+%                     yval = [yval;1];
+%                 end
+            end
+            if contains(seq.image_files{1}, searchKey3)
+                Xtest = [Xtest;lbpWindRope];
+            end
+        end
+        % end of addition 1806251121        
+%         xTest = extract_features(windImg, (target_sz([1,2]) - 1)/2, sample_scale, features, global_fparams, feature_extract_info);
+    end
+    % end of addition 1806261042
     
     % added by Holy 1806191532
     if max(old_target_sz) < max(target_sz)
@@ -650,7 +678,7 @@ while true
 %         set(gcf,'units','normalized','outerposition',[0 0 1 1]);
         subplot_cols = num_feature_blocks;
         subplot_rows = 3;%ceil(feature_dim/subplot_cols);
-        for disp_layer = 1:num_feature_blocks;
+        for disp_layer = 1:num_feature_blocks
             subplot(subplot_rows,subplot_cols,disp_layer);
             imagesc(mean(abs(sample_fs(conj(hf_full{disp_layer}))), 3)); 
             colorbar;
@@ -682,7 +710,7 @@ while true
         if size(im_to_show,3) == 1
             im_to_show = repmat(im_to_show, [1 1 3]);
         end
-        if seq.frame == 1,  %first frame, create GUI
+        if seq.frame == 1  %first frame, create GUI
             fig_handle = figure('Name', 'Tracking');
 %             set(fig_handle, 'Position', [100, 100, size(im,2), size(im,1)]);
             imagesc(im_to_show);
@@ -721,6 +749,9 @@ while true
         end
         
         drawnow;
+%         if seq.frame == 1 || seq.frame == 2
+%             pause;
+%         end
 %         if seq.frame > 177 && seq.frame < 190 % added by Holy 1806130858
 %             pause(1); % added by Holy 1806130839
 %         end % added by Holy 1806130858
@@ -744,8 +775,9 @@ disp(['fps: ' num2str(results.fps)])
 % added by Holy 1806251139
 if tagGetData
     dataMLFileName = 'dataML.mat';
-    searchKey1 = 'windingRopeTotal';
-    searchKey2 = 'windingRopeVal';
+    searchKey1 = 'windingRopeTrain';
+    searchKey2 = 'windingRopeCV';
+    searchKey3 = 'windingRopeTest';
     if contains(seq.image_files{1}, searchKey1)
         if exist(dataMLFileName, 'file') == 2
             save('dataML.mat','X','-append');
@@ -758,6 +790,13 @@ if tagGetData
             save('dataML.mat','Xval','yval','-append');
         else
             save('dataML.mat','Xval','yval');
+        end        
+    end
+    if contains(seq.image_files{1}, searchKey3)
+        if exist(dataMLFileName, 'file') == 2
+            save('dataML.mat','Xtest','ytest','-append');
+        else
+            save('dataML.mat','Xtest','ytest');
         end        
     end
 end
