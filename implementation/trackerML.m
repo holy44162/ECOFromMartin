@@ -242,9 +242,9 @@ residuals_pcg = [];
 pause('on'); % added by Holy 1806130838
 % added by Holy 1806251111
 if tagGetData
-    searchKey1 = 'windingRopeTrain';
-    searchKey2 = 'windingRopeCV';
-    searchKey3 = 'windingRopeTest';
+    searchKey1 = 'windingRopeTrain1';
+    searchKey2 = 'windingRopeCV1';
+    searchKey3 = 'windingRopeTest1';
     if contains(seq.image_files{1}, searchKey1)
         X = []; % added by Holy 1806251103
     end
@@ -630,9 +630,9 @@ while true
             windImg = imcrop(im,rect_position);
             windImg = rgb2gray(windImg);
             lbpWindRope = extractLBPFeatures(windImg,'Upright',false);
-            searchKey1 = 'windingRopeTrain';
-            searchKey2 = 'windingRopeCV';
-            searchKey3 = 'windingRopeTest';
+            searchKey1 = 'windingRopeTrain1';
+            searchKey2 = 'windingRopeCV1';
+            searchKey3 = 'windingRopeTest1';
             if contains(seq.image_files{1}, searchKey1)
                 X = [X;lbpWindRope];
             end
@@ -775,9 +775,9 @@ disp(['fps: ' num2str(results.fps)])
 % added by Holy 1806251139
 if tagGetData
     dataMLFileName = 'dataML.mat';
-    searchKey1 = 'windingRopeTrain';
-    searchKey2 = 'windingRopeCV';
-    searchKey3 = 'windingRopeTest';
+    searchKey1 = 'windingRopeTrain1';
+    searchKey2 = 'windingRopeCV1';
+    searchKey3 = 'windingRopeTest1';
     if contains(seq.image_files{1}, searchKey1)
         if exist(dataMLFileName, 'file') == 2
             save('dataML.mat','X','-append');
