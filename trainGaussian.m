@@ -1,6 +1,7 @@
 %  Loads the dataset. You should now have the
 %  variables X, Xval, yval, Xtest, ytest in your environment
-dataMLFileName = 'testData2D.mat';
+clear;
+dataMLFileName = 'dataML.mat';
 if exist(dataMLFileName, 'file') == 2
     load(dataMLFileName);
 else

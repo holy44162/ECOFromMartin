@@ -16,6 +16,8 @@ end
 % Init position
 pos = seq.init_pos(:)';
 target_sz = seq.init_sz(:)';
+numrows = target_sz(1);
+numcols = target_sz(2);
 old_target_sz = target_sz; % added by Holy 1806191530
 params.init_sz = target_sz;
 
@@ -242,9 +244,9 @@ residuals_pcg = [];
 pause('on'); % added by Holy 1806130838
 % added by Holy 1806251111
 if tagGetData
-    searchKey1 = 'windingRopeTrain1';
-    searchKey2 = 'windingRopeCV1';
-    searchKey3 = 'windingRopeTest1';
+    searchKey1 = 'windingRopeTrain';
+    searchKey2 = 'windingRopeCV';
+    searchKey3 = 'windingRopeTest';
     if contains(seq.image_files{1}, searchKey1)
         X = []; % added by Holy 1806251103
     end
@@ -272,6 +274,7 @@ while true
     % Read image
     if seq.frame > 0
         [seq, im] = get_sequence_frame(seq);
+        im = double(im); % added by Holy 1807031052
         if isempty(im)
             break;
         end
@@ -628,16 +631,20 @@ while true
         if tagGetData
             rect_position = [pos([2,1]) - (target_sz([2,1]) - 1)/2, target_sz([2,1])];
             windImg = imcrop(im,rect_position);
-            windImg = rgb2gray(windImg);
-            lbpWindRope = extractLBPFeatures(windImg,'Upright',false);
-            searchKey1 = 'windingRopeTrain1';
-            searchKey2 = 'windingRopeCV1';
-            searchKey3 = 'windingRopeTest1';
+            windImgN = imresize(windImg,[numrows numcols]);
+%             windImg = rgb2gray(windImg);
+%             lbpWindRope = extractLBPFeatures(windImg,'Upright',false);
+%             hogWindRope = extractHOGFeatures(windImgN,'CellSize',[32 32]);
+            hogWindRope = extractHOGFeatures(windImgN,'CellSize',[16 16]);
+%             hogWindRope = extractHOGFeatures(windImgN,'CellSize',[8 8]);
+            searchKey1 = 'windingRopeTrain';
+            searchKey2 = 'windingRopeCV';
+            searchKey3 = 'windingRopeTest';
             if contains(seq.image_files{1}, searchKey1)
-                X = [X;lbpWindRope];
+                X = [X;hogWindRope];
             end
             if contains(seq.image_files{1}, searchKey2)
-                Xval = [Xval;lbpWindRope];
+                Xval = [Xval;hogWindRope];
 %                 if seq.frame < 43
 %                     yval = [yval;0];
 %                 else
@@ -645,7 +652,7 @@ while true
 %                 end
             end
             if contains(seq.image_files{1}, searchKey3)
-                Xtest = [Xtest;lbpWindRope];
+                Xtest = [Xtest;hogWindRope];
             end
         end
         % end of addition 1806251121        
@@ -774,11 +781,17 @@ disp(['fps: ' num2str(results.fps)])
 
 % added by Holy 1806251139
 if tagGetData
+    numDim = 7; % added by Holy 1807031053
     dataMLFileName = 'dataML.mat';
-    searchKey1 = 'windingRopeTrain1';
-    searchKey2 = 'windingRopeCV1';
-    searchKey3 = 'windingRopeTest1';
+    searchKey1 = 'windingRopeTrain';
+    searchKey2 = 'windingRopeCV';
+    searchKey3 = 'windingRopeTest';
     if contains(seq.image_files{1}, searchKey1)
+        % added by Holy 1807031034
+        [U, ~] = pca(X);
+        Z = projectData(X, U, size(X,2));
+        X = Z(:,1:numDim);
+        % end of addition 1807031034
         if exist(dataMLFileName, 'file') == 2
             save('dataML.mat','X','-append');
         else
@@ -786,6 +799,11 @@ if tagGetData
         end
     end
     if contains(seq.image_files{1}, searchKey2)
+        % added by Holy 1807031034
+        [U, ~] = pca(Xval);
+        Z = projectData(Xval, U, size(Xval,2));
+        Xval = Z(:,1:numDim);
+        % end of addition 1807031034
         if exist(dataMLFileName, 'file') == 2
             save('dataML.mat','Xval','yval','-append');
         else
@@ -793,6 +811,11 @@ if tagGetData
         end        
     end
     if contains(seq.image_files{1}, searchKey3)
+        % added by Holy 1807031034
+        [U, ~] = pca(Xtest);
+        Z = projectData(Xtest, U, size(Xtest,2));
+        Xtest = Z(:,1:numDim);
+        % end of addition 1807031034
         if exist(dataMLFileName, 'file') == 2
             save('dataML.mat','Xtest','ytest','-append');
         else
