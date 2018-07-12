@@ -2,7 +2,7 @@ addpath('d:\baiduSyn\files\phd\functions');
 
 % folder_name = 'd:\data_seq\sequences\windingRope\imgs';
 % folder_name = 'd:\data_seq\sequences\windingRopeMess\imgs';
-folder_name = 'd:\data_seq\sequences\windingRopeTotal\imgs';
+folder_name = 'd:\data_seq\sequences\realWindingRopeTrain';
 % folder_name = 'd:\data_seq\sequences\windingRopeVal\imgs';
 gtFilePathName = [folder_name(1:end-4) 'groundtruth_rect.txt'];
 if exist(gtFilePathName, 'file') == 2
@@ -16,7 +16,7 @@ for i = 1:length(fileList)
     dataPathName = fileList{i,1};
     [pathName,FileName,fileExt] = fileparts(dataPathName);
     
-    if ~strcmpi(fileExt,'.bmp')
+    if ~strcmpi(fileExt,'.bmp') && ~strcmpi(fileExt,'.jpg')
         continue;
     else
         if i == 1

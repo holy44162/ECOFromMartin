@@ -273,8 +273,7 @@ end
 while true
     % Read image
     if seq.frame > 0
-        [seq, im] = get_sequence_frame(seq);
-        im = double(im); % added by Holy 1807031052
+        [seq, im] = get_sequence_frame(seq);        
         if isempty(im)
             break;
         end
@@ -632,11 +631,23 @@ while true
             rect_position = [pos([2,1]) - (target_sz([2,1]) - 1)/2, target_sz([2,1])];
             windImg = imcrop(im,rect_position);
             windImgN = imresize(windImg,[numrows numcols]);
-%             windImg = rgb2gray(windImg);
-%             lbpWindRope = extractLBPFeatures(windImg,'Upright',false);
-%             hogWindRope = extractHOGFeatures(windImgN,'CellSize',[32 32]);
+%             % added by Holy 1807051630
+%             saveFileName = ['d:\data_seq\sequences\realWindingRopeTrain\imgsTarget\' 'img' num2str(seq.frame-1,'%05d') '.jpg'];
+%             imwrite(windImgN,saveFileName);
+%             % end of addition 1807051630
+%             % added by Holy 1807040819
+%             windImgN = fun_imageStandardRange(windImgN);
+%             windImgG = rgb2gray(windImgN);
+%             windImgG_BW = edge(windImgG,'Sobel',([]),'vertical');
+%             hogWindRope = sum(windImgG_BW,1);
+%             % end of addition 1807040819            
+%             % added by Holy 1807041000
+%             windImgN = fun_imageStandardRange(windImgN);
+%             windImgN = rgb2gray(windImgN);
+%             hogWindRope = extractLBPFeatures(windImgN,'Upright',false);
+%             % end of addition 1807041000
             hogWindRope = extractHOGFeatures(windImgN,'CellSize',[16 16]);
-%             hogWindRope = extractHOGFeatures(windImgN,'CellSize',[8 8]);
+%             hogWindRope = []; % added by Holy 1807121131, for saving time
             searchKey1 = 'windingRopeTrain';
             searchKey2 = 'windingRopeCV';
             searchKey3 = 'windingRopeTest';
@@ -713,7 +724,7 @@ while true
     % visualization
     if params.visualization
         rect_position_vis = [pos([2,1]) - (target_sz([2,1]) - 1)/2, target_sz([2,1])];
-        im_to_show = double(im)/255;
+        im_to_show = double(im)/255;        
         if size(im_to_show,3) == 1
             im_to_show = repmat(im_to_show, [1 1 3]);
         end
