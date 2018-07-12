@@ -19,11 +19,11 @@ img_path = [video_path '/imgs/'];
 %     error('No image files to load.')
 % end
 
-if exist([img_path num2str(1, 'img%05i.png')], 'file'),
+if exist([img_path num2str(1, 'img%05i.png')], 'file')
     img_files = num2str((1:seq.len)', [img_path 'img%05i.png']);
-elseif exist([img_path num2str(1, 'img%05i.jpg')], 'file'),
+elseif exist([img_path num2str(1, 'img%05i.jpg')], 'file')
     img_files = num2str((1:seq.len)', [img_path 'img%05i.jpg']);
-elseif exist([img_path num2str(1, 'img%05i.bmp')], 'file'),
+elseif exist([img_path num2str(1, 'img%05i.bmp')], 'file')
     img_files = num2str((1:seq.len)', [img_path 'img%05i.bmp']);
 else
     error('No image files to load.')
