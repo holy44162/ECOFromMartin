@@ -1,11 +1,19 @@
 function results = trackSaver(params)
-tagGetData = 1; % tag denote if we will get the training set for ML. added by Holy 1806251109
+% tagGetData = 1; % tag denote if we will get the training set for ML. added by Holy 1806251109
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Initialization
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Get sequence info
 [seq, im] = get_sequence_info(params.seq);
+% added by Holy 1807121618
+originImgsPath = fileparts(seq.image_files{1});
+proPath = getUpLevelPath(originImgsPath, 1);
+targetImgsPath = fullfile(proPath, 'imgsTarget');
+if exist(targetImgsPath, 'dir') ~= 7
+    mkdir(targetImgsPath);
+end
+% end of addition 1807121618
 params = rmfield(params, 'seq');
 if isempty(im)
     seq.rect_position = [];
@@ -241,35 +249,35 @@ params.minimum_sample_weight = params.learning_rate*(1-params.learning_rate)^(2*
 res_norms = [];
 residuals_pcg = [];
 
-pause('on'); % added by Holy 1806130838
-% added by Holy 1806251111
-if tagGetData
-    searchKey1 = 'windingRopeTrain';
-    searchKey2 = 'windingRopeCV';
-    searchKey3 = 'windingRopeTest';
-    if contains(seq.image_files{1}, searchKey1)
-        X = []; % added by Holy 1806251103
-    end
-    if contains(seq.image_files{1}, searchKey2)
-        Xval = [];
-        indKey2 = strfind(seq.image_files{1}, searchKey2);
-        yvalPathName = [seq.image_files{1}(1:indKey2+length(searchKey2)) 'y_CV.txt'];
-        yvalFileID = fopen(yvalPathName);
-        yvalCell = textscan(yvalFileID,'%d');
-        yval = cell2mat(yvalCell);
-        fclose(yvalFileID);
-    end
-    if contains(seq.image_files{1}, searchKey3)
-        Xtest = [];
-        indKey3 = strfind(seq.image_files{1}, searchKey3);
-        ytestPathName = [seq.image_files{1}(1:indKey3+length(searchKey3)) 'y_Test.txt'];
-        ytestFileID = fopen(ytestPathName);
-        ytestCell = textscan(ytestFileID,'%d');
-        ytest = cell2mat(ytestCell);
-        fclose(ytestFileID);
-    end
-end
-% end of addition 1806251111
+% pause('on'); % added by Holy 1806130838
+% % added by Holy 1806251111
+% if tagGetData
+%     searchKey1 = 'windingRopeTrain';
+%     searchKey2 = 'windingRopeCV';
+%     searchKey3 = 'windingRopeTest';
+%     if contains(seq.image_files{1}, searchKey1)
+%         X = []; % added by Holy 1806251103
+%     end
+%     if contains(seq.image_files{1}, searchKey2)
+%         Xval = [];
+%         indKey2 = strfind(seq.image_files{1}, searchKey2);
+%         yvalPathName = [seq.image_files{1}(1:indKey2+length(searchKey2)) 'y_CV.txt'];
+%         yvalFileID = fopen(yvalPathName);
+%         yvalCell = textscan(yvalFileID,'%d');
+%         yval = cell2mat(yvalCell);
+%         fclose(yvalFileID);
+%     end
+%     if contains(seq.image_files{1}, searchKey3)
+%         Xtest = [];
+%         indKey3 = strfind(seq.image_files{1}, searchKey3);
+%         ytestPathName = [seq.image_files{1}(1:indKey3+length(searchKey3)) 'y_Test.txt'];
+%         ytestFileID = fopen(ytestPathName);
+%         ytestCell = textscan(ytestFileID,'%d');
+%         ytest = cell2mat(ytestCell);
+%         fclose(ytestFileID);
+%     end
+% end
+% % end of addition 1806251111
 while true
     % Read image
     if seq.frame > 0
@@ -626,47 +634,54 @@ while true
     
     % added by Holy 1806261042
     if seq.frame >= 2
-        % added by Holy 1806251121
-        if tagGetData
-            rect_position = [pos([2,1]) - (target_sz([2,1]) - 1)/2, target_sz([2,1])];
-            windImg = imcrop(im,rect_position);
-            windImgN = imresize(windImg,[numrows numcols]);
-%             % added by Holy 1807051630
-%             saveFileName = ['d:\data_seq\sequences\realWindingRopeTrain\imgsTarget\' 'img' num2str(seq.frame-1,'%05d') '.jpg'];
-%             imwrite(windImgN,saveFileName);
-%             % end of addition 1807051630
-%             % added by Holy 1807040819
-%             windImgN = fun_imageStandardRange(windImgN);
-%             windImgG = rgb2gray(windImgN);
-%             windImgG_BW = edge(windImgG,'Sobel',([]),'vertical');
-%             hogWindRope = sum(windImgG_BW,1);
-%             % end of addition 1807040819            
-%             % added by Holy 1807041000
-%             windImgN = fun_imageStandardRange(windImgN);
-%             windImgN = rgb2gray(windImgN);
-%             hogWindRope = extractLBPFeatures(windImgN,'Upright',false);
-%             % end of addition 1807041000
-            hogWindRope = extractHOGFeatures(windImgN,'CellSize',[16 16]);
-%             hogWindRope = []; % added by Holy 1807121131, for saving time
-            searchKey1 = 'windingRopeTrain';
-            searchKey2 = 'windingRopeCV';
-            searchKey3 = 'windingRopeTest';
-            if contains(seq.image_files{1}, searchKey1)
-                X = [X;hogWindRope];
-            end
-            if contains(seq.image_files{1}, searchKey2)
-                Xval = [Xval;hogWindRope];
-%                 if seq.frame < 43
-%                     yval = [yval;0];
-%                 else
-%                     yval = [yval;1];
-%                 end
-            end
-            if contains(seq.image_files{1}, searchKey3)
-                Xtest = [Xtest;hogWindRope];
-            end
-        end
-        % end of addition 1806251121        
+        % added by Holy 1807121613
+        rect_position = [pos([2,1]) - (target_sz([2,1]) - 1)/2, target_sz([2,1])];
+        windImg = imcrop(im,rect_position);
+        windImgN = imresize(windImg,[numrows numcols]);
+        saveFileName = fullfile(targetImgsPath, ['img' num2str(seq.frame-1,'%05d') '.jpg']);
+        imwrite(windImgN,saveFileName);
+        % end of addition 1807121613
+%         % added by Holy 1806251121
+%         if tagGetData
+%             rect_position = [pos([2,1]) - (target_sz([2,1]) - 1)/2, target_sz([2,1])];
+%             windImg = imcrop(im,rect_position);
+%             windImgN = imresize(windImg,[numrows numcols]);
+% %             % added by Holy 1807051630
+% %             saveFileName = ['d:\data_seq\sequences\realWindingRopeTrain\imgsTarget\' 'img' num2str(seq.frame-1,'%05d') '.jpg'];
+% %             imwrite(windImgN,saveFileName);
+% %             % end of addition 1807051630
+% %             % added by Holy 1807040819
+% %             windImgN = fun_imageStandardRange(windImgN);
+% %             windImgG = rgb2gray(windImgN);
+% %             windImgG_BW = edge(windImgG,'Sobel',([]),'vertical');
+% %             hogWindRope = sum(windImgG_BW,1);
+% %             % end of addition 1807040819            
+% %             % added by Holy 1807041000
+% %             windImgN = fun_imageStandardRange(windImgN);
+% %             windImgN = rgb2gray(windImgN);
+% %             hogWindRope = extractLBPFeatures(windImgN,'Upright',false);
+% %             % end of addition 1807041000
+%             hogWindRope = extractHOGFeatures(windImgN,'CellSize',[16 16]);
+% %             hogWindRope = []; % added by Holy 1807121131, for saving time
+%             searchKey1 = 'windingRopeTrain';
+%             searchKey2 = 'windingRopeCV';
+%             searchKey3 = 'windingRopeTest';
+%             if contains(seq.image_files{1}, searchKey1)
+%                 X = [X;hogWindRope];
+%             end
+%             if contains(seq.image_files{1}, searchKey2)
+%                 Xval = [Xval;hogWindRope];
+% %                 if seq.frame < 43
+% %                     yval = [yval;0];
+% %                 else
+% %                     yval = [yval;1];
+% %                 end
+%             end
+%             if contains(seq.image_files{1}, searchKey3)
+%                 Xtest = [Xtest;hogWindRope];
+%             end
+%         end
+%         % end of addition 1806251121        
 %         xTest = extract_features(windImg, (target_sz([1,2]) - 1)/2, sample_scale, features, global_fparams, feature_extract_info);
     end
     % end of addition 1806261042
@@ -790,48 +805,48 @@ end
 
 disp(['fps: ' num2str(results.fps)])
 
-% added by Holy 1806251139
-if tagGetData
-    numDim = 7; % added by Holy 1807031053
-    dataMLFileName = 'dataML.mat';
-    searchKey1 = 'windingRopeTrain';
-    searchKey2 = 'windingRopeCV';
-    searchKey3 = 'windingRopeTest';
-    if contains(seq.image_files{1}, searchKey1)
-        % added by Holy 1807031034
-        [U, ~] = pca(X);
-        Z = projectData(X, U, size(X,2));
-        X = Z(:,1:numDim);
-        % end of addition 1807031034
-        if exist(dataMLFileName, 'file') == 2
-            save('dataML.mat','X','-append');
-        else
-            save('dataML.mat','X');
-        end
-    end
-    if contains(seq.image_files{1}, searchKey2)
-        % added by Holy 1807031034
-        [U, ~] = pca(Xval);
-        Z = projectData(Xval, U, size(Xval,2));
-        Xval = Z(:,1:numDim);
-        % end of addition 1807031034
-        if exist(dataMLFileName, 'file') == 2
-            save('dataML.mat','Xval','yval','-append');
-        else
-            save('dataML.mat','Xval','yval');
-        end        
-    end
-    if contains(seq.image_files{1}, searchKey3)
-        % added by Holy 1807031034
-        [U, ~] = pca(Xtest);
-        Z = projectData(Xtest, U, size(Xtest,2));
-        Xtest = Z(:,1:numDim);
-        % end of addition 1807031034
-        if exist(dataMLFileName, 'file') == 2
-            save('dataML.mat','Xtest','ytest','-append');
-        else
-            save('dataML.mat','Xtest','ytest');
-        end        
-    end
-end
-% end of addition 1806251139
+% % added by Holy 1806251139
+% if tagGetData
+%     numDim = 7; % added by Holy 1807031053
+%     dataMLFileName = 'dataML.mat';
+%     searchKey1 = 'windingRopeTrain';
+%     searchKey2 = 'windingRopeCV';
+%     searchKey3 = 'windingRopeTest';
+%     if contains(seq.image_files{1}, searchKey1)
+%         % added by Holy 1807031034
+%         [U, ~] = pca(X);
+%         Z = projectData(X, U, size(X,2));
+%         X = Z(:,1:numDim);
+%         % end of addition 1807031034
+%         if exist(dataMLFileName, 'file') == 2
+%             save('dataML.mat','X','-append');
+%         else
+%             save('dataML.mat','X');
+%         end
+%     end
+%     if contains(seq.image_files{1}, searchKey2)
+%         % added by Holy 1807031034
+%         [U, ~] = pca(Xval);
+%         Z = projectData(Xval, U, size(Xval,2));
+%         Xval = Z(:,1:numDim);
+%         % end of addition 1807031034
+%         if exist(dataMLFileName, 'file') == 2
+%             save('dataML.mat','Xval','yval','-append');
+%         else
+%             save('dataML.mat','Xval','yval');
+%         end        
+%     end
+%     if contains(seq.image_files{1}, searchKey3)
+%         % added by Holy 1807031034
+%         [U, ~] = pca(Xtest);
+%         Z = projectData(Xtest, U, size(Xtest,2));
+%         Xtest = Z(:,1:numDim);
+%         % end of addition 1807031034
+%         if exist(dataMLFileName, 'file') == 2
+%             save('dataML.mat','Xtest','ytest','-append');
+%         else
+%             save('dataML.mat','Xtest','ytest');
+%         end        
+%     end
+% end
+% % end of addition 1806251139
