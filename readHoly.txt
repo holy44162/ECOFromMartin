@@ -1,3 +1,6 @@
 1. size of hog feature is proportional to the size of initial target size.
 2. demo_ECO_HC_ML.m is the entrance to obtain training sets.
 3. saveTrackedTargets.m is the entrance to save tracked results.
+4. Demo using the winding model: (1) run "demo_ECO_HC_ML.m" to obtain traing set, ...
+   CV set, and test set (change the video_path). (2) run "trainGaussian.m" ...
+   to train gaussian model. (3) run "testGaussian.m" to get the result.
