@@ -14,9 +14,9 @@ setup_paths();
 % video_path = 'sequences/Crossing';
 % video_path = 'd:/data_seq/sequences/dog1';
 
-video_path = 'd:/data_seq/sequences/windingRopeTrain';
+% video_path = 'd:/data_seq/sequences/windingRopeTrain';
 % video_path = 'd:/data_seq/sequences/windingRopeCV';
-% video_path = 'd:/data_seq/sequences/windingRopeTest';
+video_path = 'd:/data_seq/sequences/windingRopeTest';
 % video_path = 'd:/data_seq/sequences/realWindingRopeTrain';
 % video_path = 'd:/data_seq/sequences/realWindingRopeCV';
 % video_path = 'd:/data_seq/sequences/realWindingRopeTest';

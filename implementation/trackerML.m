@@ -646,7 +646,7 @@ while true
 %             windImgN = rgb2gray(windImgN);
 %             hogWindRope = extractLBPFeatures(windImgN,'Upright',false);
 %             % end of addition 1807041000
-            hogWindRope = extractHOGFeatures(windImgN,'CellSize',[16 16]);
+            hogWindRope = extractHOGFeatures(windImgN,'CellSize',[32 32]);
 %             hogWindRope = []; % added by Holy 1807121131, for saving time
             searchKey1 = 'windingRopeTrain';
             searchKey2 = 'windingRopeCV';
@@ -792,16 +792,19 @@ disp(['fps: ' num2str(results.fps)])
 
 % added by Holy 1806251139
 if tagGetData
-    numDim = 7; % added by Holy 1807031053
+    numDim = 10; % added by Holy 1807031053
     dataMLFileName = 'dataML.mat';
     searchKey1 = 'windingRopeTrain';
     searchKey2 = 'windingRopeCV';
     searchKey3 = 'windingRopeTest';
     if contains(seq.image_files{1}, searchKey1)
         % added by Holy 1807031034
-        [U, ~] = pca(X);
-        Z = projectData(X, U, size(X,2));
-        X = Z(:,1:numDim);
+        % hided by Holy 1807251026
+%         [U, ~] = pca(X);
+%         Z = projectData(X, U, size(X,2));
+%         X = Z(:,1:numDim);
+        % end of addition 1807251026
+        [~,X,~] = pca(X,'NumComponents',numDim); % added by Holy 1807251027
         % end of addition 1807031034
         if exist(dataMLFileName, 'file') == 2
             save('dataML.mat','X','-append');
@@ -811,9 +814,12 @@ if tagGetData
     end
     if contains(seq.image_files{1}, searchKey2)
         % added by Holy 1807031034
-        [U, ~] = pca(Xval);
-        Z = projectData(Xval, U, size(Xval,2));
-        Xval = Z(:,1:numDim);
+        % hided by Holy 1807251026
+%         [U, ~] = pca(Xval);
+%         Z = projectData(Xval, U, size(Xval,2));
+%         Xval = Z(:,1:numDim);
+        % end of addition 1807251026
+        [~,Xval,~] = pca(Xval,'NumComponents',numDim); % added by Holy 1807251027
         % end of addition 1807031034
         if exist(dataMLFileName, 'file') == 2
             save('dataML.mat','Xval','yval','-append');
@@ -823,9 +829,12 @@ if tagGetData
     end
     if contains(seq.image_files{1}, searchKey3)
         % added by Holy 1807031034
-        [U, ~] = pca(Xtest);
-        Z = projectData(Xtest, U, size(Xtest,2));
-        Xtest = Z(:,1:numDim);
+        % hided by Holy 1807251026
+%         [U, ~] = pca(Xtest);
+%         Z = projectData(Xtest, U, size(Xtest,2));
+%         Xtest = Z(:,1:numDim);
+        % end of addition 1807251026
+        [~,Xtest,~] = pca(Xtest,'NumComponents',numDim); % added by Holy 1807251027
         % end of addition 1807031034
         if exist(dataMLFileName, 'file') == 2
             save('dataML.mat','Xtest','ytest','-append');

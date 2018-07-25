@@ -52,7 +52,7 @@ for i = 1:length(fileList)
         continue;
     else
         windImgN = imread(fileList{i, 1});        
-        hogWindRope = extractHOGFeatures(windImgN,'CellSize',[16 16]);        
+        hogWindRope = extractHOGFeatures(windImgN,'CellSize',[32 32]);        
         
         if contains(fileList{i, 1}, searchKey1)
             X = [X;hogWindRope];
@@ -66,13 +66,11 @@ for i = 1:length(fileList)
     end
 end
 
-numDim = 7;
+numDim = 10;
 dataMLFileName = 'dataML.mat';
 
 if contains(fileList{1, 1}, searchKey1)
-    [U, ~] = pca(X);
-    Z = projectData(X, U, size(X,2));
-    X = Z(:,1:numDim);
+    [~,X,~] = pca(X,'NumComponents',numDim);
     
     if exist(dataMLFileName, 'file') == 2
         save('dataML.mat','X','-append');
@@ -81,9 +79,7 @@ if contains(fileList{1, 1}, searchKey1)
     end
 end
 if contains(fileList{1, 1}, searchKey2)
-    [U, ~] = pca(Xval);
-    Z = projectData(Xval, U, size(Xval,2));
-    Xval = Z(:,1:numDim);
+    [~,Xval,~] = pca(Xval,'NumComponents',numDim);
     
     if exist(dataMLFileName, 'file') == 2
         save('dataML.mat','Xval','yval','-append');
@@ -92,9 +88,7 @@ if contains(fileList{1, 1}, searchKey2)
     end
 end
 if contains(fileList{1, 1}, searchKey3)
-    [U, ~] = pca(Xtest);
-    Z = projectData(Xtest, U, size(Xtest,2));
-    Xtest = Z(:,1:numDim);
+    [~,Xtest,~] = pca(Xtest,'NumComponents',numDim);
     
     if exist(dataMLFileName, 'file') == 2
         save('dataML.mat','Xtest','ytest','-append');
