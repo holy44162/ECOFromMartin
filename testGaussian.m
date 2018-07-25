@@ -36,3 +36,7 @@ F1 = 2*prec*rec/(prec+rec);
 disp(['The total number of mess frames is: ' num2str(numMess)]);
 disp(['The indices of mess frames are: ' num2str(indMess')]);
 disp(['The F1 score is: ' num2str(F1)]);
+
+f = fopen('log.txt', 'a');
+fprintf(f, 'tp = %d, fp =  %d, F1 =  %d\r\n\r\n',tp, fp, F1);
+fclose(f);

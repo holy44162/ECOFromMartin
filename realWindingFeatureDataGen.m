@@ -1,8 +1,16 @@
 clear;
-tic
+tStart = tic;
 functionPath = 'd:\baiduSyn\files\phd\functions\';
 addpath(functionPath);
 addpath([functionPath 'ParforProgMon']);
+
+% set parameters here
+hogSize = 64; % hog feature cell size
+numDim = 15; % reduced dim in pca
+debug = false;
+if debug
+    addpath([functionPath 'toolbox_general']);
+end
 
 % folder_name = 'd:\data_seq\sequences\realWindingRopeTrain\imgsTarget\';
 % folder_name = 'd:\data_seq\sequences\realWindingRopeCV\imgsTarget\';
@@ -43,38 +51,60 @@ end
 searchKey = 'img';
 searchFileExt = '.jpg';
 
-poolobj = gcp('nocreate'); % If no pool, do not create new one.
-if isempty(poolobj)
-    parpool;
-end
-
-ppm = ParforProgMon('', length(fileList));
-
-% fprintf('Progress:\n');
-% fprintf(['\n' repmat('.',1,length(fileList)) '\n\n']);
-parfor i = 1:length(fileList)
-%     fprintf('\b|\n');
-    [~,FileName,fileExt] = fileparts(fileList{i, 1});
-    if ~contains(FileName, searchKey) || ~strcmpi(fileExt,searchFileExt)
-        continue;
-    else
-        windImgN = imread(fileList{i, 1});        
-        hogWindRope = extractHOGFeatures(windImgN,'CellSize',[32 32]);        
-        
-        if contains(fileList{i, 1}, searchKey1)
-            X = [X;hogWindRope];
+if ~debug
+    poolobj = gcp('nocreate'); % If no pool, do not create new one.
+    if isempty(poolobj)
+        parpool;
+    end
+    
+    ppm = ParforProgMon('', length(fileList));
+    
+    % fprintf('Progress:\n');
+    % fprintf(['\n' repmat('.',1,length(fileList)) '\n\n']);
+    parfor i = 1:length(fileList)
+        %     fprintf('\b|\n');
+        [~,FileName,fileExt] = fileparts(fileList{i, 1});
+        if ~contains(FileName, searchKey) || ~strcmpi(fileExt,searchFileExt)
+            continue;
+        else
+            windImgN = imread(fileList{i, 1});
+            hogWindRope = extractHOGFeatures(windImgN,'CellSize',[hogSize hogSize]);
+            
+            if contains(fileList{i, 1}, searchKey1)
+                X = [X;hogWindRope];
+            end
+            if contains(fileList{i, 1}, searchKey2)
+                Xval = [Xval;hogWindRope];
+            end
+            if contains(fileList{i, 1}, searchKey3)
+                Xtest = [Xtest;hogWindRope];
+            end
         end
-        if contains(fileList{i, 1}, searchKey2)
-            Xval = [Xval;hogWindRope];            
-        end
-        if contains(fileList{i, 1}, searchKey3)
-            Xtest = [Xtest;hogWindRope];
+        ppm.increment();
+    end
+else
+    for i = 1:length(fileList)
+        progressbar(i, length(fileList));
+        [~,FileName,fileExt] = fileparts(fileList{i, 1});
+        if ~contains(FileName, searchKey) || ~strcmpi(fileExt,searchFileExt)
+            continue;
+        else
+            windImgN = imread(fileList{i, 1});
+            hogWindRope = extractHOGFeatures(windImgN,'CellSize',[hogSize hogSize]);
+            
+            if contains(fileList{i, 1}, searchKey1)
+                X = [X;hogWindRope];
+            end
+            if contains(fileList{i, 1}, searchKey2)
+                Xval = [Xval;hogWindRope];
+            end
+            if contains(fileList{i, 1}, searchKey3)
+                Xtest = [Xtest;hogWindRope];
+            end
         end
     end
-    ppm.increment(); 
 end
 
-numDim = 15;
 dataMLFileName = 'dataML.mat';
 
 if contains(fileList{1, 1}, searchKey1)
@@ -105,4 +135,28 @@ if contains(fileList{1, 1}, searchKey3)
     end
 end
 disp('Mission accomplished.');
-toc
+
+totalElapsedTime = toc(tStart);
+disp(['total time: ' num2str(totalElapsedTime) ' sec']);
+disp(['total time: ' num2str(totalElapsedTime/60) ' min']);
+
+if contains(fileList{1, 1}, searchKey1)
+    typeWord = searchKey1;
+end
+if contains(fileList{1, 1}, searchKey2)
+    typeWord = searchKey2;
+end
+if contains(fileList{1, 1}, searchKey3)
+    typeWord = searchKey3;
+end
+f = fopen('log.txt', 'a');
+if contains(fileList{1, 1}, searchKey1)
+    fprintf(f,datestr(now));
+    fprintf(f, ' ');
+end
+fprintf(f, [typeWord ' time: ']);
+fprintf(f, '%d min, ',totalElapsedTime/60);
+if contains(fileList{1, 1}, searchKey3)
+    fprintf(f, 'hogSize = %d, numDim =  %d, ',hogSize, numDim);
+end
+fclose(f);

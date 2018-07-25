@@ -1,0 +1,2 @@
+25-Jul-2018 15:23:05 Train time: 2.889952e+00 min, CV time: 9.907626e-01 min, Test time: 9.905847e-01 min, hogSize = 64, numDim =  15, tp = 7, fp =  496, F1 =  2.729045e-02
+
