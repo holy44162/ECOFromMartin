@@ -2,11 +2,11 @@ clear;
 tic
 functionPath = 'd:\baiduSyn\files\phd\functions\';
 addpath(functionPath);
-addpath([functionPath 'toolbox_general']);
+addpath([functionPath 'ParforProgMon']);
 
-folder_name = 'd:\data_seq\sequences\realWindingRopeTrain\imgsTarget\';
+% folder_name = 'd:\data_seq\sequences\realWindingRopeTrain\imgsTarget\';
 % folder_name = 'd:\data_seq\sequences\realWindingRopeCV\imgsTarget\';
-% folder_name = 'd:\data_seq\sequences\realWindingRopeTest\imgsTarget\';
+folder_name = 'd:\data_seq\sequences\realWindingRopeTest\imgsTarget\';
 % folder_name = 'd:\data_seq\sequences\windingRopeTrain\imgsTarget\';
 % folder_name = 'd:\data_seq\sequences\windingRopeCV\imgsTarget\';
 % folder_name = 'd:\data_seq\sequences\windingRopeTest\imgsTarget\';
@@ -16,12 +16,10 @@ fileList = getAllFiles(folder_name);
 [dirName,~,~] = fileparts(fileList{1, 1});
 upDirName = getUpLevelPath(dirName, 1);
 
-searchKey1 = 'realWindingRopeTrain';
-searchKey2 = 'realWindingRopeCV';
-searchKey3 = 'realWindingRopeTest';
-% searchKey1 = 'windingRopeTrain';
-% searchKey2 = 'windingRopeCV';
-% searchKey3 = 'windingRopeTest';
+searchKey1 = 'Train';
+searchKey2 = 'CV';
+searchKey3 = 'Test';
+
 if contains(fileList{1, 1}, searchKey1)
     X = [];
 end
@@ -45,8 +43,17 @@ end
 searchKey = 'img';
 searchFileExt = '.jpg';
 
-for i = 1:length(fileList)
-    progressbar(i, length(fileList));
+poolobj = gcp('nocreate'); % If no pool, do not create new one.
+if isempty(poolobj)
+    parpool;
+end
+
+ppm = ParforProgMon('', length(fileList));
+
+% fprintf('Progress:\n');
+% fprintf(['\n' repmat('.',1,length(fileList)) '\n\n']);
+parfor i = 1:length(fileList)
+%     fprintf('\b|\n');
     [~,FileName,fileExt] = fileparts(fileList{i, 1});
     if ~contains(FileName, searchKey) || ~strcmpi(fileExt,searchFileExt)
         continue;
@@ -64,9 +71,10 @@ for i = 1:length(fileList)
             Xtest = [Xtest;hogWindRope];
         end
     end
+    ppm.increment(); 
 end
 
-numDim = 10;
+numDim = 15;
 dataMLFileName = 'dataML.mat';
 
 if contains(fileList{1, 1}, searchKey1)
