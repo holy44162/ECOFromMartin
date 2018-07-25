@@ -21,7 +21,8 @@ end
 ptest = multivariateGaussianFast(Xtest, mu, detSigma, invSigma);
 
 numMess = sum(ptest < epsilon);
-indMess = find(ptest < epsilon)+1;
+% indMess = find(ptest < epsilon)+1;
+indMess = find(ptest < epsilon);
 
 testPredictions = (ptest < epsilon);
 tp = sum((testPredictions == 1) & (ytest == 1));
