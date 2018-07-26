@@ -1,2 +1,24 @@
 25-Jul-2018 15:23:05 Train time: 2.889952e+00 min, CV time: 9.907626e-01 min, Test time: 9.905847e-01 min, hogSize = 64, numDim =  15, tp = 7, fp =  496, F1 =  2.729045e-02
 
+25-Jul-2018 15:49:57 Train time: 2.909647e+00 min, CV time: 1.032007e+00 min, Test time: 1.026489e+00 min, hogSize = 32, numDim =  10, tp = 5, fp =  208, F1 =  4.484305e-02
+
+26-Jul-2018 11:07:48 Train time: 3.547134e+00 min, CV time: 1.033840e+00 min, Test time: 1.015318e+00 min, hogSize = 40, numDim =  15, tp = 6, fp =  158, F1 =  6.896552e-02
+
+26-Jul-2018 11:23:29 Train time: 2.749965e+00 min, CV time: 1.005835e+00 min, Test time: 1.042815e+00 min, hogSize = 45, numDim =  15, tp = 7, fp =  445, F1 =  3.030303e-02
+
+26-Jul-2018 11:32:04 Train time: 2.800768e+00 min, CV time: 1.006092e+00 min, Test time: 1.015167e+00 min, hogSize = 42, numDim =  15, tp = 7, fp =  479, F1 =  2.822581e-02
+
+26-Jul-2018 11:38:20 Train time: 2.952459e+00 min, CV time: 1.050528e+00 min, Test time: 1.000211e+00 min, hogSize = 38, numDim =  15, tp = 6, fp =  149, F1 =  7.272727e-02
+
+26-Jul-2018 11:45:24 Train time: 3.191121e+00 min, CV time: 1.033293e+00 min, Test time: 1.018382e+00 min, hogSize = 36, numDim =  15, tp = 6, fp =  176, F1 =  6.250000e-02
+
+26-Jul-2018 14:00:37 Train time: 3.369009e+00 min, CV time: 1.062587e+00 min, Test time: 1.022399e+00 min, hogSize = 36, numDim =  17, tp = 9, fp =  947, F1 =  1.863354e-02
+
+26-Jul-2018 14:11:25 Train time: 2.942840e+00 min, CV time: 9.987593e-01 min, Test time: 1.035317e+00 min, hogSize = 38, numDim =  17, tp = 9, fp =  951, F1 =  1.855670e-02
+
+26-Jul-2018 14:19:27 Train time: 2.928474e+00 min, CV time: 1.010927e+00 min, Test time: 1.043349e+00 min, hogSize = 38, numDim =  19, tp = 7, fp =  449, F1 =  3.004292e-02
+
+26-Jul-2018 14:25:38 Train time: 2.925935e+00 min, CV time: 1.020996e+00 min, Test time: 1.026031e+00 min, hogSize = 38, numDim =  21, tp = 7, fp =  286, F1 =  4.620462e-02
+
+26-Jul-2018 14:32:09 Train time: 2.912910e+00 min, CV time: 9.972468e-01 min, Test time: 9.928179e-01 min, hogSize = 38, numDim =  23, tp = 7, fp =  340, F1 =  3.921569e-02
+

@@ -5,8 +5,8 @@ addpath(functionPath);
 addpath([functionPath 'ParforProgMon']);
 
 % set parameters here
-hogSize = 64; % hog feature cell size
-numDim = 15; % reduced dim in pca
+hogSize = 38; % hog feature cell size
+numDim = 23; % reduced dim in pca
 debug = false;
 if debug
     addpath([functionPath 'toolbox_general']);
@@ -68,6 +68,7 @@ if ~debug
             continue;
         else
             windImgN = imread(fileList{i, 1});
+%             windImgN = imbinarize(rgb2gray(windImgN),'adaptive','Sensitivity',1); % added by Holy 1807261112
             hogWindRope = extractHOGFeatures(windImgN,'CellSize',[hogSize hogSize]);
             
             if contains(fileList{i, 1}, searchKey1)
@@ -91,7 +92,25 @@ else
         else
             windImgN = imread(fileList{i, 1});
             hogWindRope = extractHOGFeatures(windImgN,'CellSize',[hogSize hogSize]);
-            
+            if i == 1
+                testImgId = 1009;
+%                 testImgId = 319;
+                testImg = imread(fileList{testImgId, 1});
+                processedImage = imbinarize(rgb2gray(testImg),'adaptive','Sensitivity',1);
+%                 se1 = strel('disk', 2);
+%                 processedImage = imdilate(processedImage, se1);
+%                 [featureVector,hogVisualization] = extractHOGFeatures(processedImage,...
+%                     'CellSize',[hogSize hogSize],'NumBins',9);
+                [featureVector,hogVisualization] = extractHOGFeatures(testImg,...
+                    'CellSize',[hogSize hogSize],'NumBins',9);
+                figure;
+%                 imshow(processedImage);
+                imshow(testImg);
+                hold on;
+                plot(hogVisualization,'Color','r');
+                hold off;
+                return;
+            end
             if contains(fileList{i, 1}, searchKey1)
                 X = [X;hogWindRope];
             end
@@ -140,23 +159,25 @@ totalElapsedTime = toc(tStart);
 disp(['total time: ' num2str(totalElapsedTime) ' sec']);
 disp(['total time: ' num2str(totalElapsedTime/60) ' min']);
 
-if contains(fileList{1, 1}, searchKey1)
-    typeWord = searchKey1;
+if ~debug
+    if contains(fileList{1, 1}, searchKey1)
+        typeWord = searchKey1;
+    end
+    if contains(fileList{1, 1}, searchKey2)
+        typeWord = searchKey2;
+    end
+    if contains(fileList{1, 1}, searchKey3)
+        typeWord = searchKey3;
+    end
+    f = fopen('log.txt', 'a');
+    if contains(fileList{1, 1}, searchKey1)
+        fprintf(f,datestr(now));
+        fprintf(f, ' ');
+    end
+    fprintf(f, [typeWord ' time: ']);
+    fprintf(f, '%d min, ',totalElapsedTime/60);
+    if contains(fileList{1, 1}, searchKey3)
+        fprintf(f, 'hogSize = %d, numDim =  %d, ',hogSize, numDim);
+    end
+    fclose(f);
 end
-if contains(fileList{1, 1}, searchKey2)
-    typeWord = searchKey2;
-end
-if contains(fileList{1, 1}, searchKey3)
-    typeWord = searchKey3;
-end
-f = fopen('log.txt', 'a');
-if contains(fileList{1, 1}, searchKey1)
-    fprintf(f,datestr(now));
-    fprintf(f, ' ');
-end
-fprintf(f, [typeWord ' time: ']);
-fprintf(f, '%d min, ',totalElapsedTime/60);
-if contains(fileList{1, 1}, searchKey3)
-    fprintf(f, 'hogSize = %d, numDim =  %d, ',hogSize, numDim);
-end
-fclose(f);
