@@ -47,3 +47,34 @@ baseline: 1. video tracking target. 2. hog feature
 
 27-Jul-2018 10:28:22 Train time: 2.938560e+00 min, CV time: 1.024732e+00 min, Test time: 1.018703e+00 min, hogSize = 38, numDim =  8, tp = 1, fp =  74, F1 =  2.352941e-02
 
+optimize 1: video tracking target's edge cut; biasHRatio = 7; biasWRatio = 11.
+27-Jul-2018 11:18:50 Train time: 2.345517e+00 min, CV time: 7.057006e-01 min, Test time: 6.982585e-01 min, hogSize = 38, numDim =  9, tp = 6, fp =  429, F1 =  2.696629e-02
+
+27-Jul-2018 13:42:19 Train time: 2.396413e+00 min, CV time: 7.124510e-01 min, Test time: 6.882320e-01 min, hogSize = 38, numDim =  9, tp = 6, fp =  429, F1 =  2.696629e-02
+
+optimize 1: video tracking target's edge cut; biasHRatio = 5; biasWRatio = 11.
+27-Jul-2018 13:57:43 Train time: 1.773573e+00 min, CV time: 6.310836e-01 min, Test time: 6.063826e-01 min, hogSize = 38, numDim =  9, tp = 6, fp =  363, F1 =  3.166227e-02
+
+27-Jul-2018 14:02:57 Train time: 1.776325e+00 min, CV time: 6.097029e-01 min, Test time: 5.945083e-01 min, hogSize = 38, numDim =  15, tp = 9, fp =  745, F1 =  2.356021e-02
+
+27-Jul-2018 14:12:11 Train time: 1.692915e+00 min, CV time: 5.957792e-01 min, Test time: 6.343586e-01 min, hogSize = 38, numDim =  8, tp = 6, fp =  373, F1 =  3.084833e-02
+
+27-Jul-2018 14:16:06 Train time: 1.813239e+00 min, CV time: 6.236445e-01 min, Test time: 6.199030e-01 min, hogSize = 38, numDim =  7, tp = 6, fp =  244, F1 =  4.615385e-02
+
+27-Jul-2018 14:19:55 Train time: 1.728669e+00 min, CV time: 6.281138e-01 min, Test time: 6.206729e-01 min, hogSize = 38, numDim =  6, tp = 0, fp =  104, F1 =  NaN
+
+optimize 1: video tracking target's edge cut; biasHRatio = 9; biasWRatio = 11.
+27-Jul-2018 14:29:08 Train time: 2.164015e+00 min, CV time: 7.326160e-01 min, Test time: 7.486159e-01 min, hogSize = 38, numDim =  6, tp = 0, fp =  72, F1 =  NaN
+
+27-Jul-2018 14:33:49 Train time: 2.094856e+00 min, CV time: 7.555036e-01 min, Test time: 7.283780e-01 min, hogSize = 38, numDim =  7, tp = 4, fp =  89, F1 =  7.766990e-02
+
+27-Jul-2018 14:40:07 Train time: 2.204004e+00 min, CV time: 7.848803e-01 min, Test time: 7.452902e-01 min, hogSize = 38, numDim =  8, tp = 6, fp =  127, F1 =  8.391608e-02
+
+27-Jul-2018 14:44:51 Train time: 2.152773e+00 min, CV time: 7.747589e-01 min, Test time: 7.771375e-01 min, hogSize = 38, numDim =  9, tp = 6, fp =  413, F1 =  2.797203e-02
+
+27-Jul-2018 14:51:38 Train time: 2.109713e+00 min, CV time: 7.587584e-01 min, Test time: 7.453525e-01 min, hogSize = 38, numDim =  10, tp = 6, fp =  522, F1 =  2.230483e-02
+
+baseline: 1. video tracking target. 2. hog feature
+27-Jul-2018 15:07:35 Train time: 2.951459e+00 min, CV time: 1.015956e+00 min, Test time: 1.046249e+00 min, hogSize = 38, numDim =  9, tp = 5, fp =  91, F1 =  9.433962e-02
+
+optimize 2: 1. replace pca with gda

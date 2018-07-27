@@ -1,14 +1,15 @@
-function realWindingFeatureDataGen(folder_name, hogSize, numDim)
+function realWindingFeatureDataGen(folder_name,hogSize,numDim)
 % clear;
 tStart = tic;
 functionPath = 'd:\baiduSyn\files\phd\functions\';
 addpath(functionPath);
 addpath([functionPath 'ParforProgMon']);
+addpath([functionPath 'gda']);
 
 % set parameters here
 % hogSize = 38; % hog feature cell size
 % numDim = 27; % reduced dim in pca
-debug = true;
+debug = false;
 if debug
     addpath([functionPath 'toolbox_general']);
 end
@@ -21,6 +22,28 @@ end
 % folder_name = 'd:\data_seq\sequences\windingRopeTest\imgsTarget\';
 fileList = getAllFiles(folder_name);
 
+% % added by Holy 1807271108
+% refImg = imread(fileList{1, 1});
+% [rowRefImg, colRefImg, ~] = size(refImg);
+% biasHeight = round(rowRefImg/biasHRatio);
+% biasWidth = round(colRefImg/biasWRatio);
+% % end of addition 1807271108
+
+% added by Holy 1807271328
+refImg = imread(fileList{1, 1});
+% hogInputRefImg = refImg(biasHeight:end-biasHeight,biasWidth:end-biasWidth,:);
+hogInputRefImg = refImg;
+hogFeature = extractHOGFeatures(hogInputRefImg,'CellSize',[hogSize hogSize]);
+lenHogFeature = length(hogFeature);
+% end of addition 1807271328
+
+% % added by Holy 1807271516
+% binary_picture = imbinarize(rgb2gray(refImg),'adaptive','Sensitivity',1);
+% gaborArray = gaborFilterBank(5,8,39,39);
+% gaborFeature = gaborFeatures(binary_picture,gaborArray,4,4);
+% gaborFeature = gaborFeature';
+% % end of addition 1807271516
+
 % get up level dir
 [dirName,~,~] = fileparts(fileList{1, 1});
 upDirName = getUpLevelPath(dirName, 1);
@@ -32,10 +55,21 @@ searchKey3 = 'Test';
 firstFilePathName = fileList{1, 1};
 
 if contains(firstFilePathName, searchKey1)
-    X = [];
+%     X = []; % hided by Holy 1807271332
+    X = zeros(length(fileList), lenHogFeature); % added by Holy 1807271334
+    
+    % added by Holy 1807271622
+    trainLabelPathName = fullfile(upDirName, 'imgsTag.txt');
+    trainLabelFileID = fopen(trainLabelPathName);
+    trainLabelCell = textscan(trainLabelFileID,'%d');
+    trainLabel = cell2mat(trainLabelCell);
+    trainLabel = trainLabel';
+    fclose(trainLabelFileID);
+    % end of addition 1807271622
 end
 if contains(firstFilePathName, searchKey2)
-    Xval = [];
+%     Xval = []; % hided by Holy 1807271335
+    Xval = zeros(length(fileList), lenHogFeature); % added by Holy 1807271334
     yvalPathName = fullfile(upDirName, 'y_CV.txt');
     yvalFileID = fopen(yvalPathName);
     yvalCell = textscan(yvalFileID,'%d');
@@ -43,7 +77,8 @@ if contains(firstFilePathName, searchKey2)
     fclose(yvalFileID);
 end
 if contains(firstFilePathName, searchKey3)
-    Xtest = [];
+%     Xtest = []; % hided by Holy 1807271336
+    Xtest = zeros(length(fileList), lenHogFeature); % added by Holy 1807271334
     ytestPathName = fullfile(upDirName, 'y_Test.txt');
     ytestFileID = fopen(ytestPathName);
     ytestCell = textscan(ytestFileID,'%d');
@@ -53,6 +88,33 @@ end
 
 searchKey = 'img';
 searchFileExt = '.jpg';
+
+% added by Holy 1807271652
+if contains(firstFilePathName, searchKey1)
+    gdaImgPath = fullfile(upDirName, 'imgsTargetGda');
+    fileListGda = getAllFiles(gdaImgPath);
+    XGda = zeros(length(fileListGda), lenHogFeature);
+    poolobj = gcp('nocreate'); % If no pool, do not create new one.
+    if isempty(poolobj)
+        parpool;
+    end
+    
+    ppmGda = ParforProgMon('', length(fileListGda));
+    parfor i = 1:length(fileListGda)
+        windImgN = imread(fileListGda{i, 1});
+        
+        %             hogInputImg = windImgN(biasHeight:end-biasHeight,biasWidth:end-biasWidth,:);
+        hogInputImg = windImgN;
+        
+        hogWindRope = extractHOGFeatures(hogInputImg,'CellSize',[hogSize hogSize]);
+        
+        %             X = [X;hogWindRope]; % hided by Holy 1807271336
+        XGda(i,:) = hogWindRope; % added by Holy 1807271337
+        
+        ppm.increment();
+    end
+end
+% end of addition 1807271652
 
 if ~debug
     poolobj = gcp('nocreate'); % If no pool, do not create new one.
@@ -66,9 +128,13 @@ if ~debug
         parfor i = 1:length(fileList)
             windImgN = imread(fileList{i, 1});
             
-            hogWindRope = extractHOGFeatures(windImgN,'CellSize',[hogSize hogSize]);
+%             hogInputImg = windImgN(biasHeight:end-biasHeight,biasWidth:end-biasWidth,:);
+            hogInputImg = windImgN;
+                        
+            hogWindRope = extractHOGFeatures(hogInputImg,'CellSize',[hogSize hogSize]);
             
-            X = [X;hogWindRope];
+%             X = [X;hogWindRope]; % hided by Holy 1807271336
+            X(i,:) = hogWindRope; % added by Holy 1807271337
             
             ppm.increment();
         end
@@ -77,9 +143,13 @@ if ~debug
         parfor i = 1:length(fileList)
             windImgN = imread(fileList{i, 1});
             
-            hogWindRope = extractHOGFeatures(windImgN,'CellSize',[hogSize hogSize]);
+%             hogInputImg = windImgN(biasHeight:end-biasHeight,biasWidth:end-biasWidth,:);
+            hogInputImg = windImgN;
+                        
+            hogWindRope = extractHOGFeatures(hogInputImg,'CellSize',[hogSize hogSize]);
             
-            Xval = [Xval;hogWindRope];
+%             Xval = [Xval;hogWindRope]; % hided by Holy 1807271338
+            Xval(i,:) = hogWindRope; % added by Holy 1807271337
             
             ppm.increment();
         end
@@ -88,9 +158,13 @@ if ~debug
         parfor i = 1:length(fileList)
             windImgN = imread(fileList{i, 1});
             
-            hogWindRope = extractHOGFeatures(windImgN,'CellSize',[hogSize hogSize]);
+%             hogInputImg = windImgN(biasHeight:end-biasHeight,biasWidth:end-biasWidth,:);
+            hogInputImg = windImgN;
+                        
+            hogWindRope = extractHOGFeatures(hogInputImg,'CellSize',[hogSize hogSize]);
             
-            Xtest = [Xtest;hogWindRope];
+%             Xtest = [Xtest;hogWindRope]; % hided by Holy 1807271338
+            Xtest(i,:) = hogWindRope; % added by Holy 1807271337
             
             ppm.increment();
         end
@@ -130,13 +204,14 @@ else
             windImgN = imread(fileList{i, 1});
             hogWindRope = extractHOGFeatures(windImgN,'CellSize',[hogSize hogSize]);
             if i == 1
-                %                 testImgId = 1009;
-                testImgId = 319;
+                testImgId = 1009;
+%                 testImgId = 319;
                 testImg = imread(fileList{testImgId, 1});
-                [rowTestImg, colTestImg, ~] = size(testImg);
-                biasHeight = round(rowTestImg/7);
-                biasWidth = round(colTestImg/11);
-                testImgWithBias = testImg(biasHeight:end-biasHeight,biasWidth:end-biasWidth,:);
+%                 [rowTestImg, colTestImg, ~] = size(testImg);
+%                 biasHeight = round(rowTestImg/5);
+%                 biasWidth = round(colTestImg/11);
+%                 testImgWithBias = testImg(biasHeight:end-biasHeight,biasWidth:end-biasWidth,:);
+                testImgWithBias = testImg;
                 hogInputImg = testImgWithBias;
 %                 processedImage = imbinarize(rgb2gray(testImg),'adaptive','Sensitivity',1);
                 %                 se1 = strel('disk', 2);
@@ -170,30 +245,49 @@ end
 dataMLFileName = 'dataML.mat';
 
 if contains(firstFilePathName, searchKey1)
-    [~,X,~] = pca(X,'NumComponents',numDim);
+%     [~,X,~] = pca(X,'NumComponents',numDim);
+    
+    % added by Holy 1807271629
+    trainData = XGda';
+    trainGda = gda(trainData,trainData,trainLabel);
+    X = trainGda';
+    X = X(1:end-10,:);
+    % end of addition 1807271629
     
     if exist(dataMLFileName, 'file') == 2
-        save('dataML.mat','X','-append');
+        save(dataMLFileName,'X','trainData','trainLabel','-append');
     else
-        save('dataML.mat','X');
+        save(dataMLFileName,'X','trainData','trainLabel');
     end
 end
 if contains(firstFilePathName, searchKey2)
-    [~,Xval,~] = pca(Xval,'NumComponents',numDim);
+%     [~,Xval,~] = pca(Xval,'NumComponents',numDim);
+    
+    % added by Holy 1807271629
+    load(dataMLFileName);
+    testGda = gda(Xval',trainData,trainLabel);
+    Xval = testGda';
+    % end of addition 1807271629
     
     if exist(dataMLFileName, 'file') == 2
-        save('dataML.mat','Xval','yval','-append');
+        save(dataMLFileName,'Xval','yval','-append');
     else
-        save('dataML.mat','Xval','yval');
+        save(dataMLFileName,'Xval','yval');
     end
 end
 if contains(firstFilePathName, searchKey3)
-    [~,Xtest,~] = pca(Xtest,'NumComponents',numDim);
+%     [~,Xtest,~] = pca(Xtest,'NumComponents',numDim);
+    
+    % added by Holy 1807271629
+    load(dataMLFileName);
+    testGda = gda(Xtest',trainData,trainLabel);
+    Xtest = testGda';
+    % end of addition 1807271629
     
     if exist(dataMLFileName, 'file') == 2
-        save('dataML.mat','Xtest','ytest','-append');
+        save(dataMLFileName,'Xtest','ytest','-append');
     else
-        save('dataML.mat','Xtest','ytest');
+        save(dataMLFileName,'Xtest','ytest');
     end
 end
 disp('Mission accomplished.');
