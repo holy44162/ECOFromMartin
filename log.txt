@@ -1,3 +1,4 @@
+baseline: 1. video tracking target. 2. hog feature
 25-Jul-2018 15:23:05 Train time: 2.889952e+00 min, CV time: 9.907626e-01 min, Test time: 9.905847e-01 min, hogSize = 64, numDim =  15, tp = 7, fp =  496, F1 =  2.729045e-02
 
 25-Jul-2018 15:49:57 Train time: 2.909647e+00 min, CV time: 1.032007e+00 min, Test time: 1.026489e+00 min, hogSize = 32, numDim =  10, tp = 5, fp =  208, F1 =  4.484305e-02
@@ -21,4 +22,28 @@
 26-Jul-2018 14:25:38 Train time: 2.925935e+00 min, CV time: 1.020996e+00 min, Test time: 1.026031e+00 min, hogSize = 38, numDim =  21, tp = 7, fp =  286, F1 =  4.620462e-02
 
 26-Jul-2018 14:32:09 Train time: 2.912910e+00 min, CV time: 9.972468e-01 min, Test time: 9.928179e-01 min, hogSize = 38, numDim =  23, tp = 7, fp =  340, F1 =  3.921569e-02
+
+26-Jul-2018 15:44:59 Train time: 3.276257e+00 min, CV time: 1.022783e+00 min, Test time: 1.015454e+00 min, hogSize = 38, numDim =  25, tp = 9, fp =  545, F1 =  3.191489e-02
+
+26-Jul-2018 16:38:35 Train time: 2.929583e+00 min, CV time: 1.025161e+00 min, Test time: 1.019467e+00 min, hogSize = 38, numDim =  27, tp = 9, fp =  495, F1 =  3.501946e-02
+
+26-Jul-2018 16:51:41 Train time: 2.896392e+00 min, CV time: 9.784529e-01 min, Test time: 9.990380e-01 min, hogSize = 38, numDim =  29, tp = 10, fp =  580, F1 =  3.333333e-02
+
+27-Jul-2018 09:14:34 Train time: 3.524029e+00 min, CV time: 1.090042e+00 min, Test time: 1.061139e+00 min, hogSize = 38, numDim =  31, tp = 10, fp =  621, F1 =  3.120125e-02
+
+27-Jul-2018 09:22:01 Train time: 2.978472e+00 min, CV time: 1.061068e+00 min, Test time: 1.050921e+00 min, hogSize = 38, numDim =  33, tp = 10, fp =  694, F1 =  2.801120e-02
+
+27-Jul-2018 09:28:31 Train time: 2.895826e+00 min, CV time: 1.070725e+00 min, Test time: 1.007992e+00 min, hogSize = 38, numDim =  13, tp = 6, fp =  276, F1 =  4.109589e-02
+
+27-Jul-2018 09:34:22 Train time: 2.812722e+00 min, CV time: 1.066349e+00 min, Test time: 1.006718e+00 min, hogSize = 38, numDim =  15, tp = 6, fp =  149, F1 =  7.272727e-02
+
+27-Jul-2018 09:50:43 Train time: 2.768237e+00 min, CV time: 9.783317e-01 min, Test time: 9.979495e-01 min, hogSize = 38, numDim =  14, tp = 6, fp =  318, F1 =  3.592814e-02
+
+27-Jul-2018 09:56:34 Train time: 2.747879e+00 min, CV time: 9.993340e-01 min, Test time: 1.034336e+00 min, hogSize = 38, numDim =  11, tp = 10, fp =  962, F1 =  2.036660e-02
+
+27-Jul-2018 10:04:35 Train time: 2.963826e+00 min, CV time: 1.007181e+00 min, Test time: 9.948801e-01 min, hogSize = 38, numDim =  9, tp = 5, fp =  91, F1 =  9.433962e-02
+
+27-Jul-2018 10:10:17 Train time: 3.009869e+00 min, CV time: 1.042405e+00 min, Test time: 1.079918e+00 min, hogSize = 38, numDim =  10, tp = 7, fp =  552, F1 =  2.460457e-02
+
+27-Jul-2018 10:28:22 Train time: 2.938560e+00 min, CV time: 1.024732e+00 min, Test time: 1.018703e+00 min, hogSize = 38, numDim =  8, tp = 1, fp =  74, F1 =  2.352941e-02
 

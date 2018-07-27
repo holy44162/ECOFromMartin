@@ -1,20 +1,21 @@
-clear;
+function realWindingFeatureDataGen(folder_name, hogSize, numDim)
+% clear;
 tStart = tic;
 functionPath = 'd:\baiduSyn\files\phd\functions\';
 addpath(functionPath);
 addpath([functionPath 'ParforProgMon']);
 
 % set parameters here
-hogSize = 38; % hog feature cell size
-numDim = 23; % reduced dim in pca
-debug = false;
+% hogSize = 38; % hog feature cell size
+% numDim = 27; % reduced dim in pca
+debug = true;
 if debug
     addpath([functionPath 'toolbox_general']);
 end
 
 % folder_name = 'd:\data_seq\sequences\realWindingRopeTrain\imgsTarget\';
 % folder_name = 'd:\data_seq\sequences\realWindingRopeCV\imgsTarget\';
-folder_name = 'd:\data_seq\sequences\realWindingRopeTest\imgsTarget\';
+% folder_name = 'd:\data_seq\sequences\realWindingRopeTest\imgsTarget\';
 % folder_name = 'd:\data_seq\sequences\windingRopeTrain\imgsTarget\';
 % folder_name = 'd:\data_seq\sequences\windingRopeCV\imgsTarget\';
 % folder_name = 'd:\data_seq\sequences\windingRopeTest\imgsTarget\';
@@ -28,10 +29,12 @@ searchKey1 = 'Train';
 searchKey2 = 'CV';
 searchKey3 = 'Test';
 
-if contains(fileList{1, 1}, searchKey1)
+firstFilePathName = fileList{1, 1};
+
+if contains(firstFilePathName, searchKey1)
     X = [];
 end
-if contains(fileList{1, 1}, searchKey2)
+if contains(firstFilePathName, searchKey2)
     Xval = [];
     yvalPathName = fullfile(upDirName, 'y_CV.txt');
     yvalFileID = fopen(yvalPathName);
@@ -39,8 +42,8 @@ if contains(fileList{1, 1}, searchKey2)
     yval = cell2mat(yvalCell);
     fclose(yvalFileID);
 end
-if contains(fileList{1, 1}, searchKey3)
-    Xtest = [];    
+if contains(firstFilePathName, searchKey3)
+    Xtest = [];
     ytestPathName = fullfile(upDirName, 'y_Test.txt');
     ytestFileID = fopen(ytestPathName);
     ytestCell = textscan(ytestFileID,'%d');
@@ -59,30 +62,64 @@ if ~debug
     
     ppm = ParforProgMon('', length(fileList));
     
-    % fprintf('Progress:\n');
-    % fprintf(['\n' repmat('.',1,length(fileList)) '\n\n']);
-    parfor i = 1:length(fileList)
-        %     fprintf('\b|\n');
-        [~,FileName,fileExt] = fileparts(fileList{i, 1});
-        if ~contains(FileName, searchKey) || ~strcmpi(fileExt,searchFileExt)
-            continue;
-        else
+    if contains(firstFilePathName, searchKey1)
+        parfor i = 1:length(fileList)
             windImgN = imread(fileList{i, 1});
-%             windImgN = imbinarize(rgb2gray(windImgN),'adaptive','Sensitivity',1); % added by Holy 1807261112
+            
             hogWindRope = extractHOGFeatures(windImgN,'CellSize',[hogSize hogSize]);
             
-            if contains(fileList{i, 1}, searchKey1)
-                X = [X;hogWindRope];
-            end
-            if contains(fileList{i, 1}, searchKey2)
-                Xval = [Xval;hogWindRope];
-            end
-            if contains(fileList{i, 1}, searchKey3)
-                Xtest = [Xtest;hogWindRope];
-            end
+            X = [X;hogWindRope];
+            
+            ppm.increment();
         end
-        ppm.increment();
     end
+    if contains(firstFilePathName, searchKey2)
+        parfor i = 1:length(fileList)
+            windImgN = imread(fileList{i, 1});
+            
+            hogWindRope = extractHOGFeatures(windImgN,'CellSize',[hogSize hogSize]);
+            
+            Xval = [Xval;hogWindRope];
+            
+            ppm.increment();
+        end
+    end
+    if contains(firstFilePathName, searchKey3)
+        parfor i = 1:length(fileList)
+            windImgN = imread(fileList{i, 1});
+            
+            hogWindRope = extractHOGFeatures(windImgN,'CellSize',[hogSize hogSize]);
+            
+            Xtest = [Xtest;hogWindRope];
+            
+            ppm.increment();
+        end
+    end
+    
+%     % fprintf('Progress:\n');
+%     % fprintf(['\n' repmat('.',1,length(fileList)) '\n\n']);
+%     parfor i = 1:length(fileList)
+%         %     fprintf('\b|\n');
+%         [~,FileName,fileExt] = fileparts(fileList{i, 1});
+%         if ~contains(FileName, searchKey) || ~strcmpi(fileExt,searchFileExt)
+%             continue;
+%         else
+%             windImgN = imread(fileList{i, 1});
+%             %             windImgN = imbinarize(rgb2gray(windImgN),'adaptive','Sensitivity',1); % added by Holy 1807261112
+%             hogWindRope = extractHOGFeatures(windImgN,'CellSize',[hogSize hogSize]);
+%             
+%             if contains(firstFilePathName, searchKey1)
+%                 X = [X;hogWindRope];
+%             end
+%             if contains(firstFilePathName, searchKey2)
+%                 Xval = [Xval;hogWindRope];
+%             end
+%             if contains(firstFilePathName, searchKey3)
+%                 Xtest = [Xtest;hogWindRope];
+%             end
+%         end
+%         ppm.increment();
+%     end
 else
     for i = 1:length(fileList)
         progressbar(i, length(fileList));
@@ -93,31 +130,37 @@ else
             windImgN = imread(fileList{i, 1});
             hogWindRope = extractHOGFeatures(windImgN,'CellSize',[hogSize hogSize]);
             if i == 1
-                testImgId = 1009;
-%                 testImgId = 319;
+                %                 testImgId = 1009;
+                testImgId = 319;
                 testImg = imread(fileList{testImgId, 1});
-                processedImage = imbinarize(rgb2gray(testImg),'adaptive','Sensitivity',1);
-%                 se1 = strel('disk', 2);
-%                 processedImage = imdilate(processedImage, se1);
-%                 [featureVector,hogVisualization] = extractHOGFeatures(processedImage,...
-%                     'CellSize',[hogSize hogSize],'NumBins',9);
-                [featureVector,hogVisualization] = extractHOGFeatures(testImg,...
+                [rowTestImg, colTestImg, ~] = size(testImg);
+                biasHeight = round(rowTestImg/7);
+                biasWidth = round(colTestImg/11);
+                testImgWithBias = testImg(biasHeight:end-biasHeight,biasWidth:end-biasWidth,:);
+                hogInputImg = testImgWithBias;
+%                 processedImage = imbinarize(rgb2gray(testImg),'adaptive','Sensitivity',1);
+                %                 se1 = strel('disk', 2);
+                %                 processedImage = imdilate(processedImage, se1);
+                %                 [featureVector,hogVisualization] = extractHOGFeatures(processedImage,...
+                %                     'CellSize',[hogSize hogSize],'NumBins',9);
+                [featureVector,hogVisualization] = extractHOGFeatures(hogInputImg,...
                     'CellSize',[hogSize hogSize],'NumBins',9);
                 figure;
-%                 imshow(processedImage);
                 imshow(testImg);
+                figure;
+                imshow(hogInputImg);
                 hold on;
                 plot(hogVisualization,'Color','r');
                 hold off;
                 return;
             end
-            if contains(fileList{i, 1}, searchKey1)
+            if contains(firstFilePathName, searchKey1)
                 X = [X;hogWindRope];
             end
-            if contains(fileList{i, 1}, searchKey2)
+            if contains(firstFilePathName, searchKey2)
                 Xval = [Xval;hogWindRope];
             end
-            if contains(fileList{i, 1}, searchKey3)
+            if contains(firstFilePathName, searchKey3)
                 Xtest = [Xtest;hogWindRope];
             end
         end
@@ -126,7 +169,7 @@ end
 
 dataMLFileName = 'dataML.mat';
 
-if contains(fileList{1, 1}, searchKey1)
+if contains(firstFilePathName, searchKey1)
     [~,X,~] = pca(X,'NumComponents',numDim);
     
     if exist(dataMLFileName, 'file') == 2
@@ -135,7 +178,7 @@ if contains(fileList{1, 1}, searchKey1)
         save('dataML.mat','X');
     end
 end
-if contains(fileList{1, 1}, searchKey2)
+if contains(firstFilePathName, searchKey2)
     [~,Xval,~] = pca(Xval,'NumComponents',numDim);
     
     if exist(dataMLFileName, 'file') == 2
@@ -144,7 +187,7 @@ if contains(fileList{1, 1}, searchKey2)
         save('dataML.mat','Xval','yval');
     end
 end
-if contains(fileList{1, 1}, searchKey3)
+if contains(firstFilePathName, searchKey3)
     [~,Xtest,~] = pca(Xtest,'NumComponents',numDim);
     
     if exist(dataMLFileName, 'file') == 2
@@ -160,24 +203,25 @@ disp(['total time: ' num2str(totalElapsedTime) ' sec']);
 disp(['total time: ' num2str(totalElapsedTime/60) ' min']);
 
 if ~debug
-    if contains(fileList{1, 1}, searchKey1)
+    if contains(firstFilePathName, searchKey1)
         typeWord = searchKey1;
     end
-    if contains(fileList{1, 1}, searchKey2)
+    if contains(firstFilePathName, searchKey2)
         typeWord = searchKey2;
     end
-    if contains(fileList{1, 1}, searchKey3)
+    if contains(firstFilePathName, searchKey3)
         typeWord = searchKey3;
     end
     f = fopen('log.txt', 'a');
-    if contains(fileList{1, 1}, searchKey1)
+    if contains(firstFilePathName, searchKey1)
         fprintf(f,datestr(now));
         fprintf(f, ' ');
     end
     fprintf(f, [typeWord ' time: ']);
     fprintf(f, '%d min, ',totalElapsedTime/60);
-    if contains(fileList{1, 1}, searchKey3)
+    if contains(firstFilePathName, searchKey3)
         fprintf(f, 'hogSize = %d, numDim =  %d, ',hogSize, numDim);
     end
     fclose(f);
+end
 end
