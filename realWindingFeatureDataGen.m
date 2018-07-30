@@ -58,14 +58,14 @@ if contains(firstFilePathName, searchKey1)
 %     X = []; % hided by Holy 1807271332
     X = zeros(length(fileList), lenHogFeature); % added by Holy 1807271334
     
-    % added by Holy 1807271622
-    trainLabelPathName = fullfile(upDirName, 'imgsTag.txt');
-    trainLabelFileID = fopen(trainLabelPathName);
-    trainLabelCell = textscan(trainLabelFileID,'%d');
-    trainLabel = cell2mat(trainLabelCell);
-    trainLabel = trainLabel';
-    fclose(trainLabelFileID);
-    % end of addition 1807271622
+%     % added by Holy 1807271622
+%     trainLabelPathName = fullfile(upDirName, 'imgsTag.txt');
+%     trainLabelFileID = fopen(trainLabelPathName);
+%     trainLabelCell = textscan(trainLabelFileID,'%d');
+%     trainLabel = cell2mat(trainLabelCell);
+%     trainLabel = trainLabel';
+%     fclose(trainLabelFileID);
+%     % end of addition 1807271622
 end
 if contains(firstFilePathName, searchKey2)
 %     Xval = []; % hided by Holy 1807271335
@@ -89,32 +89,32 @@ end
 searchKey = 'img';
 searchFileExt = '.jpg';
 
-% added by Holy 1807271652
-if contains(firstFilePathName, searchKey1)
-    gdaImgPath = fullfile(upDirName, 'imgsTargetGda');
-    fileListGda = getAllFiles(gdaImgPath);
-    XGda = zeros(length(fileListGda), lenHogFeature);
-    poolobj = gcp('nocreate'); % If no pool, do not create new one.
-    if isempty(poolobj)
-        parpool;
-    end
-    
-    ppmGda = ParforProgMon('', length(fileListGda));
-    parfor i = 1:length(fileListGda)
-        windImgN = imread(fileListGda{i, 1});
-        
-        %             hogInputImg = windImgN(biasHeight:end-biasHeight,biasWidth:end-biasWidth,:);
-        hogInputImg = windImgN;
-        
-        hogWindRope = extractHOGFeatures(hogInputImg,'CellSize',[hogSize hogSize]);
-        
-        %             X = [X;hogWindRope]; % hided by Holy 1807271336
-        XGda(i,:) = hogWindRope; % added by Holy 1807271337
-        
-        ppm.increment();
-    end
-end
-% end of addition 1807271652
+% % added by Holy 1807271652
+% if contains(firstFilePathName, searchKey1)
+%     gdaImgPath = fullfile(upDirName, 'imgsTargetGda');
+%     fileListGda = getAllFiles(gdaImgPath);
+%     XGda = zeros(length(fileListGda), lenHogFeature);
+%     poolobj = gcp('nocreate'); % If no pool, do not create new one.
+%     if isempty(poolobj)
+%         parpool;
+%     end
+%     
+%     ppmGda = ParforProgMon('', length(fileListGda));
+%     parfor i = 1:length(fileListGda)
+%         windImgN = imread(fileListGda{i, 1});
+%         
+%         %             hogInputImg = windImgN(biasHeight:end-biasHeight,biasWidth:end-biasWidth,:);
+%         hogInputImg = windImgN;
+%         
+%         hogWindRope = extractHOGFeatures(hogInputImg,'CellSize',[hogSize hogSize]);
+%         
+%         %             X = [X;hogWindRope]; % hided by Holy 1807271336
+%         XGda(i,:) = hogWindRope; % added by Holy 1807271337
+%         
+%         ppmGda.increment();
+%     end
+% end
+% % end of addition 1807271652
 
 if ~debug
     poolobj = gcp('nocreate'); % If no pool, do not create new one.
@@ -123,7 +123,7 @@ if ~debug
     end
     
     ppm = ParforProgMon('', length(fileList));
-    
+
     if contains(firstFilePathName, searchKey1)
         parfor i = 1:length(fileList)
             windImgN = imread(fileList{i, 1});
@@ -139,6 +139,7 @@ if ~debug
             ppm.increment();
         end
     end
+
     if contains(firstFilePathName, searchKey2)
         parfor i = 1:length(fileList)
             windImgN = imread(fileList{i, 1});
@@ -245,29 +246,48 @@ end
 dataMLFileName = 'dataML.mat';
 
 if contains(firstFilePathName, searchKey1)
-%     [~,X,~] = pca(X,'NumComponents',numDim);
+    % added by Holy 1807301407
+    XMean = mean(X);
+    X = bsxfun(@minus,X,XMean);
+    % end of addition 1807301407
+%     [coeff,X,~] = pca(X,'NumComponents',numDim); % hided by Holy 1807301434
+    % added by Holy 1807301434
+    [coeff,X,~] = pca(X);
+%     X = X(:,1:numDim); % hided by Holy 1807301455
+    % end of addition 1807301434
     
-    % added by Holy 1807271629
-    trainData = XGda';
-    trainGda = gda(trainData,trainData,trainLabel);
-    X = trainGda';
-    X = X(1:end-10,:);
-    % end of addition 1807271629
+%     % added by Holy 1807271629
+%     trainData = XGda';
+%     trainGda = gda(trainData,trainData,trainLabel);
+%     X = trainGda';
+%     X = X(1:end-10,:);
+%     % end of addition 1807271629
     
     if exist(dataMLFileName, 'file') == 2
-        save(dataMLFileName,'X','trainData','trainLabel','-append');
+%         save(dataMLFileName,'X','trainData','trainLabel','-append'); % hided by Holy 1807301124
+%         save(dataMLFileName,'X','-append'); % hided by Holy 1807301417
+        save(dataMLFileName,'X','coeff','XMean','-append'); % added by Holy 1807301419
     else
-        save(dataMLFileName,'X','trainData','trainLabel');
+%         save(dataMLFileName,'X','trainData','trainLabel'); % hided by Holy 1807301124
+%         save(dataMLFileName,'X'); % hided by Holy 1807301420
+        save(dataMLFileName,'X','coeff','XMean'); % added by Holy 1807301419
     end
 end
 if contains(firstFilePathName, searchKey2)
-%     [~,Xval,~] = pca(Xval,'NumComponents',numDim);
+%     [~,Xval,~] = pca(Xval,'NumComponents',numDim); % hided by Holy 1807301422
     
-    % added by Holy 1807271629
-    load(dataMLFileName);
-    testGda = gda(Xval',trainData,trainLabel);
-    Xval = testGda';
-    % end of addition 1807271629
+    % added by Holy 1807301421
+    load(dataMLFileName, 'coeff', 'XMean');
+    Xval = bsxfun(@minus,Xval,XMean);
+    Xval = Xval*coeff;
+%     Xval = Xval(:,1:numDim); % hided by Holy 1807301455
+    % end of addition 1807301421
+    
+%     % added by Holy 1807271629
+%     load(dataMLFileName, 'trainLabel', 'trainData');
+%     testGda = gda(Xval',trainData,trainLabel);
+%     Xval = testGda';
+%     % end of addition 1807271629
     
     if exist(dataMLFileName, 'file') == 2
         save(dataMLFileName,'Xval','yval','-append');
@@ -276,13 +296,20 @@ if contains(firstFilePathName, searchKey2)
     end
 end
 if contains(firstFilePathName, searchKey3)
-%     [~,Xtest,~] = pca(Xtest,'NumComponents',numDim);
+%     [~,Xtest,~] = pca(Xtest,'NumComponents',numDim); % hided by Holy 1807301422
     
-    % added by Holy 1807271629
-    load(dataMLFileName);
-    testGda = gda(Xtest',trainData,trainLabel);
-    Xtest = testGda';
-    % end of addition 1807271629
+    % added by Holy 1807301421
+    load(dataMLFileName, 'coeff', 'XMean');
+    Xtest = bsxfun(@minus,Xtest,XMean);
+    Xtest = Xtest*coeff;
+%     Xtest = Xtest(:,1:numDim); % hided by Holy 1807301455
+    % end of addition 1807301421
+    
+%     % added by Holy 1807271629
+%     load(dataMLFileName, 'trainLabel', 'trainData');
+%     testGda = gda(Xtest',trainData,trainLabel);
+%     Xtest = testGda';
+%     % end of addition 1807271629
     
     if exist(dataMLFileName, 'file') == 2
         save(dataMLFileName,'Xtest','ytest','-append');
@@ -296,26 +323,31 @@ totalElapsedTime = toc(tStart);
 disp(['total time: ' num2str(totalElapsedTime) ' sec']);
 disp(['total time: ' num2str(totalElapsedTime/60) ' min']);
 
-if ~debug
-    if contains(firstFilePathName, searchKey1)
-        typeWord = searchKey1;
-    end
-    if contains(firstFilePathName, searchKey2)
-        typeWord = searchKey2;
-    end
-    if contains(firstFilePathName, searchKey3)
-        typeWord = searchKey3;
-    end
-    f = fopen('log.txt', 'a');
-    if contains(firstFilePathName, searchKey1)
-        fprintf(f,datestr(now));
-        fprintf(f, ' ');
-    end
-    fprintf(f, [typeWord ' time: ']);
-    fprintf(f, '%d min, ',totalElapsedTime/60);
-    if contains(firstFilePathName, searchKey3)
-        fprintf(f, 'hogSize = %d, numDim =  %d, ',hogSize, numDim);
-    end
-    fclose(f);
-end
+% hided by Holy 1807301456
+% if ~debug
+%     if contains(firstFilePathName, searchKey1)
+%         typeWord = searchKey1;
+%     end
+%     if contains(firstFilePathName, searchKey2)
+%         typeWord = searchKey2;
+%     end
+%     if contains(firstFilePathName, searchKey3)
+%         typeWord = searchKey3;
+%     end
+%     f = fopen('log.txt', 'a');
+%     % hided by Holy 1807301440
+% %     if contains(firstFilePathName, searchKey1)
+% %         fprintf(f,datestr(now));
+% %         fprintf(f, ' ');
+% %     end
+%     % end of addition 1807301440
+%     
+%     fprintf(f, [typeWord ' time: ']);
+%     fprintf(f, '%d min, ',totalElapsedTime/60);
+%     if contains(firstFilePathName, searchKey3)
+%         fprintf(f, 'hogSize = %d, numDim =  %d, ',hogSize, numDim);
+%     end
+%     fclose(f);
+% end
+% end of hide 1807301456
 end
