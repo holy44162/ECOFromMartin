@@ -88,3 +88,191 @@ baseline: 1. video tracking target. 2. hog feature (updated pca)
 
 30-Jul-2018 14:41:57 Train time: 3.074926e+00 min, CV time: 1.112219e+00 min, Test time: 1.119784e+00 min, hogSize = 38, numDim =  8, tp = 1, fp =  597, F1 =  3.289474e-03
 
+30-Jul-2018 15:15:16 hogSize = 38, numDim =  7, tp = 2, fp =  652, F1 =  6.024096e-03
+
+30-Jul-2018 15:33:53 hogSize = 38, numDim =  6, tp = 2, fp =  676, F1 =  5.813953e-03
+
+30-Jul-2018 15:34:34 hogSize = 38, numDim =  5, tp = 2, fp =  629, F1 =  6.240250e-03
+
+30-Jul-2018 15:35:03 hogSize = 38, numDim =  4, tp = 3, fp =  873, F1 =  6.772009e-03
+
+30-Jul-2018 15:35:22 hogSize = 38, numDim =  3, tp = 1, fp =  387, F1 =  5.025126e-03
+
+30-Jul-2018 15:35:43 hogSize = 38, numDim =  2, tp = 0, fp =  137, F1 =  NaN
+
+30-Jul-2018 15:36:11 hogSize = 38, numDim =  10, tp = 0, fp =  151, F1 =  NaN
+
+30-Jul-2018 15:36:43 hogSize = 38, numDim =  11, tp = 1, fp =  269, F1 =  7.142857e-03
+
+30-Jul-2018 15:47:35 hogSize = 38, numDim =  12, tp = 5, fp =  738, F1 =  1.328021e-02
+
+30-Jul-2018 15:48:07 hogSize = 38, numDim =  13, tp = 1, fp =  342, F1 =  5.665722e-03
+
+30-Jul-2018 15:50:18 hogSize = 38, numDim =  14, tp = 6, fp =  925, F1 =  1.275239e-02
+
+30-Jul-2018 15:50:32 hogSize = 38, numDim =  15, tp = 7, fp =  941, F1 =  1.461378e-02
+
+30-Jul-2018 15:50:48 hogSize = 38, numDim =  16, tp = 9, fp =  869, F1 =  2.027027e-02
+
+30-Jul-2018 15:51:06 hogSize = 38, numDim =  17, tp = 6, fp =  735, F1 =  1.597870e-02
+
+baseline: 1. video tracking target; 2. hog feature (updated pca); 3. selected dim
+30-Jul-2018 15:56:00 hogSize = 38, numDim =  1, tp = 0, fp =  138, F1 =  NaN
+
+30-Jul-2018 15:56:23 hogSize = 38, numDim =  2, tp = 1, fp =  0, F1 =  1.818182e-01
+
+30-Jul-2018 15:57:14 hogSize = 38, numDim =  3, tp = 2, fp =  290, F1 =  1.324503e-02
+
+30-Jul-2018 15:57:33 hogSize = 38, numDim =  4, tp = 0, fp =  18, F1 =  NaN
+
+30-Jul-2018 15:57:49 hogSize = 38, numDim =  5, tp = 0, fp =  0, F1 =  NaN
+
+30-Jul-2018 15:58:01 hogSize = 38, numDim =  6, tp = 1, fp =  351, F1 =  5.524862e-03
+
+30-Jul-2018 15:58:16 hogSize = 38, numDim =  7, tp = 2, fp =  194, F1 =  1.941748e-02
+
+30-Jul-2018 15:58:28 hogSize = 38, numDim =  8, tp = 7, fp =  937, F1 =  1.467505e-02
+
+30-Jul-2018 15:58:58 hogSize = 38, numDim =  9, tp = 0, fp =  53, F1 =  NaN
+
+30-Jul-2018 15:59:10 hogSize = 38, numDim =  10, tp = 0, fp =  0, F1 =  NaN
+
+30-Jul-2018 15:59:23 hogSize = 38, numDim =  11, tp = 5, fp =  526, F1 =  1.848429e-02
+
+30-Jul-2018 15:59:37 hogSize = 38, numDim =  12, tp = 0, fp =  112, F1 =  NaN
+
+30-Jul-2018 16:01:06 hogSize = 38, numDim =  13, tp = 0, fp =  59, F1 =  NaN
+
+30-Jul-2018 16:01:21 hogSize = 38, numDim =  14, tp = 6, fp =  942, F1 =  1.252610e-02
+
+30-Jul-2018 16:02:08 hogSize = 38, numDim =  15, tp = 2, fp =  284, F1 =  1.351351e-02
+
+30-Jul-2018 16:02:28 hogSize = 38, numDim =  16, tp = 1, fp =  50, F1 =  3.278689e-02
+
+30-Jul-2018 16:02:41 hogSize = 38, numDim =  17, tp = 0, fp =  118, F1 =  NaN
+
+30-Jul-2018 16:02:52 hogSize = 38, numDim =  18, tp = 8, fp =  883, F1 =  1.775805e-02
+
+30-Jul-2018 16:03:04 hogSize = 38, numDim =  19, tp = 4, fp =  322, F1 =  2.380952e-02
+
+30-Jul-2018 16:03:17 hogSize = 38, numDim =  20, tp = 0, fp =  178, F1 =  NaN
+
+30-Jul-2018 16:03:28 hogSize = 38, numDim =  21, tp = 0, fp =  65, F1 =  NaN
+
+30-Jul-2018 16:03:40 hogSize = 38, numDim =  22, tp = 0, fp =  179, F1 =  NaN
+
+30-Jul-2018 16:03:51 hogSize = 38, numDim =  23, tp = 1, fp =  398, F1 =  4.889976e-03
+
+30-Jul-2018 16:04:04 hogSize = 38, numDim =  24, tp = 1, fp =  211, F1 =  9.009009e-03
+
+30-Jul-2018 16:04:14 hogSize = 38, numDim =  25, tp = 8, fp =  948, F1 =  1.656315e-02
+
+30-Jul-2018 16:04:27 hogSize = 38, numDim =  26, tp = 2, fp =  730, F1 =  5.390836e-03
+
+30-Jul-2018 16:04:38 hogSize = 38, numDim =  27, tp = 0, fp =  53, F1 =  NaN
+
+30-Jul-2018 16:04:49 hogSize = 38, numDim =  28, tp = 3, fp =  351, F1 =  1.648352e-02
+
+30-Jul-2018 16:05:02 hogSize = 38, numDim =  29, tp = 10, fp =  1004, F1 =  1.953125e-02
+
+30-Jul-2018 16:05:16 hogSize = 38, numDim =  30, tp = 1, fp =  760, F1 =  2.594034e-03
+
+baseline: 1. video tracking target; 2. hog feature (updated pca); 3. combined dim
+30-Jul-2018 16:08:39 hogSize = 38, numDim =  2,7, hogSize = 7, numDim =  tp = 8, fp =  300, F1 =  5.031447e-02
+
+30-Jul-2018 16:09:51 hogSize = 38, numDim =  2,8, hogSize = 8, numDim =  tp = 8, fp =  867, F1 =  1.807910e-02
+
+30-Jul-2018 16:10:38 hogSize = 38, numDim =  7,8, hogSize = 8, numDim =  tp = 1, fp =  173, F1 =  1.086957e-02
+
+30-Jul-2018 16:11:18 hogSize = 38, numDim =  2,7,8 hogSize = 7, numDim =  8, tp = 2, fp =  145, F1 =  2.547771e-02
+
+model:
+30-Jul-2018 16:17:46 hogSize = 38, numDim =  1, hogSize = 2, numDim =  3, hogSize = 4, numDim =  5, hogSize = 6, numDim =  7, hogSize = 8, numDim =  9, hogSize = 10, numDim =  tp = 8, fp =  14, F1 =  5.161290e-01
+
+30-Jul-2018 16:19:58 hogSize = 32, numDim =  1, hogSize = 2, numDim =  3, hogSize = 4, numDim =  5, hogSize = 6, numDim =  7, hogSize = 8, numDim =  9, hogSize = 10, numDim =  tp = 6, fp =  2, F1 =  7.058824e-01
+
+30-Jul-2018 16:23:45 hogSize = 16, numDim =  1   2   3   4   5   6   7   8   9  10, tp = 5, fp =  11, F1 =  4.000000e-01
+
+30-Jul-2018 16:24:51 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10, tp = 8, fp =  14, F1 =  5.161290e-01
+
+30-Jul-2018 16:26:10 hogSize = 38, numDim =  1, tp = 7, fp =  125, F1 =  9.929078e-02
+
+30-Jul-2018 16:26:35 hogSize = 38, numDim =  2, tp = 3, fp =  0, F1 =  5.000000e-01
+
+30-Jul-2018 16:26:43 hogSize = 38, numDim =  3, tp = 3, fp =  13, F1 =  2.400000e-01
+
+30-Jul-2018 16:26:49 hogSize = 38, numDim =  4, tp = 2, fp =  0, F1 =  3.636364e-01
+
+30-Jul-2018 16:26:54 hogSize = 38, numDim =  5, tp = 1, fp =  2, F1 =  1.666667e-01
+
+30-Jul-2018 16:26:59 hogSize = 38, numDim =  6, tp = 2, fp =  5, F1 =  2.500000e-01
+
+30-Jul-2018 16:27:05 hogSize = 38, numDim =  7, tp = 3, fp =  4, F1 =  3.750000e-01
+
+30-Jul-2018 16:27:11 hogSize = 38, numDim =  8, tp = 4, fp =  2, F1 =  5.333333e-01
+
+30-Jul-2018 16:27:17 hogSize = 38, numDim =  9, tp = 5, fp =  37, F1 =  1.960784e-01
+
+30-Jul-2018 16:27:22 hogSize = 38, numDim =  10, tp = 0, fp =  1, F1 =  NaN
+
+30-Jul-2018 16:27:27 hogSize = 38, numDim =  11, tp = 1, fp =  5, F1 =  1.333333e-01
+
+30-Jul-2018 16:27:32 hogSize = 38, numDim =  12, tp = 1, fp =  5, F1 =  1.333333e-01
+
+30-Jul-2018 16:27:36 hogSize = 38, numDim =  13, tp = 4, fp =  5, F1 =  4.444444e-01
+
+30-Jul-2018 16:27:40 hogSize = 38, numDim =  14, tp = 2, fp =  7, F1 =  2.222222e-01
+
+30-Jul-2018 16:27:46 hogSize = 38, numDim =  15, tp = 4, fp =  6, F1 =  4.210526e-01
+
+30-Jul-2018 16:27:57 hogSize = 38, numDim =  16, tp = 0, fp =  20, F1 =  NaN
+
+30-Jul-2018 16:28:01 hogSize = 38, numDim =  17, tp = 6, fp =  25, F1 =  3.000000e-01
+
+30-Jul-2018 16:28:04 hogSize = 38, numDim =  18, tp = 3, fp =  17, F1 =  2.068966e-01
+
+30-Jul-2018 16:28:08 hogSize = 38, numDim =  19, tp = 4, fp =  18, F1 =  2.580645e-01
+
+30-Jul-2018 16:28:13 hogSize = 38, numDim =  20, tp = 1, fp =  3, F1 =  1.538462e-01
+
+30-Jul-2018 16:29:15 hogSize = 38, numDim =  1  2, tp = 3, fp =  16, F1 =  2.142857e-01
+
+30-Jul-2018 16:29:20 hogSize = 38, numDim =  1  2  8, tp = 3, fp =  1, F1 =  4.615385e-01
+
+30-Jul-2018 16:29:26 hogSize = 38, numDim =  1  2  8  9, tp = 4, fp =  1, F1 =  5.714286e-01
+
+30-Jul-2018 16:29:44 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10, tp = 8, fp =  14, F1 =  5.161290e-01
+
+30-Jul-2018 16:29:53 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11, tp = 8, fp =  21, F1 =  4.210526e-01
+
+30-Jul-2018 16:29:59 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12, tp = 8, fp =  27, F1 =  3.636364e-01
+
+30-Jul-2018 16:30:04 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13, tp = 8, fp =  29, F1 =  3.478261e-01
+
+30-Jul-2018 16:30:08 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14, tp = 9, fp =  40, F1 =  3.103448e-01
+
+30-Jul-2018 16:30:12 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15, tp = 9, fp =  51, F1 =  2.608696e-01
+
+30-Jul-2018 16:30:18 hogSize = 38, numDim =  1  2  3  4  5  6  7  8  9, tp = 8, fp =  12, F1 =  5.517241e-01
+
+30-Jul-2018 16:30:34 hogSize = 38, numDim =  1  2  3  4  5  6  7  8, tp = 8, fp =  5, F1 =  7.272727e-01
+
+30-Jul-2018 16:31:00 hogSize = 38, numDim =  1  2  3  4  5  6  7, tp = 6, fp =  3, F1 =  6.666667e-01
+
+30-Jul-2018 16:31:12 hogSize = 38, numDim =  1  2  3  4  5  6, tp = 4, fp =  3, F1 =  5.000000e-01
+
+30-Jul-2018 16:31:18 hogSize = 38, numDim =  1  2  3  4  5, tp = 3, fp =  0, F1 =  5.000000e-01
+
+30-Jul-2018 16:31:22 hogSize = 38, numDim =  1  2  3  4, tp = 3, fp =  0, F1 =  5.000000e-01
+
+30-Jul-2018 16:31:57 hogSize = 38, numDim =  1  2  3  4  5  6  7  8, tp = 8, fp =  5, F1 =  7.272727e-01
+
+baseline: 1. video tracking target; 2. hog feature (updated pca); 3. combined dim
+30-Jul-2018 16:32:41 hogSize = 38, numDim =  1  2  3  4  5  6  7  8, tp = 1, fp =  597, F1 =  3.289474e-03
+
+30-Jul-2018 16:41:43 hogSize = 38, numDim =  1  2  3  4  5  6  7  8  9, tp = 2, fp =  713, F1 =  5.517241e-03
+
+30-Jul-2018 16:42:53 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16, tp = 9, fp =  869, F1 =  2.027027e-02
+
+30-Jul-2018 16:44:06 hogSize = 38, numDim =  2  7, tp = 8, fp =  300, F1 =  5.031447e-02
+

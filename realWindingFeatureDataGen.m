@@ -1,4 +1,4 @@
-function realWindingFeatureDataGen(folder_name,hogSize,numDim)
+function realWindingFeatureDataGen(folder_name,hogSize)
 % clear;
 tStart = tic;
 functionPath = 'd:\baiduSyn\files\phd\functions\';
