@@ -276,3 +276,15 @@ baseline: 1. video tracking target; 2. hog feature (updated pca); 3. combined di
 
 30-Jul-2018 16:44:06 hogSize = 38, numDim =  2  7, tp = 8, fp =  300, F1 =  5.031447e-02
 
+optimize 3: 1. use cascade adapthisteq
+31-Jul-2018 14:58:38 hogSize = 38, numDim =  2  7, tp = 8, fp =  300, F1 =  5.031447e-02
+
+31-Jul-2018 14:59:05 hogSize = 38, numDim =  2  7, tp = 1, fp =  214, F1 =  8.888889e-03
+
+31-Jul-2018 15:08:05 hogSize = 38, numDim =  1  2  3  4  5  6  7  8, tp = 1, fp =  287, F1 =  6.711409e-03
+
+31-Jul-2018 15:16:02 hogSize = 38, numDim =  1  2  3  4  5  6  7  8  9, tp = 1, fp =  285, F1 =  6.756757e-03
+
+31-Jul-2018 15:23:26 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15, tp = 2, fp =  760, F1 =  5.181347e-03
+
+optimize 4: 1. use cascade adapthisteq; 2. replace hog feature with gabor feature
