@@ -131,11 +131,11 @@ if ~debug
 %             hogInputImg = windImgN(biasHeight:end-biasHeight,biasWidth:end-biasWidth,:);
 %             hogInputImg = windImgN; % hided by Holy 1807311454
             % added by Holy 1807311455
-            hogInputImg = im2double(windImgN);
-            hogInputImg = rgb2gray(hogInputImg);
-            hogInputImg = adapthisteq(hogInputImg);
-            hogInputImg = adapthisteq(hogInputImg,'NumTiles',[4,4]);
-            hogInputImg = adapthisteq(hogInputImg,'NumTiles',[2,2]);
+            hogInputImg5 = im2double(windImgN);
+            hogInputImg2 = rgb2gray(hogInputImg5);
+            hogInputImg3 = adapthisteq(hogInputImg2);
+            hogInputImg4 = adapthisteq(hogInputImg3,'NumTiles',[4,4]);
+            hogInputImg = adapthisteq(hogInputImg4,'NumTiles',[2,2]);
             % end of addition 1807311455
                         
             hogWindRope = extractHOGFeatures(hogInputImg,'CellSize',[hogSize hogSize]);
@@ -155,11 +155,11 @@ if ~debug
 %             hogInputImg = windImgN; % hided by Holy 1807311457
             
             % added by Holy 1807311455
-            hogInputImg = im2double(windImgN);
-            hogInputImg = rgb2gray(hogInputImg);
-            hogInputImg = adapthisteq(hogInputImg);
-            hogInputImg = adapthisteq(hogInputImg,'NumTiles',[4,4]);
-            hogInputImg = adapthisteq(hogInputImg,'NumTiles',[2,2]);
+            hogInputImg5 = im2double(windImgN);
+            hogInputImg2 = rgb2gray(hogInputImg5);
+            hogInputImg3 = adapthisteq(hogInputImg2);
+            hogInputImg4 = adapthisteq(hogInputImg3,'NumTiles',[4,4]);
+            hogInputImg = adapthisteq(hogInputImg4,'NumTiles',[2,2]);
             % end of addition 1807311455
                         
             hogWindRope = extractHOGFeatures(hogInputImg,'CellSize',[hogSize hogSize]);
@@ -175,14 +175,14 @@ if ~debug
             windImgN = imread(fileList{i, 1});
             
 %             hogInputImg = windImgN(biasHeight:end-biasHeight,biasWidth:end-biasWidth,:);
-            hogInputImg = windImgN; % hided by Holy 1807311458
+%             hogInputImg = windImgN; % hided by Holy 1807311458
             
             % added by Holy 1807311455
-            hogInputImg = im2double(windImgN);
-            hogInputImg = rgb2gray(hogInputImg);
-            hogInputImg = adapthisteq(hogInputImg);
-            hogInputImg = adapthisteq(hogInputImg,'NumTiles',[4,4]);
-            hogInputImg = adapthisteq(hogInputImg,'NumTiles',[2,2]);
+            hogInputImg5 = im2double(windImgN);
+            hogInputImg2 = rgb2gray(hogInputImg5);
+            hogInputImg3 = adapthisteq(hogInputImg2);
+            hogInputImg4 = adapthisteq(hogInputImg3,'NumTiles',[4,4]);
+            hogInputImg = adapthisteq(hogInputImg4,'NumTiles',[2,2]);
             % end of addition 1807311455
                         
             hogWindRope = extractHOGFeatures(hogInputImg,'CellSize',[hogSize hogSize]);

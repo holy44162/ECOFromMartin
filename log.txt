@@ -288,3 +288,4 @@ optimize 3: 1. use cascade adapthisteq
 31-Jul-2018 15:23:26 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15, tp = 2, fp =  760, F1 =  5.181347e-03
 
 optimize 4: 1. use cascade adapthisteq; 2. replace hog feature with gabor feature
+
