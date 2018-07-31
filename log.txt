@@ -288,4 +288,69 @@ optimize 3: 1. use cascade adapthisteq
 31-Jul-2018 15:23:26 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15, tp = 2, fp =  760, F1 =  5.181347e-03
 
 optimize 4: 1. use cascade adapthisteq; 2. replace hog feature with gabor feature
+31-Jul-2018 16:26:52 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15, tp = 5, fp =  548, F1 =  1.776199e-02
+
+31-Jul-2018 16:46:15 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16, tp = 2, fp =  233, F1 =  1.632653e-02
+
+31-Jul-2018 16:47:21 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14, tp = 5, fp =  525, F1 =  1.851852e-02
+
+31-Jul-2018 16:48:43 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13, tp = 5, fp =  541, F1 =  1.798561e-02
+
+31-Jul-2018 16:49:56 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12, tp = 4, fp =  496, F1 =  1.568627e-02
+
+31-Jul-2018 16:50:49 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11, tp = 3, fp =  381, F1 =  1.522843e-02
+
+31-Jul-2018 16:51:44 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10, tp = 3, fp =  370, F1 =  1.566580e-02
+
+31-Jul-2018 16:52:38 hogSize = 38, numDim =  1  2  3  4  5  6  7  8  9, tp = 3, fp =  364, F1 =  1.591512e-02
+
+31-Jul-2018 16:53:37 hogSize = 38, numDim =  1  2  3  4  5  6  7  8, tp = 3, fp =  355, F1 =  1.630435e-02
+
+31-Jul-2018 16:54:27 hogSize = 38, numDim =  1  2  3  4  5  6  7, tp = 3, fp =  275, F1 =  2.083333e-02
+
+31-Jul-2018 16:55:28 hogSize = 38, numDim =  1  2  3  4  5  6, tp = 3, fp =  284, F1 =  2.020202e-02
+
+31-Jul-2018 16:56:19 hogSize = 38, numDim =  1  2  3  4  5, tp = 2, fp =  52, F1 =  6.250000e-02
+
+31-Jul-2018 16:57:12 hogSize = 38, numDim =  1  2  3  4, tp = 3, fp =  51, F1 =  9.375000e-02
+
+31-Jul-2018 16:58:01 hogSize = 38, numDim =  1  2  3, tp = 3, fp =  49, F1 =  9.677419e-02
+
+31-Jul-2018 16:59:01 hogSize = 38, numDim =  1  2, tp = 1, fp =  510, F1 =  3.838772e-03
+
+31-Jul-2018 16:59:51 hogSize = 38, numDim =  1, tp = 1, fp =  49, F1 =  3.333333e-02
+
+31-Jul-2018 18:05:20 hogSize = 38, numDim =  1, tp = 1, fp =  49, F1 =  3.333333e-02
+
+31-Jul-2018 19:34:47 hogSize = 38, numDim =  1  2, tp = 1, fp =  510, F1 =  3.838772e-03
+
+31-Jul-2018 20:06:12 hogSize = 38, numDim =  1  2  3, tp = 3, fp =  49, F1 =  9.677419e-02
+
+31-Jul-2018 20:07:29 hogSize = 38, numDim =  1  2  3  4, tp = 3, fp =  51, F1 =  9.375000e-02
+
+31-Jul-2018 20:08:36 hogSize = 38, numDim =  1  2  3  4  5, tp = 2, fp =  52, F1 =  6.250000e-02
+
+31-Jul-2018 20:09:38 hogSize = 38, numDim =  1  2  3  4  5  6, tp = 3, fp =  284, F1 =  2.020202e-02
+
+31-Jul-2018 20:10:37 hogSize = 38, numDim =  1  2  3  4  5  6  7, tp = 3, fp =  275, F1 =  2.083333e-02
+
+31-Jul-2018 20:11:32 hogSize = 38, numDim =  1  2  3  4  5  6  7  8, tp = 3, fp =  355, F1 =  1.630435e-02
+
+31-Jul-2018 20:12:25 hogSize = 38, numDim =  1  2  3  4  5  6  7  8  9, tp = 3, fp =  364, F1 =  1.591512e-02
+
+31-Jul-2018 20:13:19 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10, tp = 3, fp =  370, F1 =  1.566580e-02
+
+31-Jul-2018 20:14:21 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11, tp = 3, fp =  381, F1 =  1.522843e-02
+
+31-Jul-2018 20:15:26 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12, tp = 4, fp =  496, F1 =  1.568627e-02
+
+31-Jul-2018 20:16:23 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13, tp = 5, fp =  541, F1 =  1.798561e-02
+
+31-Jul-2018 20:17:26 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14, tp = 5, fp =  525, F1 =  1.851852e-02
+
+31-Jul-2018 20:18:39 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15, tp = 5, fp =  548, F1 =  1.776199e-02
+
+31-Jul-2018 20:19:34 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16, tp = 2, fp =  233, F1 =  1.632653e-02
+
+31-Jul-2018 20:25:43 hogSize = 38, numDim =  1  2  3, tp = 3, fp =  49, F1 =  9.677419e-02
 
