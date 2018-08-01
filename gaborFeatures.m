@@ -1,4 +1,4 @@
-function featureVector = gaborFeatures(img,gaborArray,d1,d2)
+function [featureVector,gaborResult] = gaborFeatures(img,gaborArray,d1,d2)
 
 % GABORFEATURES extracts the Gabor features of an input image.
 % It creates a column vector, consisting of the Gabor features of the input
@@ -75,8 +75,8 @@ for i = 1:u
         gaborAbs = downsample(gaborAbs.',d2);
         gaborAbs = gaborAbs(:);
         
-        % Normalized to zero mean and unit variance. (if not applicable, please comment this line)
-        gaborAbs = (gaborAbs-mean(gaborAbs))/std(gaborAbs,1);
+%         % Normalized to zero mean and unit variance. (if not applicable, please comment this line)
+%         gaborAbs = (gaborAbs-mean(gaborAbs))/std(gaborAbs,1);
         
         featureVector =  [featureVector; gaborAbs];
         
@@ -84,7 +84,7 @@ for i = 1:u
 end
 
 
-%% Show filtered images (Please comment this section if not needed!)
+% Show filtered images (Please comment this section if not needed!)
 
 % % Show real parts of Gabor-filtered images
 % figure('NumberTitle','Off','Name','Real parts of Gabor filters');

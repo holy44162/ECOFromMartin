@@ -2,7 +2,7 @@ clear;
 
 hogSize = 38; % hog feature cell size
 % numDim = [1:8]; % reduced dim in pca, model best para.
-numDim = [1:3]; % reduced dim in pca
+numDim = [1:9]; % reduced dim in pca
 trainTag = true;
 % trainTag = false;
 % biasHRatio = 9; % video tracked target's height bias ratio
@@ -16,17 +16,17 @@ fclose(f);
 
 if trainTag
     % train
-    folder_name = 'd:\data_seq\sequences\realWindingRopeTrain\imgsTarget\';
+    folder_name = 'd:\data_seq\sequences\realWindingRopeTrainCompact1\imgsTarget\';
 %     folder_name = 'd:\data_seq\sequences\windingRopeTrain\imgsTarget\';
     realWindingFeatureDataGen(folder_name,hogSize);
     
     % CV
-    folder_name = 'd:\data_seq\sequences\realWindingRopeCV\imgsTarget\';
+    folder_name = 'd:\data_seq\sequences\realWindingRopeCVCompact1\imgsTarget\';
 %     folder_name = 'd:\data_seq\sequences\windingRopeCV\imgsTarget\';
     realWindingFeatureDataGen(folder_name,hogSize);
     
     % test
-    folder_name = 'd:\data_seq\sequences\realWindingRopeTest\imgsTarget\';
+    folder_name = 'd:\data_seq\sequences\realWindingRopeTestCompact1\imgsTarget\';
 %     folder_name = 'd:\data_seq\sequences\windingRopeTest\imgsTarget\';
     realWindingFeatureDataGen(folder_name,hogSize);
 end

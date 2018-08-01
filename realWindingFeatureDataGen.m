@@ -40,7 +40,8 @@ lenHogFeature = length(hogFeature);
 
 % added by Holy 1807311554
 gaborMatrix = gaborFilterBank(5,8,39,39);
-gaborArray = gaborMatrix(1,2:4);
+% gaborArray = gaborMatrix(1,2:4); % hided by Holy 1808011143
+gaborArray = gaborMatrix; % added by Holy 1808011143
 refImgD = im2double(refImg);
 refImgDG = rgb2gray(refImgD);
 gaborFeature = gaborFeatures(refImgDG,gaborArray,4,4);
@@ -151,6 +152,8 @@ if ~debug
             hogInputImg4 = adapthisteq(hogInputImg3,'NumTiles',[4,4]);
             hogInputImg = adapthisteq(hogInputImg4,'NumTiles',[2,2]);
             % end of addition 1807311455
+            
+            hogInputImg = imbinarize(hogInputImg,'adaptive','Sensitivity',1); % added by Holy 1808011341
                         
 %             hogWindRope = extractHOGFeatures(hogInputImg,'CellSize',[hogSize hogSize]); % hided by Holy 1807311605
             gaborFeatureVec = gaborFeatures(hogInputImg,gaborArray,4,4);
@@ -177,7 +180,9 @@ if ~debug
             hogInputImg3 = adapthisteq(hogInputImg2);
             hogInputImg4 = adapthisteq(hogInputImg3,'NumTiles',[4,4]);
             hogInputImg = adapthisteq(hogInputImg4,'NumTiles',[2,2]);
-            % end of addition 1807311455                        
+            % end of addition 1807311455
+            
+            hogInputImg = imbinarize(hogInputImg,'adaptive','Sensitivity',1); % added by Holy 1808011341
             
             %             hogWindRope = extractHOGFeatures(hogInputImg,'CellSize',[hogSize hogSize]); % hided by Holy 1807311605
             gaborFeatureVec = gaborFeatures(hogInputImg,gaborArray,4,4);
@@ -203,7 +208,9 @@ if ~debug
             hogInputImg3 = adapthisteq(hogInputImg2);
             hogInputImg4 = adapthisteq(hogInputImg3,'NumTiles',[4,4]);
             hogInputImg = adapthisteq(hogInputImg4,'NumTiles',[2,2]);
-            % end of addition 1807311455                        
+            % end of addition 1807311455
+            
+            hogInputImg = imbinarize(hogInputImg,'adaptive','Sensitivity',1); % added by Holy 1808011341
             
             %             hogWindRope = extractHOGFeatures(hogInputImg,'CellSize',[hogSize hogSize]); % hided by Holy 1807311605
             gaborFeatureVec = gaborFeatures(hogInputImg,gaborArray,4,4);
