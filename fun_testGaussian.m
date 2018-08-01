@@ -19,7 +19,7 @@ end
 
 %  test set
 % Xtest = Xtest(:,1:numDim); % hided by Holy 1807301554
-% Xtest = Xtest(:,numDim); % added by Holy 1807301554
+Xtest = Xtest(:,numDim); % added by Holy 1807301554
 ptest = multivariateGaussianFast(Xtest, muValue, detSigma, invSigma);
 
 numMess = sum(ptest < epsilon);

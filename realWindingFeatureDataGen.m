@@ -67,9 +67,9 @@ firstFilePathName = fileList{1, 1};
 
 if contains(firstFilePathName, searchKey1)
 %     X = []; % hided by Holy 1807271332
-%     X = zeros(length(fileList), lenHogFeature); % added by Holy 1807271334
+    X = zeros(length(fileList), lenHogFeature); % added by Holy 1807271334
 %     X = zeros(length(fileList), lenGaborFeature); % added by Holy 1807311602
-    X = zeros(length(fileList), 7); % added by Holy 1808011535
+%     X = zeros(length(fileList), 7); % added by Holy 1808011535
     
 %     % added by Holy 1807271622
 %     trainLabelPathName = fullfile(upDirName, 'imgsTag.txt');
@@ -82,9 +82,9 @@ if contains(firstFilePathName, searchKey1)
 end
 if contains(firstFilePathName, searchKey2)
 %     Xval = []; % hided by Holy 1807271335
-%     Xval = zeros(length(fileList), lenHogFeature); % added by Holy 1807271334
+    Xval = zeros(length(fileList), lenHogFeature); % added by Holy 1807271334
 %     Xval = zeros(length(fileList), lenGaborFeature); % added by Holy 1807311602
-    Xval = zeros(length(fileList), 7); % added by Holy 1808011535
+%     Xval = zeros(length(fileList), 7); % added by Holy 1808011535
     yvalPathName = fullfile(upDirName, 'y_CV.txt');
     yvalFileID = fopen(yvalPathName);
     yvalCell = textscan(yvalFileID,'%d');
@@ -93,9 +93,9 @@ if contains(firstFilePathName, searchKey2)
 end
 if contains(firstFilePathName, searchKey3)
 %     Xtest = []; % hided by Holy 1807271336
-%     Xtest = zeros(length(fileList), lenHogFeature); % added by Holy 1807271334
+    Xtest = zeros(length(fileList), lenHogFeature); % added by Holy 1807271334
 %     Xtest = zeros(length(fileList), lenGaborFeature); % added by Holy 1807311602
-    Xtest = zeros(length(fileList), 7); % added by Holy 1808011535
+%     Xtest = zeros(length(fileList), 7); % added by Holy 1808011535
     ytestPathName = fullfile(upDirName, 'y_Test.txt');
     ytestFileID = fopen(ytestPathName);
     ytestCell = textscan(ytestFileID,'%d');
@@ -158,17 +158,17 @@ if ~debug
             
             hogInputImg = imbinarize(hogInputImg,'adaptive','Sensitivity',1); % added by Holy 1808011341
                         
-%             hogWindRope = extractHOGFeatures(hogInputImg,'CellSize',[hogSize hogSize]); % hided by Holy 1807311605
+            hogWindRope = extractHOGFeatures(windImgN,'CellSize',[hogSize hogSize]); % hided by Holy 1807311605
 %             gaborFeatureVec = gaborFeatures(hogInputImg,gaborArray,4,4); % hided by Holy 1808011537
-            [~,gaborResult] = gaborFeatures(hogInputImg,gaborArray,4,4); % added by Holy 1808011538
+%             [~,gaborResult] = gaborFeatures(hogInputImg,gaborArray,4,4); % added by Holy 1808011538
             
 %             X = [X;hogWindRope]; % hided by Holy 1807271336
-%             X(i,:) = hogWindRope; % added by Holy 1807271337
+            X(i,:) = hogWindRope; % added by Holy 1807271337
 %             X(i,:) = gaborFeatureVec'; % added by Holy 1807311607
-            % added by Holy 1808011539
-            sumDiff = complexCellAbsSumDiff(gaborResult,6)
-            X(i,:) = sumDiff;
-            % end of addition 1808011539
+%             % added by Holy 1808011539
+%             sumDiff = complexCellAbsSumDiff(gaborResult,6)
+%             X(i,:) = sumDiff;
+%             % end of addition 1808011539
             
             ppm.increment();
         end
@@ -192,17 +192,17 @@ if ~debug
             
             hogInputImg = imbinarize(hogInputImg,'adaptive','Sensitivity',1); % added by Holy 1808011341
             
-            %             hogWindRope = extractHOGFeatures(hogInputImg,'CellSize',[hogSize hogSize]); % hided by Holy 1807311605
+            hogWindRope = extractHOGFeatures(windImgN,'CellSize',[hogSize hogSize]); % hided by Holy 1807311605
 %             gaborFeatureVec = gaborFeatures(hogInputImg,gaborArray,4,4); % hided by Holy 1808011542
-            [~,gaborResult] = gaborFeatures(hogInputImg,gaborArray,4,4); % added by Holy 1808011538            
+%             [~,gaborResult] = gaborFeatures(hogInputImg,gaborArray,4,4); % added by Holy 1808011538            
             
 %             Xval = [Xval;hogWindRope]; % hided by Holy 1807271336
-%             Xval(i,:) = hogWindRope; % added by Holy 1807271337
+            Xval(i,:) = hogWindRope; % added by Holy 1807271337
 %             Xval(i,:) = gaborFeatureVec'; % added by Holy 1807311607
-            % added by Holy 1808011539
-            sumDiff = complexCellAbsSumDiff(gaborResult,6)
-            Xval(i,:) = sumDiff;
-            % end of addition 1808011539
+%             % added by Holy 1808011539
+%             sumDiff = complexCellAbsSumDiff(gaborResult,6)
+%             Xval(i,:) = sumDiff;
+%             % end of addition 1808011539
             
             ppm.increment();
         end
@@ -225,17 +225,17 @@ if ~debug
             
             hogInputImg = imbinarize(hogInputImg,'adaptive','Sensitivity',1); % added by Holy 1808011341
             
-            %             hogWindRope = extractHOGFeatures(hogInputImg,'CellSize',[hogSize hogSize]); % hided by Holy 1807311605
+            hogWindRope = extractHOGFeatures(windImgN,'CellSize',[hogSize hogSize]); % hided by Holy 1807311605
 %             gaborFeatureVec = gaborFeatures(hogInputImg,gaborArray,4,4);
-            [~,gaborResult] = gaborFeatures(hogInputImg,gaborArray,4,4); % added by Holy 1808011538            
+%             [~,gaborResult] = gaborFeatures(hogInputImg,gaborArray,4,4); % added by Holy 1808011538            
             
 %             Xtest = [Xtest;hogWindRope]; % hided by Holy 1807271336
-%             Xtest(i,:) = hogWindRope; % added by Holy 1807271337
+            Xtest(i,:) = hogWindRope; % added by Holy 1807271337
 %             Xtest(i,:) = gaborFeatureVec'; % added by Holy 1807311607
-            % added by Holy 1808011539
-            sumDiff = complexCellAbsSumDiff(gaborResult,6)
-            Xtest(i,:) = sumDiff;
-            % end of addition 1808011539
+%             % added by Holy 1808011539
+%             sumDiff = complexCellAbsSumDiff(gaborResult,6)
+%             Xtest(i,:) = sumDiff;
+%             % end of addition 1808011539
             
             ppm.increment();
         end
@@ -317,15 +317,15 @@ dataMLFileName = 'dataML.mat';
 
 if contains(firstFilePathName, searchKey1)
     % hided by Holy 1808011545
-%     % added by Holy 1807301407
-%     XMean = mean(X);
-%     X = bsxfun(@minus,X,XMean);
-%     % end of addition 1807301407
-% %     [coeff,X,~] = pca(X,'NumComponents',numDim); % hided by Holy 1807301434
-%     % added by Holy 1807301434
-%     [coeff,X,~] = pca(X);
-% %     X = X(:,1:numDim); % hided by Holy 1807301455
-%     % end of addition 1807301434
+    % added by Holy 1807301407
+    XMean = mean(X);
+    X = bsxfun(@minus,X,XMean);
+    % end of addition 1807301407
+%     [coeff,X,~] = pca(X,'NumComponents',numDim); % hided by Holy 1807301434
+    % added by Holy 1807301434
+    [coeff,X,~] = pca(X);
+%     X = X(:,1:numDim); % hided by Holy 1807301455
+    % end of addition 1807301434
     % end of hide 1808011545
     
 %     % added by Holy 1807271629
@@ -337,23 +337,23 @@ if contains(firstFilePathName, searchKey1)
     
     if exist(dataMLFileName, 'file') == 2
 %         save(dataMLFileName,'X','trainData','trainLabel','-append'); % hided by Holy 1807301124
-        save(dataMLFileName,'X','-append'); % hided by Holy 1807301417
-%         save(dataMLFileName,'X','coeff','XMean','-append'); % added by Holy 1807301419
+%         save(dataMLFileName,'X','-append'); % hided by Holy 1807301417
+        save(dataMLFileName,'X','coeff','XMean','-append'); % added by Holy 1807301419
     else
 %         save(dataMLFileName,'X','trainData','trainLabel'); % hided by Holy 1807301124
-        save(dataMLFileName,'X','-v7.3'); % hided by Holy 1807301420
-%         save(dataMLFileName,'X','coeff','XMean','-v7.3'); % added by Holy 1807301419
+%         save(dataMLFileName,'X','-v7.3'); % hided by Holy 1807301420
+        save(dataMLFileName,'X','coeff','XMean','-v7.3'); % added by Holy 1807301419
     end
 end
 if contains(firstFilePathName, searchKey2)
 %     [~,Xval,~] = pca(Xval,'NumComponents',numDim); % hided by Holy 1807301422
     % hided by Holy 1808011548
-%     % added by Holy 1807301421
-%     load(dataMLFileName, 'coeff', 'XMean');
-%     Xval = bsxfun(@minus,Xval,XMean);
-%     Xval = Xval*coeff;
-% %     Xval = Xval(:,1:numDim); % hided by Holy 1807301455
-%     % end of addition 1807301421
+    % added by Holy 1807301421
+    load(dataMLFileName, 'coeff', 'XMean');
+    Xval = bsxfun(@minus,Xval,XMean);
+    Xval = Xval*coeff;
+%     Xval = Xval(:,1:numDim); % hided by Holy 1807301455
+    % end of addition 1807301421
     % end of hide 1808011548
     
 %     % added by Holy 1807271629
@@ -371,12 +371,12 @@ end
 if contains(firstFilePathName, searchKey3)
 %     [~,Xtest,~] = pca(Xtest,'NumComponents',numDim); % hided by Holy 1807301422
     % hided by Holy 1808011550
-%     % added by Holy 1807301421
-%     load(dataMLFileName, 'coeff', 'XMean');
-%     Xtest = bsxfun(@minus,Xtest,XMean);
-%     Xtest = Xtest*coeff;
-% %     Xtest = Xtest(:,1:numDim); % hided by Holy 1807301455
-%     % end of addition 1807301421
+    % added by Holy 1807301421
+    load(dataMLFileName, 'coeff', 'XMean');
+    Xtest = bsxfun(@minus,Xtest,XMean);
+    Xtest = Xtest*coeff;
+%     Xtest = Xtest(:,1:numDim); % hided by Holy 1807301455
+    % end of addition 1807301421
     % end of hide 1808011550
     
 %     % added by Holy 1807271629
