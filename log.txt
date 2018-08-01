@@ -403,3 +403,6 @@ optimize 8: 1. binary images; 2. gabor feature; 3. rearrange training,CV, and te
 01-Aug-2018 14:09:04 hogSize = 38, numDim =  1  2  3  4  5  6  7  8  9, tp = 9, fp =  86, F1 =  1.714286e-01
 
 optimize 9: 1. binary images; 2. gabor direction bias feature; 3. rearrange training,CV, and test set. 4. do not normalize gabor feature
+01-Aug-2018 15:52:59 hogSize = 38, numDim =  1  2  3  4  5  6  7  8  9, tp = 10, fp =  40, F1 =  3.333333e-01
+
+optimize 10: 1. hog feature; 2. rearrange training,CV, and test set.

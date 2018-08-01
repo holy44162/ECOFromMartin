@@ -11,7 +11,7 @@ end
 
 %  Apply the same steps to the larger dataset
 % X = X(:,1:numDim); % hided by Holy 1807301553
-X = X(:,numDim); % added by Holy 1807301553
+% X = X(:,numDim); % added by Holy 1807301553
 [muValue, Sigma2] = estimateGaussian(X);
 
 if (size(Sigma2, 2) == 1) || (size(Sigma2, 1) == 1)
@@ -24,7 +24,7 @@ invSigma = pinv(Sigma2);
 %  Cross-validation set
 % pval = multivariateGaussian(Xval, mu, Sigma2);
 % Xval = Xval(:,1:numDim); % hided by Holy 1807301554
-Xval = Xval(:,numDim); % added by Holy 1807301554
+% Xval = Xval(:,numDim); % added by Holy 1807301554
 pval = multivariateGaussianFast(Xval, muValue, detSigma, invSigma);
 
 %  Find the best threshold
