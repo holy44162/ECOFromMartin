@@ -88,12 +88,14 @@ params.interpolation_windowing = false;     % Do additional windowing on the Fou
 
 % Scale parameters for the translation model
 % Only used if: params.use_scale_filter = false
-params.number_of_scales = 7;            % Number of scales to run the detector
+% params.number_of_scales = 7;            % Number of scales to run the detector % hided by Holy 1808040939
+params.number_of_scales = 1; % added by Holy 1808040939
 params.scale_step = 1.01;               % The scale factor
 
 % Scale filter parameters
 % Only used if: params.use_scale_filter = true
-params.use_scale_filter = true;         % Use the fDSST scale filter or not (for speed)
+% params.use_scale_filter = true;         % Use the fDSST scale filter or not (for speed) % hided by Holy 1808040930
+params.use_scale_filter = false; % added by Holy 1808040931
 params.scale_sigma_factor = 1/16;       % Scale label function sigma
 params.scale_learning_rate = 0.025;		% Scale filter learning rate
 params.number_of_scales_filter = 17;    % Number of scales

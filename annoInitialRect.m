@@ -2,8 +2,9 @@ addpath('d:\baiduSyn\files\phd\functions');
 
 % folder_name = 'd:\data_seq\sequences\windingRope\imgs';
 % folder_name = 'd:\data_seq\sequences\windingRopeMess\imgs';
-folder_name = 'd:\data_seq\sequences\realWindingRopeTrain';
+% folder_name = 'd:\data_seq\sequences\realWindingRopeTrain';
 % folder_name = 'd:\data_seq\sequences\windingRopeVal\imgs';
+folder_name = 'd:\data_seq\sequences\realWindingRopesCompact\';
 gtFilePathName = [folder_name(1:end-4) 'groundtruth_rect.txt'];
 if exist(gtFilePathName, 'file') == 2
     msgbox('groundtruth_rect.txt already exists.');

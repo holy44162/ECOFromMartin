@@ -460,4 +460,183 @@ optimize 10: 1. hog feature; 2. rearrange training,CV, and test set.
 
 01-Aug-2018 16:39:19 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14, tp = 7, fp =  4, F1 =  6.666667e-01
 
-optimize 11: 1. gabor var feature; 2. rearrange training,CV, and test set.
+optimize 11: 1. video tracking target's edge cut; biasHRatio = 90; biasWRatio = 60; 2. hog feature; 3. rearrange training,CV, and test set.
+02-Aug-2018 14:37:05 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14, tp = 9, fp =  32, F1 =  3.529412e-01
+
+03-Aug-2018 10:24:16 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15, tp = 9, fp =  32, F1 =  3.529412e-01
+
+03-Aug-2018 10:24:58 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16, tp = 9, fp =  31, F1 =  3.600000e-01
+
+03-Aug-2018 10:25:08 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17, tp = 9, fp =  32, F1 =  3.529412e-01
+
+03-Aug-2018 10:25:16 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18, tp = 10, fp =  32, F1 =  3.846154e-01
+
+03-Aug-2018 10:25:27 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19, tp = 10, fp =  33, F1 =  3.773585e-01
+
+03-Aug-2018 10:25:37 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20, tp = 10, fp =  33, F1 =  3.773585e-01
+
+03-Aug-2018 10:25:43 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20  21, tp = 10, fp =  34, F1 =  3.703704e-01
+
+03-Aug-2018 10:27:16 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20  21  22, tp = 10, fp =  39, F1 =  3.389831e-01
+
+03-Aug-2018 10:28:08 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13, tp = 8, fp =  32, F1 =  3.200000e-01
+
+03-Aug-2018 10:28:14 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12, tp = 10, fp =  33, F1 =  3.773585e-01
+
+03-Aug-2018 10:28:20 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11, tp = 8, fp =  16, F1 =  4.705882e-01
+
+03-Aug-2018 10:28:26 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10, tp = 8, fp =  10, F1 =  5.714286e-01
+
+03-Aug-2018 10:28:34 hogSize = 38, numDim =  1  2  3  4  5  6  7  8  9, tp = 7, fp =  8, F1 =  5.600000e-01
+
+03-Aug-2018 10:28:42 hogSize = 38, numDim =  1  2  3  4  5  6  7  8, tp = 7, fp =  9, F1 =  5.384615e-01
+
+03-Aug-2018 10:28:49 hogSize = 38, numDim =  1  2  3  4  5  6  7, tp = 6, fp =  9, F1 =  4.800000e-01
+
+03-Aug-2018 10:28:56 hogSize = 38, numDim =  1  2  3  4  5  6, tp = 5, fp =  3, F1 =  5.555556e-01
+
+03-Aug-2018 10:29:03 hogSize = 38, numDim =  1  2  3  4  5, tp = 5, fp =  3, F1 =  5.555556e-01
+
+03-Aug-2018 10:29:08 hogSize = 38, numDim =  1  2  3  4, tp = 5, fp =  1, F1 =  6.250000e-01
+
+03-Aug-2018 10:29:15 hogSize = 38, numDim =  1  2  3, tp = 4, fp =  1, F1 =  5.333333e-01
+
+03-Aug-2018 10:29:21 hogSize = 38, numDim =  1  2, tp = 3, fp =  0, F1 =  4.615385e-01
+
+03-Aug-2018 10:29:29 hogSize = 38, numDim =  1, tp = 2, fp =  0, F1 =  3.333333e-01
+
+03-Aug-2018 10:30:07 hogSize = 38, numDim =  1  2  3  4, tp = 5, fp =  1, F1 =  6.250000e-01
+
+optimize 12: 1. video tracking target's edge cut; 2. gabor var feature; 3. rearrange training,CV, and test set.
+03-Aug-2018 11:22:41 hogSize = 38, numDim =  1  2  3  4, tp = 0, fp =  0, F1 =  NaN
+
+03-Aug-2018 11:41:22 hogSize = 38, numDim =  1  2  3  4  5, tp = 3, fp =  0, F1 =  4.615385e-01
+
+03-Aug-2018 11:41:34 hogSize = 38, numDim =  1  2  3  4  5  6, tp = 6, fp =  0, F1 =  7.500000e-01
+
+03-Aug-2018 11:41:40 hogSize = 38, numDim =  1  2  3  4  5  6  7, tp = 6, fp =  0, F1 =  7.500000e-01
+
+03-Aug-2018 11:41:49 hogSize = 38, numDim =  1  2  3  4  5  6  7  8, tp = 7, fp =  1, F1 =  7.777778e-01
+
+03-Aug-2018 11:42:03 hogSize = 38, numDim =  1  2  3  4  5  6  7  8  9, tp = 6, fp =  1, F1 =  7.058824e-01
+
+03-Aug-2018 11:42:09 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10, tp = 8, fp =  1, F1 =  8.421053e-01
+
+03-Aug-2018 11:42:15 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11, tp = 8, fp =  1, F1 =  8.421053e-01
+
+03-Aug-2018 11:42:21 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12, tp = 8, fp =  2, F1 =  8.000000e-01
+
+03-Aug-2018 11:43:50 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13, tp = 8, fp =  2, F1 =  8.000000e-01
+
+03-Aug-2018 11:43:55 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14, tp = 9, fp =  2, F1 =  8.571429e-01
+
+03-Aug-2018 11:44:02 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15, tp = 9, fp =  2, F1 =  8.571429e-01
+
+03-Aug-2018 11:44:07 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16, tp = 9, fp =  10, F1 =  6.206897e-01
+
+03-Aug-2018 11:44:13 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17, tp = 9, fp =  19, F1 =  4.736842e-01
+
+03-Aug-2018 11:44:19 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18, tp = 9, fp =  27, F1 =  3.913043e-01
+
+03-Aug-2018 11:44:25 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19, tp = 9, fp =  30, F1 =  3.673469e-01
+
+03-Aug-2018 11:44:30 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20, tp = 9, fp =  34, F1 =  3.396226e-01
+
+03-Aug-2018 11:45:06 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14, tp = 9, fp =  2, F1 =  8.571429e-01
+
+optimize 12: 1. video tracking target's edge cut; 2. gabor var feature; 3. rearrange training3, CV3, and test3 set.
+03-Aug-2018 13:30:58 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14, tp = 9, fp =  125, F1 =  1.250000e-01
+
+03-Aug-2018 13:42:37 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15, tp = 9, fp =  125, F1 =  1.250000e-01
+
+03-Aug-2018 13:42:45 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16, tp = 9, fp =  125, F1 =  1.250000e-01
+
+03-Aug-2018 13:42:50 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17, tp = 10, fp =  125, F1 =  1.379310e-01
+
+03-Aug-2018 13:42:57 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18, tp = 10, fp =  125, F1 =  1.379310e-01
+
+03-Aug-2018 13:43:02 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19, tp = 10, fp =  125, F1 =  1.379310e-01
+
+03-Aug-2018 13:43:13 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13, tp = 7, fp =  124, F1 =  9.929078e-02
+
+03-Aug-2018 13:43:19 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12, tp = 6, fp =  123, F1 =  8.633094e-02
+
+03-Aug-2018 13:43:26 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11, tp = 7, fp =  123, F1 =  1.000000e-01
+
+03-Aug-2018 13:43:32 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10, tp = 9, fp =  125, F1 =  1.250000e-01
+
+03-Aug-2018 13:43:41 hogSize = 38, numDim =  1  2  3  4  5  6  7  8  9, tp = 9, fp =  125, F1 =  1.250000e-01
+
+03-Aug-2018 13:43:48 hogSize = 38, numDim =  1  2  3  4  5  6  7  8, tp = 9, fp =  125, F1 =  1.250000e-01
+
+03-Aug-2018 13:43:54 hogSize = 38, numDim =  1  2  3  4  5  6  7, tp = 5, fp =  100, F1 =  8.695652e-02
+
+03-Aug-2018 13:44:00 hogSize = 38, numDim =  1  2  3  4  5  6, tp = 4, fp =  92, F1 =  7.547170e-02
+
+03-Aug-2018 13:44:07 hogSize = 38, numDim =  1  2  3  4  5, tp = 4, fp =  89, F1 =  7.766990e-02
+
+03-Aug-2018 13:45:52 hogSize = 38, numDim =  1  2  3  4, tp = 1, fp =  92, F1 =  1.941748e-02
+
+03-Aug-2018 13:45:58 hogSize = 38, numDim =  1  2  3, tp = 3, fp =  14, F1 =  2.222222e-01
+
+03-Aug-2018 13:46:04 hogSize = 38, numDim =  1  2, tp = 3, fp =  94, F1 =  5.607477e-02
+
+03-Aug-2018 13:46:17 hogSize = 38, numDim =  1, tp = 1, fp =  125, F1 =  1.470588e-02
+
+optimize 12: 1. video tracking target's edge cut; 2. gabor var feature; 3. rearrange training4, CV4, and test4 set.
+03-Aug-2018 13:50:34 hogSize = 38, numDim =  1, tp = 9, fp =  0, F1 =  9.473684e-01
+
+03-Aug-2018 14:08:54 hogSize = 38, numDim =  1  2, tp = 10, fp =  38, F1 =  3.448276e-01
+
+03-Aug-2018 14:09:05 hogSize = 38, numDim =  1  2  3, tp = 10, fp =  39, F1 =  3.389831e-01
+
+03-Aug-2018 14:09:11 hogSize = 38, numDim =  1  2  3  4, tp = 6, fp =  38, F1 =  2.222222e-01
+
+03-Aug-2018 14:09:16 hogSize = 38, numDim =  1  2  3  4  5, tp = 7, fp =  39, F1 =  2.500000e-01
+
+optimize 12: 1. video tracking target's edge cut; 2. gabor var feature; 3. rearrange training5, CV5, and test5 set.
+03-Aug-2018 14:15:53 hogSize = 38, numDim =  1  2  3  4  5, tp = 3, fp =  49, F1 =  9.677419e-02
+
+03-Aug-2018 14:23:27 hogSize = 38, numDim =  1, tp = 0, fp =  0, F1 =  NaN
+
+03-Aug-2018 14:23:33 hogSize = 38, numDim =  1  2, tp = 1, fp =  0, F1 =  1.818182e-01
+
+03-Aug-2018 14:23:42 hogSize = 38, numDim =  1  2  3, tp = 3, fp =  2, F1 =  4.000000e-01
+
+03-Aug-2018 14:24:00 hogSize = 38, numDim =  1  2  3  4, tp = 2, fp =  2, F1 =  2.857143e-01
+
+03-Aug-2018 14:25:11 hogSize = 38, numDim =  1  2  3  4  5  6, tp = 9, fp =  54, F1 =  2.465753e-01
+
+03-Aug-2018 14:25:23 hogSize = 38, numDim =  1  2  3  4  5  6  7, tp = 9, fp =  54, F1 =  2.465753e-01
+
+03-Aug-2018 14:25:30 hogSize = 38, numDim =  1  2  3  4  5  6  7  8, tp = 9, fp =  54, F1 =  2.465753e-01
+
+03-Aug-2018 14:25:39 hogSize = 38, numDim =  1  2  3  4  5  6  7  8  9, tp = 9, fp =  54, F1 =  2.465753e-01
+
+03-Aug-2018 14:25:46 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10, tp = 9, fp =  54, F1 =  2.465753e-01
+
+03-Aug-2018 14:25:52 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11, tp = 9, fp =  54, F1 =  2.465753e-01
+
+03-Aug-2018 14:26:20 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12, tp = 10, fp =  54, F1 =  2.702703e-01
+
+03-Aug-2018 14:26:41 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13, tp = 10, fp =  54, F1 =  2.702703e-01
+
+03-Aug-2018 14:26:46 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14, tp = 7, fp =  54, F1 =  1.971831e-01
+
+03-Aug-2018 14:26:52 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15, tp = 9, fp =  54, F1 =  2.465753e-01
+
+03-Aug-2018 14:26:57 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16, tp = 9, fp =  54, F1 =  2.465753e-01
+
+03-Aug-2018 14:27:01 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17, tp = 10, fp =  54, F1 =  2.702703e-01
+
+03-Aug-2018 14:27:06 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18, tp = 10, fp =  54, F1 =  2.702703e-01
+
+03-Aug-2018 14:27:14 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19, tp = 10, fp =  54, F1 =  2.702703e-01
+
+03-Aug-2018 14:27:20 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20, tp = 10, fp =  54, F1 =  2.702703e-01
+
+optimize 12: 1. video tracking target's edge cut; 2. gabor var feature; 3. new training, CV, and test set.
+03-Aug-2018 17:01:25 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20, tp = 5, fp =  193, F1 =  4.901961e-02
+
+04-Aug-2018 09:14:34 hogSize = 38, numDim =  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19, tp = 4, fp =  141, F1 =  5.298013e-02
+

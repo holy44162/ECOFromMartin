@@ -1,4 +1,4 @@
-function realWindingFeatureDataGen(folder_name,hogSize)
+function realWindingFeatureDataGen(folder_name,hogSize,biasHRatio,biasWRatio)
 % clear;
 tStart = tic;
 functionPath = 'd:\baiduSyn\files\phd\functions\';
@@ -23,18 +23,23 @@ end
 % folder_name = 'd:\data_seq\sequences\windingRopeTest\imgsTarget\';
 fileList = getAllFiles(folder_name);
 
-% % added by Holy 1807271108
+% added by Holy 1807271108
 % refImg = imread(fileList{1, 1});
 % [rowRefImg, colRefImg, ~] = size(refImg);
 % biasHeight = round(rowRefImg/biasHRatio);
 % biasWidth = round(colRefImg/biasWRatio);
-% % end of addition 1807271108
+% end of addition 1807271108
+
+% added by Holy 1808021415
+refImg = imread(fileList{1, 1});
+refImg = refImg(1+biasHRatio:end-biasHRatio,1+biasWRatio:end-biasWRatio,:);
+% end of addition 1808021415
 
 % added by Holy 1807271328
-refImg = imread(fileList{1, 1});
+% refImg = imread(fileList{1, 1}); % hided by Holy 1808021349
 % hogInputRefImg = refImg(biasHeight:end-biasHeight,biasWidth:end-biasWidth,:);
-hogInputRefImg = refImg;
-hogFeature = extractHOGFeatures(hogInputRefImg,'CellSize',[hogSize hogSize]);
+% hogInputRefImg = refImg;
+hogFeature = extractHOGFeatures(refImg,'CellSize',[hogSize hogSize]);
 lenHogFeature = length(hogFeature);
 % end of addition 1807271328
 
@@ -44,9 +49,15 @@ gaborMatrix = gaborFilterBank(5,8,39,39);
 gaborArray = gaborMatrix; % added by Holy 1808011143
 refImgD = im2double(refImg);
 refImgDG = rgb2gray(refImgD);
-gaborFeature = gaborFeatures(refImgDG,gaborArray,4,4);
-lenGaborFeature = length(gaborFeature);
+% gaborFeature = gaborFeatures(refImgDG,gaborArray,4,4); % hided by Holy 1808031111
+% lenGaborFeature = length(gaborFeature); % hided by Holy 1808031111
 % end of addition 1807311554
+
+% added by Holy 1808031111
+[~,gaborResult] = gaborFeatures(refImgDG,gaborArray,4,4);
+varValueRef = complexCellAbsVar(gaborResult);
+lenGaborFeature = length(varValueRef);
+% end of addition 1808031111
 
 % % added by Holy 1807271516
 % binary_picture = imbinarize(rgb2gray(refImg),'adaptive','Sensitivity',1);
@@ -67,8 +78,8 @@ firstFilePathName = fileList{1, 1};
 
 if contains(firstFilePathName, searchKey1)
 %     X = []; % hided by Holy 1807271332
-    X = zeros(length(fileList), lenHogFeature); % added by Holy 1807271334
-%     X = zeros(length(fileList), lenGaborFeature); % added by Holy 1807311602
+%     X = zeros(length(fileList), lenHogFeature); % added by Holy 1807271334
+    X = zeros(length(fileList), lenGaborFeature); % added by Holy 1807311602
 %     X = zeros(length(fileList), 7); % added by Holy 1808011535
     
 %     % added by Holy 1807271622
@@ -82,8 +93,8 @@ if contains(firstFilePathName, searchKey1)
 end
 if contains(firstFilePathName, searchKey2)
 %     Xval = []; % hided by Holy 1807271335
-    Xval = zeros(length(fileList), lenHogFeature); % added by Holy 1807271334
-%     Xval = zeros(length(fileList), lenGaborFeature); % added by Holy 1807311602
+%     Xval = zeros(length(fileList), lenHogFeature); % added by Holy 1807271334
+    Xval = zeros(length(fileList), lenGaborFeature); % added by Holy 1807311602
 %     Xval = zeros(length(fileList), 7); % added by Holy 1808011535
     yvalPathName = fullfile(upDirName, 'y_CV.txt');
     yvalFileID = fopen(yvalPathName);
@@ -93,8 +104,8 @@ if contains(firstFilePathName, searchKey2)
 end
 if contains(firstFilePathName, searchKey3)
 %     Xtest = []; % hided by Holy 1807271336
-    Xtest = zeros(length(fileList), lenHogFeature); % added by Holy 1807271334
-%     Xtest = zeros(length(fileList), lenGaborFeature); % added by Holy 1807311602
+%     Xtest = zeros(length(fileList), lenHogFeature); % added by Holy 1807271334
+    Xtest = zeros(length(fileList), lenGaborFeature); % added by Holy 1807311602
 %     Xtest = zeros(length(fileList), 7); % added by Holy 1808011535
     ytestPathName = fullfile(upDirName, 'y_Test.txt');
     ytestFileID = fopen(ytestPathName);
@@ -146,6 +157,8 @@ if ~debug
 %             progressbar(i, length(fileList));
             windImgN = imread(fileList{i, 1});
             
+            windImgN = windImgN(1+biasHRatio:end-biasHRatio,1+biasWRatio:end-biasWRatio,:); % added by Holy 1808021424
+            
 %             hogInputImg = windImgN(biasHeight:end-biasHeight,biasWidth:end-biasWidth,:);
 %             hogInputImg = windImgN; % hided by Holy 1807311454
             % added by Holy 1807311455
@@ -158,12 +171,17 @@ if ~debug
             
             hogInputImg = imbinarize(hogInputImg,'adaptive','Sensitivity',1); % added by Holy 1808011341
                         
-            hogWindRope = extractHOGFeatures(windImgN,'CellSize',[hogSize hogSize]); % hided by Holy 1807311605
+%             hogWindRope = extractHOGFeatures(windImgN,'CellSize',[hogSize hogSize]); % hided by Holy 1807311605
 %             gaborFeatureVec = gaborFeatures(hogInputImg,gaborArray,4,4); % hided by Holy 1808011537
-%             [~,gaborResult] = gaborFeatures(hogInputImg,gaborArray,4,4); % added by Holy 1808011538
+            [~,gaborResult] = gaborFeatures(hogInputImg,gaborArray,4,4); % added by Holy 1808011538
+            
+            % added by Holy 1808031117            
+            varValue = complexCellAbsVar(gaborResult);
+            X(i,:) = varValue;
+            % end of addition 1808031117
             
 %             X = [X;hogWindRope]; % hided by Holy 1807271336
-            X(i,:) = hogWindRope; % added by Holy 1807271337
+%             X(i,:) = hogWindRope; % added by Holy 1807271337
 %             X(i,:) = gaborFeatureVec'; % added by Holy 1807311607
 %             % added by Holy 1808011539
 %             sumDiff = complexCellAbsSumDiff(gaborResult,6)
@@ -179,6 +197,8 @@ if ~debug
 %             progressbar(i, length(fileList));
             windImgN = imread(fileList{i, 1});
             
+            windImgN = windImgN(1+biasHRatio:end-biasHRatio,1+biasWRatio:end-biasWRatio,:); % added by Holy 1808021424
+            
 %             hogInputImg = windImgN(biasHeight:end-biasHeight,biasWidth:end-biasWidth,:);
 %             hogInputImg = windImgN; % hided by Holy 1807311457
             
@@ -192,12 +212,17 @@ if ~debug
             
             hogInputImg = imbinarize(hogInputImg,'adaptive','Sensitivity',1); % added by Holy 1808011341
             
-            hogWindRope = extractHOGFeatures(windImgN,'CellSize',[hogSize hogSize]); % hided by Holy 1807311605
+%             hogWindRope = extractHOGFeatures(windImgN,'CellSize',[hogSize hogSize]); % hided by Holy 1807311605
 %             gaborFeatureVec = gaborFeatures(hogInputImg,gaborArray,4,4); % hided by Holy 1808011542
-%             [~,gaborResult] = gaborFeatures(hogInputImg,gaborArray,4,4); % added by Holy 1808011538            
+            [~,gaborResult] = gaborFeatures(hogInputImg,gaborArray,4,4); % added by Holy 1808011538
+            
+            % added by Holy 1808031117            
+            varValue = complexCellAbsVar(gaborResult);
+            Xval(i,:) = varValue;
+            % end of addition 1808031117
             
 %             Xval = [Xval;hogWindRope]; % hided by Holy 1807271336
-            Xval(i,:) = hogWindRope; % added by Holy 1807271337
+%             Xval(i,:) = hogWindRope; % added by Holy 1807271337
 %             Xval(i,:) = gaborFeatureVec'; % added by Holy 1807311607
 %             % added by Holy 1808011539
 %             sumDiff = complexCellAbsSumDiff(gaborResult,6)
@@ -212,6 +237,8 @@ if ~debug
 %             progressbar(i, length(fileList));
             windImgN = imread(fileList{i, 1});
             
+            windImgN = windImgN(1+biasHRatio:end-biasHRatio,1+biasWRatio:end-biasWRatio,:); % added by Holy 1808021424
+            
 %             hogInputImg = windImgN(biasHeight:end-biasHeight,biasWidth:end-biasWidth,:);
 %             hogInputImg = windImgN; % hided by Holy 1807311458
             
@@ -225,12 +252,17 @@ if ~debug
             
             hogInputImg = imbinarize(hogInputImg,'adaptive','Sensitivity',1); % added by Holy 1808011341
             
-            hogWindRope = extractHOGFeatures(windImgN,'CellSize',[hogSize hogSize]); % hided by Holy 1807311605
+%             hogWindRope = extractHOGFeatures(windImgN,'CellSize',[hogSize hogSize]); % hided by Holy 1807311605
 %             gaborFeatureVec = gaborFeatures(hogInputImg,gaborArray,4,4);
-%             [~,gaborResult] = gaborFeatures(hogInputImg,gaborArray,4,4); % added by Holy 1808011538            
+            [~,gaborResult] = gaborFeatures(hogInputImg,gaborArray,4,4); % added by Holy 1808011538
+            
+            % added by Holy 1808031117            
+            varValue = complexCellAbsVar(gaborResult);
+            Xtest(i,:) = varValue;
+            % end of addition 1808031117
             
 %             Xtest = [Xtest;hogWindRope]; % hided by Holy 1807271336
-            Xtest(i,:) = hogWindRope; % added by Holy 1807271337
+%             Xtest(i,:) = hogWindRope; % added by Holy 1807271337
 %             Xtest(i,:) = gaborFeatureVec'; % added by Holy 1807311607
 %             % added by Holy 1808011539
 %             sumDiff = complexCellAbsSumDiff(gaborResult,6)
