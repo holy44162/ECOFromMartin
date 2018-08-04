@@ -1,8 +1,8 @@
 clear;
 
-hogSize = 38; % hog feature cell size
+hogSize = 64; % hog feature cell size
 % numDim = [1:8]; % reduced dim in pca, model best para.
-numDim = [1:19]; % reduced dim in pca
+numDim = [9 11 15 17 19]; % reduced dim in pca
 % trainTag = true;
 trainTag = false;
 biasHRatio = 90; % video tracked target's height bias ratio
