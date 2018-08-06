@@ -1,4 +1,5 @@
-clear;
+function realWindingFeatureDataGen(folder_name,hogSize,biasHRatio,biasWRatio)
+% clear;
 
 hogSize = 64; % hog feature cell size
 % numDim = [1:8]; % reduced dim in pca, model best para.
@@ -17,20 +18,21 @@ fclose(f);
 if trainTag
     % train
     folder_name = 'd:\data_seq\sequences\realWindingRopesCompactTrain\imgsTarget\';
-%     folder_name = 'd:\data_seq\sequences\windingRopeTrain\imgsTarget\';
+    %     folder_name = 'd:\data_seq\sequences\windingRopeTrain\imgsTarget\';
     realWindingFeatureDataGen(folder_name,hogSize,biasHRatio,biasWRatio);
     
     % CV
     folder_name = 'd:\data_seq\sequences\realWindingRopesCompactCV\imgsTarget\';
-%     folder_name = 'd:\data_seq\sequences\windingRopeCV\imgsTarget\';
+    %     folder_name = 'd:\data_seq\sequences\windingRopeCV\imgsTarget\';
     realWindingFeatureDataGen(folder_name,hogSize,biasHRatio,biasWRatio);
     
     % test
     folder_name = 'd:\data_seq\sequences\realWindingRopesCompactTest\imgsTarget\';
-%     folder_name = 'd:\data_seq\sequences\windingRopeTest\imgsTarget\';
+    %     folder_name = 'd:\data_seq\sequences\windingRopeTest\imgsTarget\';
     realWindingFeatureDataGen(folder_name,hogSize,biasHRatio,biasWRatio);
 end
 
 fun_trainGaussian(numDim);
 
 fun_testGaussian(numDim);
+end
