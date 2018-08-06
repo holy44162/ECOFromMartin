@@ -1065,3 +1065,66 @@ optimize 14: 1. video tracking target's edge cut; 2. hog feature(64); 3. new tra
 
 04-Aug-2018 17:30:46 hogSize = 64, numDim =  9  11  15  17  19, tp = 6, fp =  7, F1 =  6.315789e-01
 
+optimize 17: 1. video tracking target's edge cut; 2. hog feature(64); 3. new training, CV, and test set; 4. without adapthisteq binarize; 5. correct pca
+05-Aug-2018 14:07:20 hogSize = 64, numDim =  9  11  15  17  19, tp = 6, fp =  10, F1 =  5.454545e-01
+
+05-Aug-2018 14:12:17 hogSize = 64, numDim =  1, tp = 2, fp =  256, F1 =  1.515152e-02
+
+05-Aug-2018 14:12:28 hogSize = 64, numDim =  2, tp = 1, fp =  28, F1 =  5.714286e-02
+
+05-Aug-2018 14:12:35 hogSize = 64, numDim =  3, tp = 2, fp =  6, F1 =  2.857143e-01
+
+05-Aug-2018 14:12:39 hogSize = 64, numDim =  4, tp = 0, fp =  4, F1 =  NaN
+
+05-Aug-2018 14:12:43 hogSize = 64, numDim =  5, tp = 1, fp =  10, F1 =  1.176471e-01
+
+05-Aug-2018 14:12:47 hogSize = 64, numDim =  6, tp = 0, fp =  17, F1 =  NaN
+
+05-Aug-2018 14:12:53 hogSize = 64, numDim =  7, tp = 3, fp =  11, F1 =  3.000000e-01
+
+05-Aug-2018 14:12:57 hogSize = 64, numDim =  8, tp = 0, fp =  4, F1 =  NaN
+
+05-Aug-2018 14:13:00 hogSize = 64, numDim =  9, tp = 3, fp =  1, F1 =  6.000000e-01
+
+05-Aug-2018 14:13:05 hogSize = 64, numDim =  10, tp = 0, fp =  0, F1 =  NaN
+
+05-Aug-2018 14:13:08 hogSize = 64, numDim =  11, tp = 2, fp =  3, F1 =  3.636364e-01
+
+05-Aug-2018 14:13:12 hogSize = 64, numDim =  12, tp = 0, fp =  3, F1 =  NaN
+
+05-Aug-2018 14:13:17 hogSize = 64, numDim =  13, tp = 1, fp =  2, F1 =  2.222222e-01
+
+05-Aug-2018 14:13:21 hogSize = 64, numDim =  14, tp = 4, fp =  11, F1 =  3.809524e-01
+
+05-Aug-2018 14:13:24 hogSize = 64, numDim =  15, tp = 0, fp =  3, F1 =  NaN
+
+05-Aug-2018 14:13:28 hogSize = 64, numDim =  16, tp = 3, fp =  34, F1 =  1.395349e-01
+
+05-Aug-2018 14:13:32 hogSize = 64, numDim =  17, tp = 3, fp =  0, F1 =  6.666667e-01
+
+05-Aug-2018 14:13:35 hogSize = 64, numDim =  18, tp = 1, fp =  2, F1 =  2.222222e-01
+
+05-Aug-2018 14:13:38 hogSize = 64, numDim =  19, tp = 2, fp =  3, F1 =  3.636364e-01
+
+05-Aug-2018 14:13:43 hogSize = 64, numDim =  20, tp = 0, fp =  4, F1 =  NaN
+
+05-Aug-2018 14:14:50 hogSize = 64, numDim =  21, tp = 1, fp =  10, F1 =  1.176471e-01
+
+05-Aug-2018 14:14:54 hogSize = 64, numDim =  22, tp = 1, fp =  4, F1 =  1.818182e-01
+
+05-Aug-2018 14:14:57 hogSize = 64, numDim =  23, tp = 2, fp =  0, F1 =  5.000000e-01
+
+05-Aug-2018 14:15:00 hogSize = 64, numDim =  24, tp = 2, fp =  4, F1 =  3.333333e-01
+
+05-Aug-2018 14:15:04 hogSize = 64, numDim =  25, tp = 0, fp =  0, F1 =  NaN
+
+05-Aug-2018 14:15:07 hogSize = 64, numDim =  26, tp = 0, fp =  7, F1 =  NaN
+
+05-Aug-2018 14:15:10 hogSize = 64, numDim =  27, tp = 0, fp =  0, F1 =  NaN
+
+05-Aug-2018 14:15:13 hogSize = 64, numDim =  28, tp = 1, fp =  0, F1 =  2.857143e-01
+
+05-Aug-2018 14:15:17 hogSize = 64, numDim =  29, tp = 2, fp =  18, F1 =  1.538462e-01
+
+05-Aug-2018 14:15:22 hogSize = 64, numDim =  30, tp = 5, fp =  4, F1 =  6.666667e-01
+

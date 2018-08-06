@@ -353,12 +353,12 @@ dataMLFileName = 'dataML.mat';
 if contains(firstFilePathName, searchKey1)
     % hided by Holy 1808011545
     % added by Holy 1807301407
-    XMean = mean(X);
-    X = bsxfun(@minus,X,XMean); % hided by Holy 1808041659
+%     XMean = mean(X); % hided by Holy 1808051158
+%     X = bsxfun(@minus,X,XMean); % hided by Holy 1808041659
     % end of addition 1807301407
 %     [coeff,X,~] = pca(X,'NumComponents',numDim); % hided by Holy 1807301434
     % added by Holy 1807301434
-    [coeff,X,~] = pca(X); % hided by Holy 1808041700
+%     [coeff,X,~] = pca(X); % hided by Holy 1808041700
 %     [coeff,X1,~] = pca(X); % added by Holy 1808041700
 %     X = X(:,1:numDim); % hided by Holy 1807301455
     % end of addition 1807301434
@@ -370,25 +370,34 @@ if contains(firstFilePathName, searchKey1)
 %     X = trainGda';
 %     X = X(1:end-10,:);
 %     % end of addition 1807271629
+
+    % added by Holy 1808051155
+    [X, XMean, XSigma] = featureNormalize(X);
+    TF = isnan(X);
+    tag = any(TF);
+    tag = ~tag;
+    X = X(:,tag);
+    [coeff,X,~] = pca(X,'Centered',false);
+    % end of addition 1808051155
     
     if exist(dataMLFileName, 'file') == 2
 %         save(dataMLFileName,'X','trainData','trainLabel','-append'); % hided by Holy 1807301124
 %         save(dataMLFileName,'X','-append'); % hided by Holy 1807301417
-        save(dataMLFileName,'X','coeff','XMean','-append'); % added by Holy 1807301419
+        save(dataMLFileName,'X','coeff','XMean','XSigma','tag','-append'); % added by Holy 1807301419
     else
 %         save(dataMLFileName,'X','trainData','trainLabel'); % hided by Holy 1807301124
 %         save(dataMLFileName,'X','-v7.3'); % hided by Holy 1807301420
-        save(dataMLFileName,'X','coeff','XMean','-v7.3'); % added by Holy 1807301419
+        save(dataMLFileName,'X','coeff','XMean','XSigma','tag','-v7.3'); % added by Holy 1807301419
     end
 end
 if contains(firstFilePathName, searchKey2)
 %     [~,Xval,~] = pca(Xval,'NumComponents',numDim); % hided by Holy 1807301422
     % hided by Holy 1808011548
     % added by Holy 1807301421
-    load(dataMLFileName, 'coeff', 'XMean');
+    load(dataMLFileName, 'coeff', 'XMean', 'XSigma', 'tag');
     % hided by Holy 1808041701
-    Xval = bsxfun(@minus,Xval,XMean);
-    Xval = Xval*coeff;
+%     Xval = bsxfun(@minus,Xval,XMean);
+%     Xval = Xval*coeff;
     % end of hide 1808041701
 %     Xval = Xval(:,1:numDim); % hided by Holy 1807301455
     % end of addition 1807301421
@@ -399,6 +408,13 @@ if contains(firstFilePathName, searchKey2)
 %     testGda = gda(Xval',trainData,trainLabel);
 %     Xval = testGda';
 %     % end of addition 1807271629
+
+    % added by Holy 1808051201
+    Xval = bsxfun(@minus,Xval,XMean);
+    Xval = bsxfun(@rdivide, Xval, XSigma);
+    Xval = Xval(:,tag);
+    Xval = Xval*coeff;
+    % end of addition 1808051201
     
     if exist(dataMLFileName, 'file') == 2
         save(dataMLFileName,'Xval','yval','-append');
@@ -410,10 +426,10 @@ if contains(firstFilePathName, searchKey3)
 %     [~,Xtest,~] = pca(Xtest,'NumComponents',numDim); % hided by Holy 1807301422
     % hided by Holy 1808011550
     % added by Holy 1807301421
-    load(dataMLFileName, 'coeff', 'XMean');
+    load(dataMLFileName, 'coeff', 'XMean', 'XSigma', 'tag');
     % hided by Holy 1808041701
-    Xtest = bsxfun(@minus,Xtest,XMean);
-    Xtest = Xtest*coeff;
+%     Xtest = bsxfun(@minus,Xtest,XMean);
+%     Xtest = Xtest*coeff;
     % end of hide 1808041701
 %     Xtest = Xtest(:,1:numDim); % hided by Holy 1807301455
     % end of addition 1807301421
@@ -424,6 +440,13 @@ if contains(firstFilePathName, searchKey3)
 %     testGda = gda(Xtest',trainData,trainLabel);
 %     Xtest = testGda';
 %     % end of addition 1807271629
+
+    % added by Holy 1808051201
+    Xtest = bsxfun(@minus,Xtest,XMean);
+    Xtest = bsxfun(@rdivide, Xtest, XSigma);
+    Xtest = Xtest(:,tag);
+    Xtest = Xtest*coeff;
+    % end of addition 1808051201
     
     if exist(dataMLFileName, 'file') == 2
         save(dataMLFileName,'Xtest','ytest','-append');
