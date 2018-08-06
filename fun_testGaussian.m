@@ -1,4 +1,4 @@
-function fun_testGaussian(numDim)
+function [F1,tp,fp] = fun_testGaussian(dataML,dimInd,gaussianPara)
 %  Loads the dataset. You should now have the
 %  variables X, Xval, yval, Xtest, ytest in your environment
 dataMLFileName = 'dataML.mat';
@@ -19,7 +19,7 @@ end
 
 %  test set
 % Xtest = Xtest(:,1:numDim); % hided by Holy 1807301554
-Xtest = Xtest(:,numDim); % added by Holy 1807301554
+Xtest = Xtest(:,dimInd); % added by Holy 1807301554
 ptest = multivariateGaussianFast(Xtest, muValue, detSigma, invSigma);
 
 numMess = sum(ptest < epsilon);
