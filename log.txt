@@ -1128,3 +1128,4 @@ optimize 17: 1. video tracking target's edge cut; 2. hog feature(64); 3. new tra
 
 05-Aug-2018 14:15:22 hogSize = 64, numDim =  30, tp = 5, fp =  4, F1 =  6.666667e-01
 
+08-Aug-2018 10:11:05 

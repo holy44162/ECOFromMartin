@@ -1,25 +1,35 @@
 function [F1,tp,fp] = fun_testGaussian(dataML,dimInd,gaussianPara)
 %  Loads the dataset. You should now have the
 %  variables X, Xval, yval, Xtest, ytest in your environment
-dataMLFileName = 'dataML.mat';
-if exist(dataMLFileName, 'file') == 2
-    load(dataMLFileName);
-else
-    disp('You should build dataML.mat first.');
-    return;
-end
-
-gaussianParaFileName = 'gaussianPara.mat';
-if exist(gaussianParaFileName, 'file') == 2
-    load(gaussianParaFileName);
-else
-    disp('You should train Gaussian model first.');
-    return;
-end
+% hided by Holy 1808071110
+% dataMLFileName = 'dataML.mat';
+% if exist(dataMLFileName, 'file') == 2
+%     load(dataMLFileName);
+% else
+%     disp('You should build dataML.mat first.');
+%     return;
+% end
+% 
+% gaussianParaFileName = 'gaussianPara.mat';
+% if exist(gaussianParaFileName, 'file') == 2
+%     load(gaussianParaFileName);
+% else
+%     disp('You should train Gaussian model first.');
+%     return;
+% end
+% end of hide 1808071110
 
 %  test set
 % Xtest = Xtest(:,1:numDim); % hided by Holy 1807301554
-Xtest = Xtest(:,dimInd); % added by Holy 1807301554
+% Xtest = Xtest(:,dimInd); % added by Holy 1807301554 % hided by Holy 1808071113
+% added by Holy 1808071112
+Xtest = dataML.Xtest(:,dimInd);
+ytest = dataML.ytest;
+detSigma = gaussianPara.detSigma;
+invSigma = gaussianPara.invSigma;
+epsilon = gaussianPara.epsilon;
+muValue = gaussianPara.muValue;
+% end of addition 1808071112
 ptest = multivariateGaussianFast(Xtest, muValue, detSigma, invSigma);
 
 numMess = sum(ptest < epsilon);
@@ -35,14 +45,16 @@ prec = tp/(tp+fp);
 rec = tp/(tp+fn);
 F1 = 2*prec*rec/(prec+rec);
 
-disp(['The total number of mess frames is: ' num2str(numMess)]);
-disp(['The indices of mess frames are: ' num2str(indMess')]);
-disp(['tp is: ' num2str(tp)]);
-disp(['fn is: ' num2str(fn)]);
-disp(['fp is: ' num2str(fp)]);
-disp(['The F1 score is: ' num2str(F1)]);
-
-f = fopen('log.txt', 'a');
-fprintf(f, 'tp = %d, fp =  %d, F1 =  %d\r\n\r\n',tp, fp, F1);
-fclose(f);
+% hided by Holy 1808071130
+% disp(['The total number of mess frames is: ' num2str(numMess)]);
+% disp(['The indices of mess frames are: ' num2str(indMess')]);
+% disp(['tp is: ' num2str(tp)]);
+% disp(['fn is: ' num2str(fn)]);
+% disp(['fp is: ' num2str(fp)]);
+% disp(['The F1 score is: ' num2str(F1)]);
+% 
+% f = fopen('log.txt', 'a');
+% fprintf(f, 'tp = %d, fp =  %d, F1 =  %d\r\n\r\n',tp, fp, F1);
+% fclose(f);
+% end of hide 1808071130
 end
