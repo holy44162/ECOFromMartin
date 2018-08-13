@@ -1,9 +1,26 @@
-function maxF1Row = fun_testScript(hogSize,biasHRatio,biasWRatio)
+function maxF1Row = fun_testScript(maxHogSize,maxImgEdge,heightBias,widthBias)
 % clear;
 
 % hogSize = 64; % hog feature cell size % hided by Holy 1808060828
 % numDim = [1:8]; % reduced dim in pca, model best para.
 % numDim = [30]; % reduced dim in pca % hided by Holy 1808060845
+
+% added by Holy 1808131555
+numImgEdgeStep = 2;
+minImgEdge = 1;
+stepSizeImgEdge = (maxImgEdge - minImgEdge) / numImgEdgeStep;
+
+numHogSizeStep = 2;
+minHogSize = 2;
+stepSizeHogSize = (maxHogSize - minHogSize) / numHogSizeStep;
+
+for imgEdge = minImgEdge:stepSizeImgEdge:maxImgEdge
+    heightImgEdge = heightBias + imgEdge;
+    widthImgEdge = widthBias + imgEdge;
+    for hogSize = minHogSize:stepSizeHogSize:maxHogSize
+    end
+end
+% end of addition 1808131555
 
 % added by Holy 1808060831
 dataMLFileName = 'dataML.mat';
