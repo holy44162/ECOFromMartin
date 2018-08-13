@@ -1,4 +1,4 @@
-function fun_testScript(hogSize,biasHRatio,biasWRatio)
+function maxF1Row = fun_testScript(hogSize,biasHRatio,biasWRatio)
 % clear;
 
 % hogSize = 64; % hog feature cell size % hided by Holy 1808060828
