@@ -12,10 +12,12 @@ function dataML = realWindingFeatureDataGen(folder_name,hogSize,biasHRatio,biasW
 % hogSize = 38; % hog feature cell size
 % numDim = 27; % reduced dim in pca
 debug = false;
-if debug
-    addpath([functionPath 'toolbox_general']);
-end
-% addpath([functionPath 'toolbox_general']);
+% hided by Holy 1808141344
+% if debug
+%     addpath([functionPath 'toolbox_general']);
+% end
+% % addpath([functionPath 'toolbox_general']);
+% end of hide 1808141344
 
 % folder_name = 'd:\data_seq\sequences\realWindingRopeTrain\imgsTarget\';
 % folder_name = 'd:\data_seq\sequences\realWindingRopeCV\imgsTarget\';
