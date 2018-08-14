@@ -1,4 +1,4 @@
-function bestPara = fun_testScript(maxHogSize,maxImgEdge,heightBias,widthBias)
+function bestPara = fun_testScript(maxHogSize,maxImgEdge,heightBias,widthBias,numImgEdgeStep,numHogSizeStep)
 % clear;
 
 % hogSize = 64; % hog feature cell size % hided by Holy 1808060828
@@ -6,16 +6,18 @@ function bestPara = fun_testScript(maxHogSize,maxImgEdge,heightBias,widthBias)
 % numDim = [30]; % reduced dim in pca % hided by Holy 1808060845
 
 % added by Holy 1808131555
-numImgEdgeStep = 2;
+% numImgEdgeStep = 2; % hided by Holy 1808141638
 minImgEdge = 1;
 stepSizeImgEdge = (maxImgEdge - minImgEdge) / numImgEdgeStep;
 
-numHogSizeStep = 2;
+% numHogSizeStep = 2; % hided by Holy 1808141638
 minHogSize = 8;
 stepSizeHogSize = (maxHogSize - minHogSize) / numHogSizeStep;
 
 bestPara = num2cell(zeros(1,6));
+iProgress = 1;
 for imgEdge = maxImgEdge:-stepSizeImgEdge:minImgEdge
+    progressbar(iProgress,numImgEdgeStep+1);
     heightImgEdge = round(heightBias + imgEdge);
     widthImgEdge = round(widthBias + imgEdge);
     for hogSize = maxHogSize:-stepSizeHogSize:minHogSize
@@ -92,6 +94,7 @@ for imgEdge = maxImgEdge:-stepSizeImgEdge:minImgEdge
         end
         
     end
+    iProgress = iProgress + 1;
 end
 % end of addition 1808131555
 
