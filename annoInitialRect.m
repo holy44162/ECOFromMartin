@@ -1,11 +1,17 @@
-addpath('d:\baiduSyn\files\phd\functions');
+% addpath('d:\baiduSyn\files\phd\functions');
+functionPath = 'm:\files\files\phd\functions\';
+addpath(functionPath);
+% addpath([functionPath 'toolbox_general']);
 
 % folder_name = 'd:\data_seq\sequences\windingRope\imgs';
 % folder_name = 'd:\data_seq\sequences\windingRopeMess\imgs';
 % folder_name = 'd:\data_seq\sequences\realWindingRopeTrain';
 % folder_name = 'd:\data_seq\sequences\windingRopeVal\imgs';
-folder_name = 'd:\data_seq\sequences\realWindingRopesCompact\';
-gtFilePathName = [folder_name(1:end-4) 'groundtruth_rect.txt'];
+% folder_name = 'd:\data_seq\sequences\realWindingRopesCompact\';
+folder_name = 'd:\data\windingRope\20180801\dayLeft\imgs\';
+upDirName = getUpLevelPath(folder_name, 1); % added by Holy 1808241005
+% gtFilePathName = [folder_name(1:end-4) 'groundtruth_rect.txt']; % hided by Holy 1808241013
+gtFilePathName = fullfile(upDirName, 'groundtruth_rect.txt'); % added by Holy 1808241013
 if exist(gtFilePathName, 'file') == 2
     msgbox('groundtruth_rect.txt already exists.');
     return;
@@ -31,9 +37,12 @@ for i = 1:length(fileList)
             positionH = wait(h);
             delete(gca);
             close;
+            break;
         end
         rectMatrix = [rectMatrix;positionH];
     end
+%     progressbar(i, length(fileList));
 end
+rectMatrix = repmat(positionH,[length(fileList) 1]);
 dlmwrite(gtFilePathName,rectMatrix,'delimiter','\t');
 msgbox('Annotation completes.');

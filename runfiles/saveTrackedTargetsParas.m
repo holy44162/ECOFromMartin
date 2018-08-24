@@ -47,7 +47,8 @@ params.learning_rate = 0.009;	 	 	% Learning rate
 params.nSamples = 30;                   % Maximum number of stored training samples
 params.sample_replace_strategy = 'lowest_prior';    % Which sample to replace when the memory is full
 params.lt_size = 0;                     % The size of the long-term memory (where all samples have equal weight)
-params.train_gap = 5;                   % The number of intermediate frames with no training (0 corresponds to training every frame)
+% params.train_gap = 5;                   % The number of intermediate frames with no training (0 corresponds to training every frame)
+params.train_gap = 50; % added by Holy 1808241348
 params.skip_after_frame = 10;           % After which frame number the sparse update scheme should start (1 is directly)
 params.use_detection_sample = true;     % Use the sample that was extracted at the detection stage also for learning
 
@@ -115,8 +116,8 @@ params.visualization = 1;               % Visualiza tracking and detection score
 params.debug = 0;                       % Do full debug visualization
 
 % GPU
-params.use_gpu = false;                 % Enable GPU or not
-% params.use_gpu = true;                 % added by Holy 1806130847
+% params.use_gpu = false;                 % Enable GPU or not
+params.use_gpu = true;                 % added by Holy 1806130847
 params.gpu_id = [];                     % Set the GPU id, or leave empty to use default
 
 % Initialize
