@@ -8,7 +8,8 @@ addpath(functionPath);
 % folder_name = 'd:\data_seq\sequences\realWindingRopeTrain';
 % folder_name = 'd:\data_seq\sequences\windingRopeVal\imgs';
 % folder_name = 'd:\data_seq\sequences\realWindingRopesCompact\';
-folder_name = 'd:\data\windingRope\20180801\dayLeft\imgs\';
+% folder_name = 'd:\data\windingRope\20180801\dayLeft\imgs\';
+folder_name = 'd:\data\windingRope\20180801\dayLeft\imgsFixedTargets\imgs\';
 upDirName = getUpLevelPath(folder_name, 1); % added by Holy 1808241005
 % gtFilePathName = [folder_name(1:end-4) 'groundtruth_rect.txt']; % hided by Holy 1808241013
 gtFilePathName = fullfile(upDirName, 'groundtruth_rect.txt'); % added by Holy 1808241013

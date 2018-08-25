@@ -1,25 +1,63 @@
 clear;
+% tic
 % functionPath = 'd:\baiduSyn\files\phd\functions\';
 functionPath = 'm:\files\files\phd\functions\';
 addpath(functionPath);
+% addpath([functionPath 'ParforProgMon']);
+addpath('C:\Users\James\Downloads\SoundZone_Tools-master\SoundZone_Tools-master');
+addpath('C:\Users\James\Downloads\parfor_progress');
 
-% Add paths
-setup_paths();
+% video_path = 'd:\data\windingRope\20180801\dayLeft\imgs\';
+video_path = 'd:\data\windingRope\20180801\dayLeft\imgsFixedTargets\imgs\';
+% video_path = 'd:\test\imgs\'; % just for test
+groundtruth_rectPath = getUpLevelPath(video_path, 1);
 
-% Load video information
-% video_path = 'sequences/Crossing';
-% video_path = 'd:/data_seq/sequences/dog1';
+targetImgsPath = fullfile(groundtruth_rectPath, 'imgsFixedTargets');
+if exist(targetImgsPath, 'dir') ~= 7
+    mkdir(targetImgsPath);
+end
 
-% video_path = 'd:/data_seq/sequences/windingRopeTrain';
-% video_path = 'd:/data_seq/sequences/windingRopeCV';
-% video_path = 'd:/data_seq/sequences/windingRopeTest';
-% video_path = 'd:/data_seq/sequences/realWindingRopeTrain';
-% video_path = 'd:/data_seq/sequences/realWindingRopeCV';
-% video_path = 'd:/data_seq/sequences/realWindingRopeTest';
-% video_path = 'd:/data_seq/sequences/realWindingRopesCompact';
-video_path = 'd:/data/windingRope/20180801/dayLeft';
+groundtruth_rectPathName = fullfile(groundtruth_rectPath, 'groundtruth_rect.txt');
 
-[seq, ground_truth] = load_video_info(video_path);
+ground_truth = dlmread(groundtruth_rectPathName);
+% ground_truth1 = dlmread(groundtruth_rectPathName,'\t',[0 0 0 3]); % read only one line ,so run faster
 
-% Run ECO
-results = saveTrackedTargetsParas(seq);
+rect_position = ground_truth(1,:);
+
+numImgs = size(ground_truth,1);
+
+if exist([video_path num2str(1, 'img%05i.png')], 'file')
+    img_files = num2str((1:numImgs)', [strrep(video_path, '\', '\\') 'img%05i.png']);
+elseif exist([video_path num2str(1, 'img%05i.jpg')], 'file')
+    img_files = num2str((1:numImgs)', [strrep(video_path, '\', '\\') 'img%05i.jpg']);
+elseif exist([video_path num2str(1, 'img%05i.bmp')], 'file')
+    img_files = num2str((1:numImgs)', [strrep(video_path, '\', '\\') 'img%05i.bmp']);
+else
+    error('No image files to load.')
+end
+frames = cellstr(img_files);
+
+poolobj = gcp('nocreate'); % If no pool, do not create new one.
+if isempty(poolobj)
+    parpool;    
+end
+
+% ppm = ParforProgMon('', numImgs);
+% added by Holy 1808251606
+fprintf('\t Completion: ');
+showTimeToCompletion; startTime=tic;
+p = parfor_progress(numImgs);
+% end of addition 1808251606
+parfor i = 1:numImgs
+    [pathName,FileName,fileExt] = fileparts(frames{i,1});
+    im = imread(frames{i,1});
+    windImg = imcrop(im,rect_position);
+    saveFileName = fullfile(targetImgsPath, [FileName fileExt]);
+    imwrite(windImg,saveFileName);
+    % added by Holy 1808251606
+    p = parfor_progress;
+    showTimeToCompletion( p/100, [], [], startTime );
+    % end of addition 1808251606
+%     ppm.increment();
+end
+% toc
