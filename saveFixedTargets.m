@@ -3,9 +3,9 @@ clear;
 % functionPath = 'd:\baiduSyn\files\phd\functions\';
 functionPath = 'm:\files\files\phd\functions\';
 addpath(functionPath);
+addpath([functionPath 'SoundZone_Tools-master']);
+addpath([functionPath 'parfor_progress']);
 % addpath([functionPath 'ParforProgMon']);
-addpath('C:\Users\James\Downloads\SoundZone_Tools-master\SoundZone_Tools-master');
-addpath('C:\Users\James\Downloads\parfor_progress');
 
 % video_path = 'd:\data\windingRope\20180801\dayLeft\imgs\';
 video_path = 'd:\data\windingRope\20180801\dayLeft\imgsFixedTargets\imgs\';
