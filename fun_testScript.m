@@ -22,18 +22,18 @@ for imgEdge = maxImgEdge:-stepSizeImgEdge:minImgEdge
     widthImgEdge = round(widthBias + imgEdge);
     for hogSize = maxHogSize:-stepSizeHogSize:minHogSize
         % train
-%         folder_name = 'd:\data_seq\sequences\realWindingRopesCompactTrain\imgsTarget\'; % hided by Holy 1808281445
-        folder_name = 'd:\data_seq\towerCrane\train\imgs\'; % added by Holy 1808281445
+        folder_name = 'd:\data_seq\sequences\realWindingRopesCompactTrain\imgsTarget\'; % hided by Holy 1808281445
+%         folder_name = 'd:\data_seq\towerCrane\train\imgs\'; % added by Holy 1808281445
         dataML = realWindingFeatureDataGen(folder_name,hogSize,heightImgEdge,widthImgEdge);
         
         % CV
-%         folder_name = 'd:\data_seq\sequences\realWindingRopesCompactCV\imgsTarget\';  % hided by Holy 1808281445
-        folder_name = 'd:\data_seq\towerCrane\CV\imgs\'; % added by Holy 1808281445
+        folder_name = 'd:\data_seq\sequences\realWindingRopesCompactCV\imgsTarget\';  % hided by Holy 1808281445
+%         folder_name = 'd:\data_seq\towerCrane\CV\imgs\'; % added by Holy 1808281445
         dataML = realWindingFeatureDataGen(folder_name,hogSize,heightImgEdge,widthImgEdge,dataML);
         
         % test
-%         folder_name = 'd:\data_seq\sequences\realWindingRopesCompactTest\imgsTarget\'; % hided by Holy 1808281445
-        folder_name = 'd:\data_seq\towerCrane\test\imgs\'; % added by Holy 1808281445
+        folder_name = 'd:\data_seq\sequences\realWindingRopesCompactTest\imgsTarget\'; % hided by Holy 1808281445
+%         folder_name = 'd:\data_seq\towerCrane\test\imgs\'; % added by Holy 1808281445
         dataML = realWindingFeatureDataGen(folder_name,hogSize,heightImgEdge,widthImgEdge,dataML);
         
         % get best parameters

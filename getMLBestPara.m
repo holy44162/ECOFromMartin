@@ -11,8 +11,16 @@ maxHogSize = 64;
 maxImgEdge = 60;
 heightBias = 30;
 widthBias = 0;
-numImgEdgeStep = 2;
-numHogSizeStep = 2;
+% hided by Holy 1808290928
+% numImgEdgeStep = 2;
+% numHogSizeStep = 2;
+% end of hide 1808290928
+
+% added by Holy 1808290928
+numImgEdgeStep = 1;
+numHogSizeStep = 1;
+% end of addition 1808290928
+
 bestPara = fun_testScript(maxHogSize,maxImgEdge,heightBias,widthBias,numImgEdgeStep,numHogSizeStep);
 save('bestPara.mat','bestPara');
 
