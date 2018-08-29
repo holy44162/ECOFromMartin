@@ -2,8 +2,10 @@ clear;
 tStart = tic;
 functionPath = 'm:\files\files\phd\functions\';
 addpath(functionPath);
-addpath([functionPath 'ParforProgMon']);
+% addpath([functionPath 'ParforProgMon']);
 addpath([functionPath 'toolbox_general']);
+addpath([functionPath 'SoundZone_Tools-master']);
+addpath([functionPath 'parfor_progress']);
 
 maxHogSize = 64;
 maxImgEdge = 60;

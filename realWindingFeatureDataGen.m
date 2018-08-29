@@ -87,7 +87,7 @@ searchKey3 = 'Test';
 
 firstFilePathName = fileList{1, 1};
 
-if contains(firstFilePathName, searchKey1)
+if contains(firstFilePathName, searchKey1,'IgnoreCase',true)
 %     X = []; % hided by Holy 1807271332
     X = zeros(length(fileList), lenHogFeature); % added by Holy 1807271334
 %     X = zeros(length(fileList), lenGaborFeature); % added by Holy 1807311602
@@ -102,7 +102,7 @@ if contains(firstFilePathName, searchKey1)
 %     fclose(trainLabelFileID);
 %     % end of addition 1807271622
 end
-if contains(firstFilePathName, searchKey2)
+if contains(firstFilePathName, searchKey2,'IgnoreCase',true)
 %     Xval = []; % hided by Holy 1807271335
     Xval = zeros(length(fileList), lenHogFeature); % added by Holy 1807271334
 %     Xval = zeros(length(fileList), lenGaborFeature); % added by Holy 1807311602
@@ -113,7 +113,7 @@ if contains(firstFilePathName, searchKey2)
     yval = cell2mat(yvalCell);
     fclose(yvalFileID);
 end
-if contains(firstFilePathName, searchKey3)
+if contains(firstFilePathName, searchKey3,'IgnoreCase',true)
 %     Xtest = []; % hided by Holy 1807271336
     Xtest = zeros(length(fileList), lenHogFeature); % added by Holy 1807271334
 %     Xtest = zeros(length(fileList), lenGaborFeature); % added by Holy 1807311602
@@ -161,9 +161,14 @@ if ~debug
         parpool;
     end
     
-    ppm = ParforProgMon('', length(fileList));
+%     ppm = ParforProgMon('', length(fileList)); % hided by Holy 1808281434
 
-    if contains(firstFilePathName, searchKey1)
+    if contains(firstFilePathName, searchKey1,'IgnoreCase',true)
+        % added by Holy 1808281434
+        fprintf('\t Completion: ');
+        showTimeToCompletion; startTime=tic;
+        p = parfor_progress(length(fileList));
+        % end of addition 1808281434
         parfor i = 1:length(fileList)
 %             progressbar(i, length(fileList));
             windImgN = imread(fileList{i, 1});
@@ -200,11 +205,21 @@ if ~debug
 %             X(i,:) = sumDiff;
 %             % end of addition 1808011539
             
-            ppm.increment();
+%             ppm.increment(); % hided by Holy 1808281436
+            
+            % added by Holy 1808281436
+            p = parfor_progress;
+            showTimeToCompletion(p/100, [], [], startTime);
+            % end of addition 1808281436
         end
     end
 
-    if contains(firstFilePathName, searchKey2)
+    if contains(firstFilePathName, searchKey2,'IgnoreCase',true)
+        % added by Holy 1808281434
+        fprintf('\t Completion: ');
+        showTimeToCompletion; startTime=tic;
+        p = parfor_progress(length(fileList));
+        % end of addition 1808281434
         parfor i = 1:length(fileList)
 %             progressbar(i, length(fileList));
             windImgN = imread(fileList{i, 1});
@@ -242,10 +257,20 @@ if ~debug
 %             Xval(i,:) = sumDiff;
 %             % end of addition 1808011539
             
-            ppm.increment();
+%             ppm.increment(); % hided by Holy 1808281438
+            
+            % added by Holy 1808281436
+            p = parfor_progress;
+            showTimeToCompletion(p/100, [], [], startTime);
+            % end of addition 1808281436
         end
     end
-    if contains(firstFilePathName, searchKey3)
+    if contains(firstFilePathName, searchKey3,'IgnoreCase',true)
+        % added by Holy 1808281434
+        fprintf('\t Completion: ');
+        showTimeToCompletion; startTime=tic;
+        p = parfor_progress(length(fileList));
+        % end of addition 1808281434
         parfor i = 1:length(fileList)
 %             progressbar(i, length(fileList));
             windImgN = imread(fileList{i, 1});
@@ -283,7 +308,12 @@ if ~debug
 %             Xtest(i,:) = sumDiff;
 %             % end of addition 1808011539
             
-            ppm.increment();
+%             ppm.increment(); % hided by Holy 1808281439
+            
+            % added by Holy 1808281436
+            p = parfor_progress;
+            showTimeToCompletion(p/100, [], [], startTime);
+            % end of addition 1808281436
         end
     end
     
@@ -361,7 +391,7 @@ end
 
 % dataMLFileName = 'dataML.mat'; % hided by Holy 1808131657
 
-if contains(firstFilePathName, searchKey1)
+if contains(firstFilePathName, searchKey1,'IgnoreCase',true)
     % hided by Holy 1808011545
     % added by Holy 1807301407
 %     XMean = mean(X); % hided by Holy 1808051158
@@ -411,7 +441,7 @@ if contains(firstFilePathName, searchKey1)
 %     end
     % end of hide 1808131635
 end
-if contains(firstFilePathName, searchKey2)
+if contains(firstFilePathName, searchKey2,'IgnoreCase',true)
 %     [~,Xval,~] = pca(Xval,'NumComponents',numDim); % hided by Holy 1807301422
     % hided by Holy 1808011548
     % added by Holy 1807301421
@@ -459,7 +489,7 @@ if contains(firstFilePathName, searchKey2)
 %     end
     % end of hide 1808131635
 end
-if contains(firstFilePathName, searchKey3)
+if contains(firstFilePathName, searchKey3,'IgnoreCase',true)
 %     [~,Xtest,~] = pca(Xtest,'NumComponents',numDim); % hided by Holy 1807301422
     % hided by Holy 1808011550
     % added by Holy 1807301421
