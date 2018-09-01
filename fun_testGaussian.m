@@ -1,4 +1,4 @@
-function [F1,tp,fp] = fun_testGaussian(dataML,dimInd,gaussianPara)
+function [F1,tp,fp,indMess] = fun_testGaussian(dataML,dimInd,gaussianPara)
 %  Loads the dataset. You should now have the
 %  variables X, Xval, yval, Xtest, ytest in your environment
 % hided by Holy 1808071110
