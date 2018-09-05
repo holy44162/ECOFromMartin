@@ -7,14 +7,24 @@ addpath([functionPath 'toolbox_general']);
 addpath([functionPath 'SoundZone_Tools-master']);
 addpath([functionPath 'parfor_progress']);
 
-bestParaMat = 'bestPara1.mat';
+bestParaMat = 'bestPara.mat';
 heightBias = 30;
 widthBias = 0;
-trainFolderName = 'd:\data_seq\towerCrane\train\imgs\';
-CVFolderName = 'd:\data_seq\towerCrane\CV\imgs\';
-testFolderName = 'd:\data_seq\towerCrane\test\imgs\';
+% hided by Holy 1809051115
+% trainFolderName = 'd:\data_seq\towerCrane\train\imgs\';
+% CVFolderName = 'd:\data_seq\towerCrane\CV\imgs\';
+% testFolderName = 'd:\data_seq\towerCrane\test\imgs\';
+% end of hide 1809051115
 
-[F1,tp,fp,indMess] = fun_testScriptWithPara(bestParaMat,trainFolderName,CVFolderName,testFolderName,heightBias,widthBias);
+% added by Holy 1809051115
+trainFolderName = 'd:\data_seq\towerCraneCompact\train\imgs\';
+CVFolderName = 'd:\data_seq\towerCraneCompact\CV\imgs\';
+testFolderName = 'd:\data_seq\towerCraneCompact\test\imgs\';
+% end of addition 1809051115
+
+featureType = 'hog'; % added by Holy 1809051546
+
+[F1,tp,fp,indMess,indFn] = fun_testScriptWithPara(bestParaMat,trainFolderName,CVFolderName,testFolderName,heightBias,widthBias,featureType);
 
 totalElapsedTime = toc(tStart);
 disp(['total time: ' num2str(totalElapsedTime) ' sec']);

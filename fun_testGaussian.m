@@ -1,4 +1,4 @@
-function [F1,tp,fp,indMess] = fun_testGaussian(dataML,dimInd,gaussianPara)
+function [F1,tp,fp,indMess,indFn] = fun_testGaussian(dataML,dimInd,gaussianPara)
 %  Loads the dataset. You should now have the
 %  variables X, Xval, yval, Xtest, ytest in your environment
 % hided by Holy 1808071110
@@ -40,6 +40,11 @@ testPredictions = (ptest < epsilon);
 tp = sum((testPredictions == 1) & (ytest == 1));
 fp = sum((testPredictions == 1) & (ytest == 0));
 fn = sum((testPredictions == 0) & (ytest == 1));
+
+% added by Holy 1809051333
+fnTest = (testPredictions == 0) & (ytest == 1);
+indFn = find(fnTest == 1);
+% end of addition 1809051333
 
 prec = tp/(tp+fp);
 rec = tp/(tp+fn);

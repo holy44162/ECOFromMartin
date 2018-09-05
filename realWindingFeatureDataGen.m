@@ -1,4 +1,4 @@
-function dataML = realWindingFeatureDataGen(folder_name,hogSize,biasHRatio,biasWRatio,dataMLInput)
+function dataML = realWindingFeatureDataGen(folder_name,hogSize,biasHRatio,biasWRatio,featureType,dataMLInput)
 % clear;
 % hided by Holy 1808131653
 % tStart = tic;
@@ -27,7 +27,7 @@ debug = false;
 % folder_name = 'd:\data_seq\sequences\windingRopeTest\imgsTarget\';
 
 % added by Holy 1808131629
-if nargin < 5
+if nargin < 6
     dataMLInput = [];
 end
 % end of addition 1808131629
@@ -57,7 +57,8 @@ lenHogFeature = length(hogFeature);
 % added by Holy 1807311554
 gaborMatrix = gaborFilterBank(5,8,39,39);
 % gaborArray = gaborMatrix(1,2:4); % hided by Holy 1808011143
-gaborArray = gaborMatrix; % added by Holy 1808011143
+% gaborArray = gaborMatrix; % added by Holy 1808011143
+gaborArray = gaborMatrix(2,5); % added by Holy 1809051513
 refImgD = im2double(refImg);
 refImgDG = rgb2gray(refImgD);
 % gaborFeature = gaborFeatures(refImgDG,gaborArray,4,4); % hided by Holy 1808031111
@@ -85,11 +86,15 @@ searchKey1 = 'Train';
 searchKey2 = 'CV';
 searchKey3 = 'Test';
 
+hogFeatureType = 'hog';
+
 firstFilePathName = fileList{1, 1};
 
 if contains(firstFilePathName, searchKey1,'IgnoreCase',true)
 %     X = []; % hided by Holy 1807271332
-    X = zeros(length(fileList), lenHogFeature); % added by Holy 1807271334
+    if contains(featureType, hogFeatureType,'IgnoreCase',true)
+        X = zeros(length(fileList), lenHogFeature); % added by Holy 1807271334
+    end
 %     X = zeros(length(fileList), lenGaborFeature); % added by Holy 1807311602
 %     X = zeros(length(fileList), 7); % added by Holy 1808011535
     
@@ -104,7 +109,9 @@ if contains(firstFilePathName, searchKey1,'IgnoreCase',true)
 end
 if contains(firstFilePathName, searchKey2,'IgnoreCase',true)
 %     Xval = []; % hided by Holy 1807271335
-    Xval = zeros(length(fileList), lenHogFeature); % added by Holy 1807271334
+    if contains(featureType, hogFeatureType,'IgnoreCase',true)        
+        Xval = zeros(length(fileList), lenHogFeature); % added by Holy 1807271334
+    end
 %     Xval = zeros(length(fileList), lenGaborFeature); % added by Holy 1807311602
 %     Xval = zeros(length(fileList), 7); % added by Holy 1808011535
     yvalPathName = fullfile(upDirName, 'y_CV.txt');
@@ -115,7 +122,9 @@ if contains(firstFilePathName, searchKey2,'IgnoreCase',true)
 end
 if contains(firstFilePathName, searchKey3,'IgnoreCase',true)
 %     Xtest = []; % hided by Holy 1807271336
-    Xtest = zeros(length(fileList), lenHogFeature); % added by Holy 1807271334
+    if contains(featureType, hogFeatureType,'IgnoreCase',true)
+        Xtest = zeros(length(fileList), lenHogFeature); % added by Holy 1807271334
+    end
 %     Xtest = zeros(length(fileList), lenGaborFeature); % added by Holy 1807311602
 %     Xtest = zeros(length(fileList), 7); % added by Holy 1808011535
     ytestPathName = fullfile(upDirName, 'y_Test.txt');
@@ -180,25 +189,29 @@ if ~debug
             % added by Holy 1807311455
             hogInputImg5 = im2double(windImgN);
             hogInputImg2 = rgb2gray(hogInputImg5);
-            hogInputImg3 = adapthisteq(hogInputImg2);
-            hogInputImg4 = adapthisteq(hogInputImg3,'NumTiles',[4,4]);
-            hogInputImg = adapthisteq(hogInputImg4,'NumTiles',[2,2]);
+            % hided by Holy 1809051529
+%             hogInputImg3 = adapthisteq(hogInputImg2);
+%             hogInputImg4 = adapthisteq(hogInputImg3,'NumTiles',[4,4]);
+%             hogInputImg = adapthisteq(hogInputImg4,'NumTiles',[2,2]);
+            % end of hide 1809051529
             % end of addition 1807311455
             
 %             hogInputImg = imbinarize(hogInputImg,'adaptive','Sensitivity',1); % added by Holy 1808011341
             hogInputImg = imbinarize(hogInputImg2,'adaptive','Sensitivity',1); % added by Holy 1808041457
-                        
-            hogWindRope = extractHOGFeatures(hogInputImg,'CellSize',[hogSize hogSize]); % hided by Holy 1807311605
-%             gaborFeatureVec = gaborFeatures(hogInputImg,gaborArray,4,4); % hided by Holy 1808011537
-%             [~,gaborResult] = gaborFeatures(hogInputImg,gaborArray,4,4); % added by Holy 1808011538
             
-%             % added by Holy 1808031117            
-%             varValue = complexCellAbsVar(gaborResult);
-%             X(i,:) = varValue;
-%             % end of addition 1808031117
-            
-%             X = [X;hogWindRope]; % hided by Holy 1807271336
-            X(i,:) = hogWindRope; % added by Holy 1807271337
+            if contains(featureType, hogFeatureType,'IgnoreCase',true)
+                hogWindRope = extractHOGFeatures(hogInputImg,'CellSize',[hogSize hogSize]); % hided by Holy 1807311605
+                %             gaborFeatureVec = gaborFeatures(hogInputImg,gaborArray,4,4); % hided by Holy 1808011537
+                %             [~,gaborResult] = gaborFeatures(hogInputImg,gaborArray,4,4); % added by Holy 1808011538
+                
+                %             % added by Holy 1808031117
+                %             varValue = complexCellAbsVar(gaborResult);
+                %             X(i,:) = varValue;
+                %             % end of addition 1808031117
+                
+                %             X = [X;hogWindRope]; % hided by Holy 1807271336
+                X(i,:) = hogWindRope; % added by Holy 1807271337
+            end
 %             X(i,:) = gaborFeatureVec'; % added by Holy 1807311607
 %             % added by Holy 1808011539
 %             sumDiff = complexCellAbsSumDiff(gaborResult,6)
@@ -232,25 +245,30 @@ if ~debug
             % added by Holy 1807311455
             hogInputImg5 = im2double(windImgN);
             hogInputImg2 = rgb2gray(hogInputImg5);
-            hogInputImg3 = adapthisteq(hogInputImg2);
-            hogInputImg4 = adapthisteq(hogInputImg3,'NumTiles',[4,4]);
-            hogInputImg = adapthisteq(hogInputImg4,'NumTiles',[2,2]);
+            
+            % hided by Holy 1809051533
+%             hogInputImg3 = adapthisteq(hogInputImg2);
+%             hogInputImg4 = adapthisteq(hogInputImg3,'NumTiles',[4,4]);
+%             hogInputImg = adapthisteq(hogInputImg4,'NumTiles',[2,2]);
+            % end of hide 1809051533
             % end of addition 1807311455
             
 %             hogInputImg = imbinarize(hogInputImg,'adaptive','Sensitivity',1); % added by Holy 1808011341
             hogInputImg = imbinarize(hogInputImg2,'adaptive','Sensitivity',1); % added by Holy 1808041457
             
-            hogWindRope = extractHOGFeatures(hogInputImg,'CellSize',[hogSize hogSize]); % hided by Holy 1807311605
-%             gaborFeatureVec = gaborFeatures(hogInputImg,gaborArray,4,4); % hided by Holy 1808011542
-%             [~,gaborResult] = gaborFeatures(hogInputImg,gaborArray,4,4); % added by Holy 1808011538
-            
-%             % added by Holy 1808031117            
-%             varValue = complexCellAbsVar(gaborResult);
-%             Xval(i,:) = varValue;
-%             % end of addition 1808031117
-            
-%             Xval = [Xval;hogWindRope]; % hided by Holy 1807271336
-            Xval(i,:) = hogWindRope; % added by Holy 1807271337
+            if contains(featureType, hogFeatureType,'IgnoreCase',true)
+                hogWindRope = extractHOGFeatures(hogInputImg,'CellSize',[hogSize hogSize]); % hided by Holy 1807311605
+                %             gaborFeatureVec = gaborFeatures(hogInputImg,gaborArray,4,4); % hided by Holy 1808011542
+                %             [~,gaborResult] = gaborFeatures(hogInputImg,gaborArray,4,4); % added by Holy 1808011538
+                
+                %             % added by Holy 1808031117
+                %             varValue = complexCellAbsVar(gaborResult);
+                %             Xval(i,:) = varValue;
+                %             % end of addition 1808031117
+                
+                %             Xval = [Xval;hogWindRope]; % hided by Holy 1807271336
+                Xval(i,:) = hogWindRope; % added by Holy 1807271337
+            end
 %             Xval(i,:) = gaborFeatureVec'; % added by Holy 1807311607
 %             % added by Holy 1808011539
 %             sumDiff = complexCellAbsSumDiff(gaborResult,6)
@@ -283,25 +301,30 @@ if ~debug
             % added by Holy 1807311455
             hogInputImg5 = im2double(windImgN);
             hogInputImg2 = rgb2gray(hogInputImg5);
-            hogInputImg3 = adapthisteq(hogInputImg2);
-            hogInputImg4 = adapthisteq(hogInputImg3,'NumTiles',[4,4]);
-            hogInputImg = adapthisteq(hogInputImg4,'NumTiles',[2,2]);
+            
+            % hided by Holy 1809051536
+%             hogInputImg3 = adapthisteq(hogInputImg2);
+%             hogInputImg4 = adapthisteq(hogInputImg3,'NumTiles',[4,4]);
+%             hogInputImg = adapthisteq(hogInputImg4,'NumTiles',[2,2]);
+            % end of hide 1809051536
             % end of addition 1807311455
             
 %             hogInputImg = imbinarize(hogInputImg,'adaptive','Sensitivity',1); % added by Holy 1808011341
             hogInputImg = imbinarize(hogInputImg2,'adaptive','Sensitivity',1); % added by Holy 1808041457
             
-            hogWindRope = extractHOGFeatures(hogInputImg,'CellSize',[hogSize hogSize]); % hided by Holy 1807311605
-%             gaborFeatureVec = gaborFeatures(hogInputImg,gaborArray,4,4);
-%             [~,gaborResult] = gaborFeatures(hogInputImg,gaborArray,4,4); % added by Holy 1808011538
-            
-%             % added by Holy 1808031117            
-%             varValue = complexCellAbsVar(gaborResult);
-%             Xtest(i,:) = varValue;
-%             % end of addition 1808031117
-            
-%             Xtest = [Xtest;hogWindRope]; % hided by Holy 1807271336
-            Xtest(i,:) = hogWindRope; % added by Holy 1807271337
+            if contains(featureType, hogFeatureType,'IgnoreCase',true)
+                hogWindRope = extractHOGFeatures(hogInputImg,'CellSize',[hogSize hogSize]); % hided by Holy 1807311605
+                %             gaborFeatureVec = gaborFeatures(hogInputImg,gaborArray,4,4);
+                %             [~,gaborResult] = gaborFeatures(hogInputImg,gaborArray,4,4); % added by Holy 1808011538
+                
+                %             % added by Holy 1808031117
+                %             varValue = complexCellAbsVar(gaborResult);
+                %             Xtest(i,:) = varValue;
+                %             % end of addition 1808031117
+                
+                %             Xtest = [Xtest;hogWindRope]; % hided by Holy 1807271336
+                Xtest(i,:) = hogWindRope; % added by Holy 1807271337
+            end
 %             Xtest(i,:) = gaborFeatureVec'; % added by Holy 1807311607
 %             % added by Holy 1808011539
 %             sumDiff = complexCellAbsSumDiff(gaborResult,6)
@@ -394,41 +417,42 @@ end
 if contains(firstFilePathName, searchKey1,'IgnoreCase',true)
     % hided by Holy 1808011545
     % added by Holy 1807301407
-%     XMean = mean(X); % hided by Holy 1808051158
-%     X = bsxfun(@minus,X,XMean); % hided by Holy 1808041659
+    %     XMean = mean(X); % hided by Holy 1808051158
+    %     X = bsxfun(@minus,X,XMean); % hided by Holy 1808041659
     % end of addition 1807301407
-%     [coeff,X,~] = pca(X,'NumComponents',numDim); % hided by Holy 1807301434
+    %     [coeff,X,~] = pca(X,'NumComponents',numDim); % hided by Holy 1807301434
     % added by Holy 1807301434
-%     [coeff,X,~] = pca(X); % hided by Holy 1808041700
-%     [coeff,X1,~] = pca(X); % added by Holy 1808041700
-%     X = X(:,1:numDim); % hided by Holy 1807301455
+    %     [coeff,X,~] = pca(X); % hided by Holy 1808041700
+    %     [coeff,X1,~] = pca(X); % added by Holy 1808041700
+    %     X = X(:,1:numDim); % hided by Holy 1807301455
     % end of addition 1807301434
     % end of hide 1808011545
     
-%     % added by Holy 1807271629
-%     trainData = XGda';
-%     trainGda = gda(trainData,trainData,trainLabel);
-%     X = trainGda';
-%     X = X(1:end-10,:);
-%     % end of addition 1807271629
-
-    % added by Holy 1808051155
-    [X, XMean, XSigma] = featureNormalize(X);
-    TF = isnan(X);
-    tag = any(TF);
-    tag = ~tag;
-    X = X(:,tag);
-    [coeff,X,~] = pca(X,'Centered',false);
-    % end of addition 1808051155
+    %     % added by Holy 1807271629
+    %     trainData = XGda';
+    %     trainGda = gda(trainData,trainData,trainLabel);
+    %     X = trainGda';
+    %     X = X(1:end-10,:);
+    %     % end of addition 1807271629
     
-    % added by Holy 1808131631
-    dataMLInput.X = X;
-    dataMLInput.coeff = coeff;
-    dataMLInput.XMean = XMean;
-    dataMLInput.XSigma = XSigma;
-    dataMLInput.tag = tag;
-    % end of addition 1808131631
-    
+    if contains(featureType, hogFeatureType,'IgnoreCase',true)
+        % added by Holy 1808051155
+        [X, XMean, XSigma] = featureNormalize(X);
+        TF = isnan(X);
+        tag = any(TF);
+        tag = ~tag;
+        X = X(:,tag);
+        [coeff,X,~] = pca(X,'Centered',false);
+        % end of addition 1808051155
+        
+        % added by Holy 1808131631
+        dataMLInput.X = X;
+        dataMLInput.coeff = coeff;
+        dataMLInput.XMean = XMean;
+        dataMLInput.XSigma = XSigma;
+        dataMLInput.tag = tag;
+        % end of addition 1808131631
+    end
     % hided by Holy 1808131635
 %     if exist(dataMLFileName, 'file') == 2
 % %         save(dataMLFileName,'X','trainData','trainLabel','-append'); % hided by Holy 1807301124
@@ -442,45 +466,46 @@ if contains(firstFilePathName, searchKey1,'IgnoreCase',true)
     % end of hide 1808131635
 end
 if contains(firstFilePathName, searchKey2,'IgnoreCase',true)
-%     [~,Xval,~] = pca(Xval,'NumComponents',numDim); % hided by Holy 1807301422
+    %     [~,Xval,~] = pca(Xval,'NumComponents',numDim); % hided by Holy 1807301422
     % hided by Holy 1808011548
     % added by Holy 1807301421
-%     load(dataMLFileName, 'coeff', 'XMean', 'XSigma', 'tag'); % hided by Holy 1808131637
+    %     load(dataMLFileName, 'coeff', 'XMean', 'XSigma', 'tag'); % hided by Holy 1808131637
     % hided by Holy 1808041701
-%     Xval = bsxfun(@minus,Xval,XMean);
-%     Xval = Xval*coeff;
+    %     Xval = bsxfun(@minus,Xval,XMean);
+    %     Xval = Xval*coeff;
     % end of hide 1808041701
-%     Xval = Xval(:,1:numDim); % hided by Holy 1807301455
+    %     Xval = Xval(:,1:numDim); % hided by Holy 1807301455
     % end of addition 1807301421
     % end of hide 1808011548
     
-%     % added by Holy 1807271629
-%     load(dataMLFileName, 'trainLabel', 'trainData');
-%     testGda = gda(Xval',trainData,trainLabel);
-%     Xval = testGda';
-%     % end of addition 1807271629
-
+    %     % added by Holy 1807271629
+    %     load(dataMLFileName, 'trainLabel', 'trainData');
+    %     testGda = gda(Xval',trainData,trainLabel);
+    %     Xval = testGda';
+    %     % end of addition 1807271629
+    
     % hided by Holy 1808131638
-%     % added by Holy 1808051201
-%     Xval = bsxfun(@minus,Xval,XMean);
-%     Xval = bsxfun(@rdivide, Xval, XSigma);
-%     Xval = Xval(:,tag);
-%     Xval = Xval*coeff;
-%     % end of addition 1808051201
+    %     % added by Holy 1808051201
+    %     Xval = bsxfun(@minus,Xval,XMean);
+    %     Xval = bsxfun(@rdivide, Xval, XSigma);
+    %     Xval = Xval(:,tag);
+    %     Xval = Xval*coeff;
+    %     % end of addition 1808051201
     % end of hide 1808131638
     
-    % added by Holy 1808131639
-    Xval = bsxfun(@minus,Xval,dataMLInput.XMean);
-    Xval = bsxfun(@rdivide, Xval, dataMLInput.XSigma);
-    Xval = Xval(:,dataMLInput.tag);
-    Xval = Xval*dataMLInput.coeff;
-    % end of addition 1808131639
-    
-    % added by Holy 1808131631
-    dataMLInput.Xval = Xval;
-    dataMLInput.yval = yval;    
-    % end of addition 1808131631
-    
+    if contains(featureType, hogFeatureType,'IgnoreCase',true)
+        % added by Holy 1808131639
+        Xval = bsxfun(@minus,Xval,dataMLInput.XMean);
+        Xval = bsxfun(@rdivide, Xval, dataMLInput.XSigma);
+        Xval = Xval(:,dataMLInput.tag);
+        Xval = Xval*dataMLInput.coeff;
+        % end of addition 1808131639
+        
+        % added by Holy 1808131631
+        dataMLInput.Xval = Xval;
+        dataMLInput.yval = yval;
+        % end of addition 1808131631
+    end
     % hided by Holy 1808131635
 %     if exist(dataMLFileName, 'file') == 2
 %         save(dataMLFileName,'Xval','yval','-append');
@@ -490,45 +515,46 @@ if contains(firstFilePathName, searchKey2,'IgnoreCase',true)
     % end of hide 1808131635
 end
 if contains(firstFilePathName, searchKey3,'IgnoreCase',true)
-%     [~,Xtest,~] = pca(Xtest,'NumComponents',numDim); % hided by Holy 1807301422
+    %     [~,Xtest,~] = pca(Xtest,'NumComponents',numDim); % hided by Holy 1807301422
     % hided by Holy 1808011550
     % added by Holy 1807301421
-%     load(dataMLFileName, 'coeff', 'XMean', 'XSigma', 'tag'); % hided by Holy 1808131649
+    %     load(dataMLFileName, 'coeff', 'XMean', 'XSigma', 'tag'); % hided by Holy 1808131649
     % hided by Holy 1808041701
-%     Xtest = bsxfun(@minus,Xtest,XMean);
-%     Xtest = Xtest*coeff;
+    %     Xtest = bsxfun(@minus,Xtest,XMean);
+    %     Xtest = Xtest*coeff;
     % end of hide 1808041701
-%     Xtest = Xtest(:,1:numDim); % hided by Holy 1807301455
+    %     Xtest = Xtest(:,1:numDim); % hided by Holy 1807301455
     % end of addition 1807301421
     % end of hide 1808011550
     
-%     % added by Holy 1807271629
-%     load(dataMLFileName, 'trainLabel', 'trainData');
-%     testGda = gda(Xtest',trainData,trainLabel);
-%     Xtest = testGda';
-%     % end of addition 1807271629
-
+    %     % added by Holy 1807271629
+    %     load(dataMLFileName, 'trainLabel', 'trainData');
+    %     testGda = gda(Xtest',trainData,trainLabel);
+    %     Xtest = testGda';
+    %     % end of addition 1807271629
+    
     % hided by Holy 1808131649
-%     % added by Holy 1808051201
-%     Xtest = bsxfun(@minus,Xtest,XMean);
-%     Xtest = bsxfun(@rdivide, Xtest, XSigma);
-%     Xtest = Xtest(:,tag);
-%     Xtest = Xtest*coeff;
-%     % end of addition 1808051201
+    %     % added by Holy 1808051201
+    %     Xtest = bsxfun(@minus,Xtest,XMean);
+    %     Xtest = bsxfun(@rdivide, Xtest, XSigma);
+    %     Xtest = Xtest(:,tag);
+    %     Xtest = Xtest*coeff;
+    %     % end of addition 1808051201
     % end of hide 1808131649
     
-    % added by Holy 1808131650
-    Xtest = bsxfun(@minus,Xtest,dataMLInput.XMean);
-    Xtest = bsxfun(@rdivide, Xtest, dataMLInput.XSigma);
-    Xtest = Xtest(:,dataMLInput.tag);
-    Xtest = Xtest*dataMLInput.coeff;
-    % end of addition 1808131650
-    
-    % added by Holy 1808131631
-    dataMLInput.Xtest = Xtest;
-    dataMLInput.ytest = ytest;    
-    % end of addition 1808131631
-    
+    if contains(featureType, hogFeatureType,'IgnoreCase',true)
+        % added by Holy 1808131650
+        Xtest = bsxfun(@minus,Xtest,dataMLInput.XMean);
+        Xtest = bsxfun(@rdivide, Xtest, dataMLInput.XSigma);
+        Xtest = Xtest(:,dataMLInput.tag);
+        Xtest = Xtest*dataMLInput.coeff;
+        % end of addition 1808131650
+        
+        % added by Holy 1808131631
+        dataMLInput.Xtest = Xtest;
+        dataMLInput.ytest = ytest;
+        % end of addition 1808131631
+    end
     % hided by Holy 1808131651
 %     if exist(dataMLFileName, 'file') == 2
 %         save(dataMLFileName,'Xtest','ytest','-append');

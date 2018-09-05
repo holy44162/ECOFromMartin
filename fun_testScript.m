@@ -1,4 +1,4 @@
-function bestPara = fun_testScript(maxHogSize,maxImgEdge,heightBias,widthBias,numImgEdgeStep,numHogSizeStep)
+function bestPara = fun_testScript(maxHogSize,maxImgEdge,heightBias,widthBias,numImgEdgeStep,numHogSizeStep,trainFolderName,CVFolderName,testFolderName,featureType)
 % clear;
 
 % hogSize = 64; % hog feature cell size % hided by Holy 1808060828
@@ -22,19 +22,19 @@ for imgEdge = maxImgEdge:-stepSizeImgEdge:minImgEdge
     widthImgEdge = round(widthBias + imgEdge);
     for hogSize = maxHogSize:-stepSizeHogSize:minHogSize
         % train
-        folder_name = 'd:\data_seq\sequences\realWindingRopesCompactTrain\imgsTarget\'; % hided by Holy 1808281445
+%         folder_name = 'd:\data_seq\sequences\realWindingRopesCompactTrain\imgsTarget\'; % hided by Holy 1808281445
 %         folder_name = 'd:\data_seq\towerCrane\train\imgs\'; % added by Holy 1808281445
-        dataML = realWindingFeatureDataGen(folder_name,hogSize,heightImgEdge,widthImgEdge);
+        dataML = realWindingFeatureDataGen(trainFolderName,hogSize,heightImgEdge,widthImgEdge,featureType);
         
         % CV
-        folder_name = 'd:\data_seq\sequences\realWindingRopesCompactCV\imgsTarget\';  % hided by Holy 1808281445
+%         folder_name = 'd:\data_seq\sequences\realWindingRopesCompactCV\imgsTarget\';  % hided by Holy 1808281445
 %         folder_name = 'd:\data_seq\towerCrane\CV\imgs\'; % added by Holy 1808281445
-        dataML = realWindingFeatureDataGen(folder_name,hogSize,heightImgEdge,widthImgEdge,dataML);
+        dataML = realWindingFeatureDataGen(CVFolderName,hogSize,heightImgEdge,widthImgEdge,featureType,dataML);
         
         % test
-        folder_name = 'd:\data_seq\sequences\realWindingRopesCompactTest\imgsTarget\'; % hided by Holy 1808281445
+%         folder_name = 'd:\data_seq\sequences\realWindingRopesCompactTest\imgsTarget\'; % hided by Holy 1808281445
 %         folder_name = 'd:\data_seq\towerCrane\test\imgs\'; % added by Holy 1808281445
-        dataML = realWindingFeatureDataGen(folder_name,hogSize,heightImgEdge,widthImgEdge,dataML);
+        dataML = realWindingFeatureDataGen(testFolderName,hogSize,heightImgEdge,widthImgEdge,featureType,dataML);
         
         % get best parameters
         numDim = size(dataML.X,2);

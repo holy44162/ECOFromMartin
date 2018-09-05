@@ -21,7 +21,13 @@ numImgEdgeStep = 1;
 numHogSizeStep = 1;
 % end of addition 1808290928
 
-bestPara = fun_testScript(maxHogSize,maxImgEdge,heightBias,widthBias,numImgEdgeStep,numHogSizeStep);
+% added by Holy 1809051115
+trainFolderName = 'd:\data_seq\towerCraneCompact\train\imgs\';
+CVFolderName = 'd:\data_seq\towerCraneCompact\CV\imgs\';
+testFolderName = 'd:\data_seq\towerCraneCompact\test\imgs\';
+% end of addition 1809051115
+
+bestPara = fun_testScript(maxHogSize,maxImgEdge,heightBias,widthBias,numImgEdgeStep,numHogSizeStep,trainFolderName,CVFolderName,testFolderName);
 save('bestPara.mat','bestPara');
 
 totalElapsedTime = toc(tStart);

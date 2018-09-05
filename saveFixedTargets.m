@@ -8,7 +8,9 @@ addpath([functionPath 'parfor_progress']);
 % addpath([functionPath 'ParforProgMon']);
 
 % video_path = 'd:\data\windingRope\20180801\dayLeft\imgs\';
-video_path = 'd:\data\windingRope\20180801\dayLeft\imgsFixedTargets\imgs\';
+% video_path = 'd:\data\windingRope\20180801\dayLeft\imgsFixedTargets\imgs\';
+% video_path = 'd:\data\windingRope\20180801\dayLeftCompact\imgs\';
+video_path = 'd:\data\windingRope\20180801\dayLeftCompact\imgsFixedTargets\imgs\';
 % video_path = 'd:\test\imgs\'; % just for test
 groundtruth_rectPath = getUpLevelPath(video_path, 1);
 
