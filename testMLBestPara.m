@@ -22,7 +22,8 @@ CVFolderName = 'd:\data_seq\towerCraneCompact\CV\imgs\';
 testFolderName = 'd:\data_seq\towerCraneCompact\test\imgs\';
 % end of addition 1809051115
 
-featureType = 'hog'; % added by Holy 1809051546
+% featureType = 'hog'; % added by Holy 1809051546
+featureType = 'gaborMax'; % added by Holy 1809051546
 
 [F1,tp,fp,indMess,indFn] = fun_testScriptWithPara(bestParaMat,trainFolderName,CVFolderName,testFolderName,heightBias,widthBias,featureType);
 
