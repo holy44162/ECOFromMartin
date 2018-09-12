@@ -14,7 +14,7 @@ stepSizeImgEdge = (maxImgEdge - minImgEdge) / numImgEdgeStep;
 minHogSize = 8;
 stepSizeHogSize = (maxHogSize - minHogSize) / numHogSizeStep;
 
-hogFeatureType = 'hog';
+hogFeatureType = 'hogOnly';
 gaborMaxFeatureType = 'gaborMax';
 gaborBWHogFeatureType = 'gaborBWHog'; % added by Holy 1809111558
 

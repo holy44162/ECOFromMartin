@@ -9,8 +9,8 @@ addpath([functionPath 'parfor_progress']);
 addpath([functionPath 'gabor']);
 
 maxHogSize = 64;
-% maxImgEdge = 60; % hided by Holy 1809061537
-maxImgEdge = 120; % added by Holy 1809061538
+maxImgEdge = 60; % hided by Holy 1809061537
+% maxImgEdge = 120; % added by Holy 1809061538
 heightBias = 30;
 widthBias = 0;
 % hided by Holy 1808290928
@@ -31,7 +31,7 @@ CVFolderName = 'd:\data_seq\towerCraneCompact\CV\imgs\';
 testFolderName = 'd:\data_seq\towerCraneCompact\test\imgs\';
 % end of addition 1809051115
 
-% featureType = 'hog';
+% featureType = 'hogOnly';
 % featureType = 'gaborMax'; % added by Holy 1809051614
 featureType = 'gaborBWHog'; % added by Holy 1809111558
 

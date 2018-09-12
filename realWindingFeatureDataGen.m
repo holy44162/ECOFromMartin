@@ -13,7 +13,7 @@ function dataML = realWindingFeatureDataGen(folder_name,hogSize,biasHRatio,biasW
 % numDim = 27; % reduced dim in pca
 debug = false;
 
-hogFeatureType = 'hog';
+hogFeatureType = 'hogOnly';
 gaborMaxFeatureType = 'gaborMax';
 gaborBWHogFeatureType = 'gaborBWHog'; % added by Holy 1809111558
 
@@ -310,61 +310,80 @@ if ~debug
         p = parfor_progress(length(fileList));
         % end of addition 1808281434
         parfor i = 1:length(fileList)
+            % hided by Holy 1809121609
+%             if contains(featureType, hogFeatureType,'IgnoreCase',true)
+%                 windImgN = imread(fileList{i, 1});
+%                 
+%                 windImgN = windImgN(1+biasHRatio:end-biasHRatio,1+biasWRatio:end-biasWRatio,:); % added by Holy 1808021424
+%                 
+%                 %             hogInputImg = windImgN(biasHeight:end-biasHeight,biasWidth:end-biasWidth,:);
+%                 %             hogInputImg = windImgN; % hided by Holy 1807311454
+%                 % added by Holy 1807311455
+%                 hogInputImg1 = im2double(windImgN);
+%                 hogInputImg1 = rgb2gray(hogInputImg1);
+%                 % hided by Holy 1809051529
+%                 %             hogInputImg3 = adapthisteq(hogInputImg2);
+%                 %             hogInputImg4 = adapthisteq(hogInputImg3,'NumTiles',[4,4]);
+%                 %             hogInputImg = adapthisteq(hogInputImg4,'NumTiles',[2,2]);
+%                 % end of hide 1809051529
+%                 % end of addition 1807311455
+%                 
+%                 %             hogInputImg = imbinarize(hogInputImg,'adaptive','Sensitivity',1); % added by Holy 1808011341
+%                 hogInputImg1 = imbinarize(hogInputImg1,'adaptive','Sensitivity',1); % added by Holy 1808041457
+%                 
+%                 hogWindRope = extractHOGFeatures(hogInputImg1,'CellSize',[hogSize hogSize]); % hided by Holy 1807311605
+%                 %             gaborFeatureVec = gaborFeatures(hogInputImg,gaborArray,4,4); % hided by Holy 1808011537
+%                 %             [~,gaborResult] = gaborFeatures(hogInputImg,gaborArray,4,4); % added by Holy 1808011538
+%                 
+%                 %             % added by Holy 1808031117
+%                 %             varValue = complexCellAbsVar(gaborResult);
+%                 %             X(i,:) = varValue;
+%                 %             % end of addition 1808031117
+%                 
+%                 %             X = [X;hogWindRope]; % hided by Holy 1807271336
+%                 X(i,:) = hogWindRope; % added by Holy 1807271337
+%             end
+%             
+%             % added by Holy 1809051555
+%             if contains(featureType, gaborMaxFeatureType,'IgnoreCase',true)
+%                 windImgN = imread(fileList{i, 1});
+%                 
+%                 windImgN = windImgN(1+biasHRatio:end-biasHRatio,1+biasWRatio:end-biasWRatio,:); % added by Holy 1808021424
+%                 
+%                 %             hogInputImg = windImgN(biasHeight:end-biasHeight,biasWidth:end-biasWidth,:);
+%                 %             hogInputImg = windImgN; % hided by Holy 1807311454
+%                 % added by Holy 1807311455
+%                 hogInputImg2 = im2double(windImgN);
+%                 hogInputImg2 = rgb2gray(hogInputImg2);
+%                 % hided by Holy 1809051529
+%                 %             hogInputImg3 = adapthisteq(hogInputImg2);
+%                 %             hogInputImg4 = adapthisteq(hogInputImg3,'NumTiles',[4,4]);
+%                 %             hogInputImg = adapthisteq(hogInputImg4,'NumTiles',[2,2]);
+%                 % end of hide 1809051529
+%                 % end of addition 1807311455
+%                 
+%                 %             hogInputImg = imbinarize(hogInputImg,'adaptive','Sensitivity',1); % added by Holy 1808011341
+%                 hogInputImg2 = imbinarize(hogInputImg2,'adaptive','Sensitivity',1); % added by Holy 1808041457
+%                 
+%                 [~,gaborResult] = gaborFeatures(hogInputImg2,gaborArray,4,4);
+%                 absValue = abs(gaborResult{1,1});                
+% %                 X(i,:) = max(absValue(:)); hided by Holy 1809060851                
+%                 
+%                 % added by Holy 1809060851
+%                 absValue = absValue(:);
+%                 absValueSort = sort(absValue, 'descend');
+%                 X(i,:) = sum(absValueSort(1:indBig));
+%                 % end of addition 1809060851
+%             end
+%             % end of addition 1809051555
+            % end of hide 1809121609
+            
+            % added by Holy 1809111615
             if contains(featureType, gaborBWHogFeatureType,'IgnoreCase',true)
                 [data_img, data_orienslist, data_sigmaC] = readandinit_hoist_imgEdge(fileList{i, 1}, ...
                     data_orientation, data_nroriens, data_sigma, data_wavelength, data_bandwidth, biasHRatio, biasWRatio);
                 data_convResult = gaborfilter(data_img, data_wavelength, data_sigma, data_orienslist, data_phaseoffset, data_aspectratio, data_bandwidth);
-            else
-                windImgN = imread(fileList{i, 1});
                 
-                windImgN = windImgN(1+biasHRatio:end-biasHRatio,1+biasWRatio:end-biasWRatio,:); % added by Holy 1808021424
-                
-                %             hogInputImg = windImgN(biasHeight:end-biasHeight,biasWidth:end-biasWidth,:);
-                %             hogInputImg = windImgN; % hided by Holy 1807311454
-                % added by Holy 1807311455
-                hogInputImg5 = im2double(windImgN);
-                hogInputImg2 = rgb2gray(hogInputImg5);
-                % hided by Holy 1809051529
-                %             hogInputImg3 = adapthisteq(hogInputImg2);
-                %             hogInputImg4 = adapthisteq(hogInputImg3,'NumTiles',[4,4]);
-                %             hogInputImg = adapthisteq(hogInputImg4,'NumTiles',[2,2]);
-                % end of hide 1809051529
-                % end of addition 1807311455
-                
-                %             hogInputImg = imbinarize(hogInputImg,'adaptive','Sensitivity',1); % added by Holy 1808011341
-                hogInputImg = imbinarize(hogInputImg2,'adaptive','Sensitivity',1); % added by Holy 1808041457
-            end
-            
-            if contains(featureType, hogFeatureType,'IgnoreCase',true)
-                hogWindRope = extractHOGFeatures(hogInputImg,'CellSize',[hogSize hogSize]); % hided by Holy 1807311605
-                %             gaborFeatureVec = gaborFeatures(hogInputImg,gaborArray,4,4); % hided by Holy 1808011537
-                %             [~,gaborResult] = gaborFeatures(hogInputImg,gaborArray,4,4); % added by Holy 1808011538
-                
-                %             % added by Holy 1808031117
-                %             varValue = complexCellAbsVar(gaborResult);
-                %             X(i,:) = varValue;
-                %             % end of addition 1808031117
-                
-                %             X = [X;hogWindRope]; % hided by Holy 1807271336
-                X(i,:) = hogWindRope; % added by Holy 1807271337
-            end
-            
-            % added by Holy 1809051555
-            if contains(featureType, gaborMaxFeatureType,'IgnoreCase',true)
-                [~,gaborResult] = gaborFeatures(hogInputImg,gaborArray,4,4);
-                absValue = abs(gaborResult{1,1});                
-%                 X(i,:) = max(absValue(:)); hided by Holy 1809060851                
-                
-                % added by Holy 1809060851
-                absValue = absValue(:);
-                absValueSort = sort(absValue, 'descend');
-                X(i,:) = sum(absValueSort(1:indBig));
-                % end of addition 1809060851
-            end
-            % end of addition 1809051555
-            
-            % added by Holy 1809111615
-            if contains(featureType, gaborBWHogFeatureType,'IgnoreCase',true)
                 hogWindRope = fun_calGaborBWHog(data_convResult,data_orienslist,data_sigmaC,data,hogSize);                
                 X(i,:) = hogWindRope;
             end
@@ -392,55 +411,88 @@ if ~debug
         p = parfor_progress(length(fileList));
         % end of addition 1808281434
         parfor i = 1:length(fileList)
-%             progressbar(i, length(fileList));
-            windImgN = imread(fileList{i, 1});
+            % hided by Holy 1809121609
+%             if contains(featureType, hogFeatureType,'IgnoreCase',true)
+%                 windImgN = imread(fileList{i, 1});
+%                 
+%                 windImgN = windImgN(1+biasHRatio:end-biasHRatio,1+biasWRatio:end-biasWRatio,:); % added by Holy 1808021424
+%                 
+%                 %             hogInputImg = windImgN(biasHeight:end-biasHeight,biasWidth:end-biasWidth,:);
+%                 %             hogInputImg = windImgN; % hided by Holy 1807311457
+%                 
+%                 % added by Holy 1807311455
+%                 hogInputImg1 = im2double(windImgN);
+%                 hogInputImg1 = rgb2gray(hogInputImg1);
+%                 
+%                 % hided by Holy 1809051533
+%                 %             hogInputImg3 = adapthisteq(hogInputImg2);
+%                 %             hogInputImg4 = adapthisteq(hogInputImg3,'NumTiles',[4,4]);
+%                 %             hogInputImg = adapthisteq(hogInputImg4,'NumTiles',[2,2]);
+%                 % end of hide 1809051533
+%                 % end of addition 1807311455
+%                 
+%                 %             hogInputImg = imbinarize(hogInputImg,'adaptive','Sensitivity',1); % added by Holy 1808011341
+%                 hogInputImg1 = imbinarize(hogInputImg1,'adaptive','Sensitivity',1); % added by Holy 1808041457
+%                 
+%                 hogWindRope = extractHOGFeatures(hogInputImg1,'CellSize',[hogSize hogSize]); % hided by Holy 1807311605
+%                 %             gaborFeatureVec = gaborFeatures(hogInputImg,gaborArray,4,4); % hided by Holy 1808011542
+%                 %             [~,gaborResult] = gaborFeatures(hogInputImg,gaborArray,4,4); % added by Holy 1808011538
+%                 
+%                 %             % added by Holy 1808031117
+%                 %             varValue = complexCellAbsVar(gaborResult);
+%                 %             Xval(i,:) = varValue;
+%                 %             % end of addition 1808031117
+%                 
+%                 %             Xval = [Xval;hogWindRope]; % hided by Holy 1807271336
+%                 Xval(i,:) = hogWindRope; % added by Holy 1807271337
+%             end
+%             
+%             % added by Holy 1809051555
+%             if contains(featureType, gaborMaxFeatureType,'IgnoreCase',true)
+%                 windImgN = imread(fileList{i, 1});
+%                 
+%                 windImgN = windImgN(1+biasHRatio:end-biasHRatio,1+biasWRatio:end-biasWRatio,:); % added by Holy 1808021424
+%                 
+%                 %             hogInputImg = windImgN(biasHeight:end-biasHeight,biasWidth:end-biasWidth,:);
+%                 %             hogInputImg = windImgN; % hided by Holy 1807311457
+%                 
+%                 % added by Holy 1807311455
+%                 hogInputImg2 = im2double(windImgN);
+%                 hogInputImg2 = rgb2gray(hogInputImg2);
+%                 
+%                 % hided by Holy 1809051533
+%                 %             hogInputImg3 = adapthisteq(hogInputImg2);
+%                 %             hogInputImg4 = adapthisteq(hogInputImg3,'NumTiles',[4,4]);
+%                 %             hogInputImg = adapthisteq(hogInputImg4,'NumTiles',[2,2]);
+%                 % end of hide 1809051533
+%                 % end of addition 1807311455
+%                 
+%                 %             hogInputImg = imbinarize(hogInputImg,'adaptive','Sensitivity',1); % added by Holy 1808011341
+%                 hogInputImg2 = imbinarize(hogInputImg2,'adaptive','Sensitivity',1); % added by Holy 1808041457
+%                 
+%                 [~,gaborResult] = gaborFeatures(hogInputImg2,gaborArray,4,4);
+%                 absValue = abs(gaborResult{1,1});
+% %                 Xvals(i,:) = max(absValue(:)); % hided by Holy 1809060857
+%                 
+%                 % added by Holy 1809060851
+%                 absValue = absValue(:);
+%                 absValueSort = sort(absValue, 'descend');
+%                 Xval(i,:) = sum(absValueSort(1:indBig));
+%                 % end of addition 1809060851
+%             end
+%             % end of addition 1809051555
+            % end of hide 1809121609
             
-            windImgN = windImgN(1+biasHRatio:end-biasHRatio,1+biasWRatio:end-biasWRatio,:); % added by Holy 1808021424
-            
-%             hogInputImg = windImgN(biasHeight:end-biasHeight,biasWidth:end-biasWidth,:);
-%             hogInputImg = windImgN; % hided by Holy 1807311457
-            
-            % added by Holy 1807311455
-            hogInputImg5 = im2double(windImgN);
-            hogInputImg2 = rgb2gray(hogInputImg5);
-            
-            % hided by Holy 1809051533
-%             hogInputImg3 = adapthisteq(hogInputImg2);
-%             hogInputImg4 = adapthisteq(hogInputImg3,'NumTiles',[4,4]);
-%             hogInputImg = adapthisteq(hogInputImg4,'NumTiles',[2,2]);
-            % end of hide 1809051533
-            % end of addition 1807311455
-            
-%             hogInputImg = imbinarize(hogInputImg,'adaptive','Sensitivity',1); % added by Holy 1808011341
-            hogInputImg = imbinarize(hogInputImg2,'adaptive','Sensitivity',1); % added by Holy 1808041457
-            
-            if contains(featureType, hogFeatureType,'IgnoreCase',true)
-                hogWindRope = extractHOGFeatures(hogInputImg,'CellSize',[hogSize hogSize]); % hided by Holy 1807311605
-                %             gaborFeatureVec = gaborFeatures(hogInputImg,gaborArray,4,4); % hided by Holy 1808011542
-                %             [~,gaborResult] = gaborFeatures(hogInputImg,gaborArray,4,4); % added by Holy 1808011538
+            % added by Holy 1809121544
+            if contains(featureType, gaborBWHogFeatureType,'IgnoreCase',true)
+                [data_img, data_orienslist, data_sigmaC] = readandinit_hoist_imgEdge(fileList{i, 1}, ...
+                    data_orientation, data_nroriens, data_sigma, data_wavelength, data_bandwidth, biasHRatio, biasWRatio);
+                data_convResult = gaborfilter(data_img, data_wavelength, data_sigma, data_orienslist, data_phaseoffset, data_aspectratio, data_bandwidth);
                 
-                %             % added by Holy 1808031117
-                %             varValue = complexCellAbsVar(gaborResult);
-                %             Xval(i,:) = varValue;
-                %             % end of addition 1808031117
-                
-                %             Xval = [Xval;hogWindRope]; % hided by Holy 1807271336
-                Xval(i,:) = hogWindRope; % added by Holy 1807271337
+                hogWindRope = fun_calGaborBWHog(data_convResult,data_orienslist,data_sigmaC,data,hogSize);                
+                Xval(i,:) = hogWindRope;
             end
-            
-            % added by Holy 1809051555
-            if contains(featureType, gaborMaxFeatureType,'IgnoreCase',true)
-                [~,gaborResult] = gaborFeatures(hogInputImg,gaborArray,4,4);
-                absValue = abs(gaborResult{1,1});
-%                 Xvals(i,:) = max(absValue(:)); % hided by Holy 1809060857
-                
-                % added by Holy 1809060851
-                absValue = absValue(:);
-                absValueSort = sort(absValue, 'descend');
-                Xval(i,:) = sum(absValueSort(1:indBig));
-                % end of addition 1809060851
-            end
-            % end of addition 1809051555
+            % end of addition 1809121544
             
 %             Xval(i,:) = gaborFeatureVec'; % added by Holy 1807311607
 %             % added by Holy 1808011539
@@ -463,55 +515,88 @@ if ~debug
         p = parfor_progress(length(fileList));
         % end of addition 1808281434
         parfor i = 1:length(fileList)
-%             progressbar(i, length(fileList));
-            windImgN = imread(fileList{i, 1});
+            % hided by Holy 1809121609
+%             if contains(featureType, hogFeatureType,'IgnoreCase',true)
+%                 windImgN = imread(fileList{i, 1});
+%                 
+%                 windImgN = windImgN(1+biasHRatio:end-biasHRatio,1+biasWRatio:end-biasWRatio,:); % added by Holy 1808021424
+%                 
+%                 %             hogInputImg = windImgN(biasHeight:end-biasHeight,biasWidth:end-biasWidth,:);
+%                 %             hogInputImg = windImgN; % hided by Holy 1807311458
+%                 
+%                 % added by Holy 1807311455
+%                 hogInputImg1 = im2double(windImgN);
+%                 hogInputImg1 = rgb2gray(hogInputImg1);
+%                 
+%                 % hided by Holy 1809051536
+%                 %             hogInputImg3 = adapthisteq(hogInputImg2);
+%                 %             hogInputImg4 = adapthisteq(hogInputImg3,'NumTiles',[4,4]);
+%                 %             hogInputImg = adapthisteq(hogInputImg4,'NumTiles',[2,2]);
+%                 % end of hide 1809051536
+%                 % end of addition 1807311455
+%                 
+%                 %             hogInputImg = imbinarize(hogInputImg,'adaptive','Sensitivity',1); % added by Holy 1808011341
+%                 hogInputImg1 = imbinarize(hogInputImg1,'adaptive','Sensitivity',1); % added by Holy 1808041457
+%             
+%                 hogWindRope = extractHOGFeatures(hogInputImg1,'CellSize',[hogSize hogSize]); % hided by Holy 1807311605
+%                 %             gaborFeatureVec = gaborFeatures(hogInputImg,gaborArray,4,4);
+%                 %             [~,gaborResult] = gaborFeatures(hogInputImg,gaborArray,4,4); % added by Holy 1808011538
+%                 
+%                 %             % added by Holy 1808031117
+%                 %             varValue = complexCellAbsVar(gaborResult);
+%                 %             Xtest(i,:) = varValue;
+%                 %             % end of addition 1808031117
+%                 
+%                 %             Xtest = [Xtest;hogWindRope]; % hided by Holy 1807271336
+%                 Xtest(i,:) = hogWindRope; % added by Holy 1807271337
+%             end
+%             
+%             % added by Holy 1809051555
+%             if contains(featureType, gaborMaxFeatureType,'IgnoreCase',true)
+%                 windImgN = imread(fileList{i, 1});
+%                 
+%                 windImgN = windImgN(1+biasHRatio:end-biasHRatio,1+biasWRatio:end-biasWRatio,:); % added by Holy 1808021424
+%                 
+%                 %             hogInputImg = windImgN(biasHeight:end-biasHeight,biasWidth:end-biasWidth,:);
+%                 %             hogInputImg = windImgN; % hided by Holy 1807311458
+%                 
+%                 % added by Holy 1807311455
+%                 hogInputImg2 = im2double(windImgN);
+%                 hogInputImg2 = rgb2gray(hogInputImg2);
+%                 
+%                 % hided by Holy 1809051536
+%                 %             hogInputImg3 = adapthisteq(hogInputImg2);
+%                 %             hogInputImg4 = adapthisteq(hogInputImg3,'NumTiles',[4,4]);
+%                 %             hogInputImg = adapthisteq(hogInputImg4,'NumTiles',[2,2]);
+%                 % end of hide 1809051536
+%                 % end of addition 1807311455
+%                 
+%                 %             hogInputImg = imbinarize(hogInputImg,'adaptive','Sensitivity',1); % added by Holy 1808011341
+%                 hogInputImg2 = imbinarize(hogInputImg2,'adaptive','Sensitivity',1); % added by Holy 1808041457
+%                 
+%                 [~,gaborResult] = gaborFeatures(hogInputImg2,gaborArray,4,4);
+%                 absValue = abs(gaborResult{1,1});
+% %                 Xtest(i,:) = max(absValue(:)); % hided by Holy 1809060858
+%                 
+%                 % added by Holy 1809060851
+%                 absValue = absValue(:);
+%                 absValueSort = sort(absValue, 'descend');
+%                 Xtest(i,:) = sum(absValueSort(1:indBig));
+%                 % end of addition 1809060851
+%             end
+%             % end of addition 1809051555
+            % end of hide 1809121609
             
-            windImgN = windImgN(1+biasHRatio:end-biasHRatio,1+biasWRatio:end-biasWRatio,:); % added by Holy 1808021424
-            
-%             hogInputImg = windImgN(biasHeight:end-biasHeight,biasWidth:end-biasWidth,:);
-%             hogInputImg = windImgN; % hided by Holy 1807311458
-            
-            % added by Holy 1807311455
-            hogInputImg5 = im2double(windImgN);
-            hogInputImg2 = rgb2gray(hogInputImg5);
-            
-            % hided by Holy 1809051536
-%             hogInputImg3 = adapthisteq(hogInputImg2);
-%             hogInputImg4 = adapthisteq(hogInputImg3,'NumTiles',[4,4]);
-%             hogInputImg = adapthisteq(hogInputImg4,'NumTiles',[2,2]);
-            % end of hide 1809051536
-            % end of addition 1807311455
-            
-%             hogInputImg = imbinarize(hogInputImg,'adaptive','Sensitivity',1); % added by Holy 1808011341
-            hogInputImg = imbinarize(hogInputImg2,'adaptive','Sensitivity',1); % added by Holy 1808041457
-            
-            if contains(featureType, hogFeatureType,'IgnoreCase',true)
-                hogWindRope = extractHOGFeatures(hogInputImg,'CellSize',[hogSize hogSize]); % hided by Holy 1807311605
-                %             gaborFeatureVec = gaborFeatures(hogInputImg,gaborArray,4,4);
-                %             [~,gaborResult] = gaborFeatures(hogInputImg,gaborArray,4,4); % added by Holy 1808011538
+            % added by Holy 1809121548
+            if contains(featureType, gaborBWHogFeatureType,'IgnoreCase',true)
+                [data_img, data_orienslist, data_sigmaC] = readandinit_hoist_imgEdge(fileList{i, 1}, ...
+                    data_orientation, data_nroriens, data_sigma, data_wavelength, data_bandwidth, biasHRatio, biasWRatio);
+                data_convResult = gaborfilter(data_img, data_wavelength, data_sigma, data_orienslist, data_phaseoffset, data_aspectratio, data_bandwidth);
                 
-                %             % added by Holy 1808031117
-                %             varValue = complexCellAbsVar(gaborResult);
-                %             Xtest(i,:) = varValue;
-                %             % end of addition 1808031117
-                
-                %             Xtest = [Xtest;hogWindRope]; % hided by Holy 1807271336
-                Xtest(i,:) = hogWindRope; % added by Holy 1807271337
+                hogWindRope = fun_calGaborBWHog(data_convResult,data_orienslist,data_sigmaC,data,hogSize);                
+                Xtest(i,:) = hogWindRope;
             end
-            
-            % added by Holy 1809051555
-            if contains(featureType, gaborMaxFeatureType,'IgnoreCase',true)
-                [~,gaborResult] = gaborFeatures(hogInputImg,gaborArray,4,4);
-                absValue = abs(gaborResult{1,1});
-%                 Xtest(i,:) = max(absValue(:)); % hided by Holy 1809060858
-                
-                % added by Holy 1809060851
-                absValue = absValue(:);
-                absValueSort = sort(absValue, 'descend');
-                Xtest(i,:) = sum(absValueSort(1:indBig));
-                % end of addition 1809060851
-            end
-            % end of addition 1809051555
+            % end of addition 1809121548
             
 %             Xtest(i,:) = gaborFeatureVec'; % added by Holy 1807311607
 %             % added by Holy 1808011539
@@ -647,6 +732,27 @@ if contains(firstFilePathName, searchKey1,'IgnoreCase',true)
         dataMLInput.X = X;
     end
     % end of addition 1809051555
+    
+    % added by Holy 1809121550
+    if contains(featureType, gaborBWHogFeatureType,'IgnoreCase',true)
+        % added by Holy 1808051155
+        [X, XMean, XSigma] = featureNormalize(X);
+        TF = isnan(X);
+        tag = any(TF);
+        tag = ~tag;
+        X = X(:,tag);
+        [coeff,X,~] = pca(X,'Centered',false);
+        % end of addition 1808051155
+        
+        % added by Holy 1808131631
+        dataMLInput.X = X;
+        dataMLInput.coeff = coeff;
+        dataMLInput.XMean = XMean;
+        dataMLInput.XSigma = XSigma;
+        dataMLInput.tag = tag;
+        % end of addition 1808131631
+    end
+    % end of addition 1809121550
             
     % hided by Holy 1808131635
 %     if exist(dataMLFileName, 'file') == 2
@@ -709,6 +815,22 @@ if contains(firstFilePathName, searchKey2,'IgnoreCase',true)
     end
     % end of addition 1809051555
     
+    % added by Holy 1809121551
+    if contains(featureType, gaborBWHogFeatureType,'IgnoreCase',true)
+        % added by Holy 1808131639
+        Xval = bsxfun(@minus,Xval,dataMLInput.XMean);
+        Xval = bsxfun(@rdivide, Xval, dataMLInput.XSigma);
+        Xval = Xval(:,dataMLInput.tag);
+        Xval = Xval*dataMLInput.coeff;
+        % end of addition 1808131639
+        
+        % added by Holy 1808131631
+        dataMLInput.Xval = Xval;
+        dataMLInput.yval = yval;
+        % end of addition 1808131631
+    end
+    % end of addition 1809121551
+    
     % hided by Holy 1808131635
 %     if exist(dataMLFileName, 'file') == 2
 %         save(dataMLFileName,'Xval','yval','-append');
@@ -765,6 +887,22 @@ if contains(firstFilePathName, searchKey3,'IgnoreCase',true)
         dataMLInput.ytest = ytest;
     end
     % end of addition 1809051555
+    
+    % added by Holy 1809121553
+    if contains(featureType, gaborBWHogFeatureType,'IgnoreCase',true)
+        % added by Holy 1808131650
+        Xtest = bsxfun(@minus,Xtest,dataMLInput.XMean);
+        Xtest = bsxfun(@rdivide, Xtest, dataMLInput.XSigma);
+        Xtest = Xtest(:,dataMLInput.tag);
+        Xtest = Xtest*dataMLInput.coeff;
+        % end of addition 1808131650
+        
+        % added by Holy 1808131631
+        dataMLInput.Xtest = Xtest;
+        dataMLInput.ytest = ytest;
+        % end of addition 1808131631
+    end
+    % end of addition 1809121553
     
     % hided by Holy 1808131651
 %     if exist(dataMLFileName, 'file') == 2

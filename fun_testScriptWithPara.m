@@ -1,8 +1,9 @@
 function [F1,tp,fp,indMess,indFn] = fun_testScriptWithPara(bestParaMat,trainFolderName,CVFolderName,testFolderName,heightBias,widthBias,featureType)
 load(bestParaMat,'bestPara');
 
-hogFeatureType = 'hog';
+hogFeatureType = 'hogOnly';
 gaborMaxFeatureType = 'gaborMax';
+gaborBWHogFeatureType = 'gaborBWHog'; % added by Holy 1809111558
 
 if contains(featureType, hogFeatureType,'IgnoreCase',true)
     dimInd = bestPara{1, 4};    
@@ -10,6 +11,10 @@ end
 
 if contains(featureType, gaborMaxFeatureType,'IgnoreCase',true)
     dimInd = 1;    
+end
+
+if contains(featureType, gaborBWHogFeatureType,'IgnoreCase',true)
+    dimInd = bestPara{1, 4};    
 end
 
 hogSize = bestPara{1, 5};
