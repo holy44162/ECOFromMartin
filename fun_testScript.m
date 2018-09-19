@@ -7,7 +7,9 @@ function bestPara = fun_testScript(maxHogSize,maxImgEdge,heightBias,widthBias,nu
 
 % added by Holy 1808131555
 % numImgEdgeStep = 2; % hided by Holy 1808141638
-minImgEdge = 1;
+% minImgEdge = 1; % hided by Holy 1809191524
+minImgEdge = 0; % added by Holy 1809191524
+
 stepSizeImgEdge = (maxImgEdge - minImgEdge) / numImgEdgeStep;
 
 % numHogSizeStep = 2; % hided by Holy 1808141638
@@ -27,20 +29,21 @@ for imgEdge = maxImgEdge:-stepSizeImgEdge:minImgEdge
     
     if contains(featureType, hogFeatureType,'IgnoreCase',true)
         for hogSize = maxHogSize:-stepSizeHogSize:minHogSize
+            hogSize1 = round(hogSize); % added by Holy 1809191551
             % train
             %         folder_name = 'd:\data_seq\sequences\realWindingRopesCompactTrain\imgsTarget\'; % hided by Holy 1808281445
             %         folder_name = 'd:\data_seq\towerCrane\train\imgs\'; % added by Holy 1808281445
-            dataML = realWindingFeatureDataGen(trainFolderName,hogSize,heightImgEdge,widthImgEdge,featureType);
+            dataML = realWindingFeatureDataGen(trainFolderName,hogSize1,heightImgEdge,widthImgEdge,featureType);
             
             % CV
             %         folder_name = 'd:\data_seq\sequences\realWindingRopesCompactCV\imgsTarget\';  % hided by Holy 1808281445
             %         folder_name = 'd:\data_seq\towerCrane\CV\imgs\'; % added by Holy 1808281445
-            dataML = realWindingFeatureDataGen(CVFolderName,hogSize,heightImgEdge,widthImgEdge,featureType,dataML);
+            dataML = realWindingFeatureDataGen(CVFolderName,hogSize1,heightImgEdge,widthImgEdge,featureType,dataML);
             
             % test
             %         folder_name = 'd:\data_seq\sequences\realWindingRopesCompactTest\imgsTarget\'; % hided by Holy 1808281445
             %         folder_name = 'd:\data_seq\towerCrane\test\imgs\'; % added by Holy 1808281445
-            dataML = realWindingFeatureDataGen(testFolderName,hogSize,heightImgEdge,widthImgEdge,featureType,dataML);
+            dataML = realWindingFeatureDataGen(testFolderName,hogSize1,heightImgEdge,widthImgEdge,featureType,dataML);
             
             % get best parameters
             numDim = size(dataML.X,2);
@@ -60,7 +63,7 @@ for imgEdge = maxImgEdge:-stepSizeImgEdge:minImgEdge
             
             % perform feature selection
             maxF1Row = num2cell(sortedResult(1,:));
-            maxF1Row = [maxF1Row {hogSize} {imgEdge}];
+            maxF1Row = [maxF1Row {hogSize1} {imgEdge}];
             featureIDs = maxF1Row(4);
             resultCell = cell(1,4);
             selectedIDs = featureIDs;
@@ -84,7 +87,7 @@ for imgEdge = maxImgEdge:-stepSizeImgEdge:minImgEdge
                     
                     % added by Holy 1808141552
                     if resultCell{1,1} == 1
-                        bestPara = [bestPara;[resultCell {hogSize} {imgEdge}]];
+                        bestPara = [bestPara;[resultCell {hogSize1} {imgEdge}]];
                     end
                     % end of addition 1808141552
                     
@@ -123,20 +126,21 @@ for imgEdge = maxImgEdge:-stepSizeImgEdge:minImgEdge
     
     if contains(featureType, gaborBWHogFeatureType,'IgnoreCase',true)
         for hogSize = maxHogSize:-stepSizeHogSize:minHogSize
+            hogSize1 = round(hogSize); % added by Holy 1809191551
             % train
             %         folder_name = 'd:\data_seq\sequences\realWindingRopesCompactTrain\imgsTarget\'; % hided by Holy 1808281445
             %         folder_name = 'd:\data_seq\towerCrane\train\imgs\'; % added by Holy 1808281445
-            dataML = realWindingFeatureDataGen(trainFolderName,hogSize,heightImgEdge,widthImgEdge,featureType);
+            dataML = realWindingFeatureDataGen(trainFolderName,hogSize1,heightImgEdge,widthImgEdge,featureType);
             
             % CV
             %         folder_name = 'd:\data_seq\sequences\realWindingRopesCompactCV\imgsTarget\';  % hided by Holy 1808281445
             %         folder_name = 'd:\data_seq\towerCrane\CV\imgs\'; % added by Holy 1808281445
-            dataML = realWindingFeatureDataGen(CVFolderName,hogSize,heightImgEdge,widthImgEdge,featureType,dataML);
+            dataML = realWindingFeatureDataGen(CVFolderName,hogSize1,heightImgEdge,widthImgEdge,featureType,dataML);
             
             % test
             %         folder_name = 'd:\data_seq\sequences\realWindingRopesCompactTest\imgsTarget\'; % hided by Holy 1808281445
             %         folder_name = 'd:\data_seq\towerCrane\test\imgs\'; % added by Holy 1808281445
-            dataML = realWindingFeatureDataGen(testFolderName,hogSize,heightImgEdge,widthImgEdge,featureType,dataML);
+            dataML = realWindingFeatureDataGen(testFolderName,hogSize1,heightImgEdge,widthImgEdge,featureType,dataML);
             
             % get best parameters
             numDim = size(dataML.X,2);
@@ -156,7 +160,7 @@ for imgEdge = maxImgEdge:-stepSizeImgEdge:minImgEdge
             
             % perform feature selection
             maxF1Row = num2cell(sortedResult(1,:));
-            maxF1Row = [maxF1Row {hogSize} {imgEdge}];
+            maxF1Row = [maxF1Row {hogSize1} {imgEdge}];
             featureIDs = maxF1Row(4);
             resultCell = cell(1,4);
             selectedIDs = featureIDs;
@@ -180,7 +184,7 @@ for imgEdge = maxImgEdge:-stepSizeImgEdge:minImgEdge
                     
                     % added by Holy 1808141552
                     if resultCell{1,1} == 1
-                        bestPara = [bestPara;[resultCell {hogSize} {imgEdge}]];
+                        bestPara = [bestPara;[resultCell {hogSize1} {imgEdge}]];
                     end
                     % end of addition 1808141552
                     

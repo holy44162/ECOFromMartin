@@ -12,6 +12,7 @@ function dataML = realWindingFeatureDataGen(folder_name,hogSize,biasHRatio,biasW
 % hogSize = 38; % hog feature cell size
 % numDim = 27; % reduced dim in pca
 debug = false;
+% debug = true;
 
 hogFeatureType = 'hogOnly';
 gaborMaxFeatureType = 'gaborMax';
@@ -638,51 +639,120 @@ if ~debug
 %         ppm.increment();
 %     end
 else
-    for i = 1:length(fileList)
-        progressbar(i, length(fileList));
-        [~,FileName,fileExt] = fileparts(fileList{i, 1});
-        if ~contains(FileName, searchKey) || ~strcmpi(fileExt,searchFileExt)
-            continue;
-        else
-            windImgN = imread(fileList{i, 1});
-            hogWindRope = extractHOGFeatures(windImgN,'CellSize',[hogSize hogSize]);
-            if i == 1
-                testImgId = 1009;
-%                 testImgId = 319;
-                testImg = imread(fileList{testImgId, 1});
-%                 [rowTestImg, colTestImg, ~] = size(testImg);
-%                 biasHeight = round(rowTestImg/5);
-%                 biasWidth = round(colTestImg/11);
-%                 testImgWithBias = testImg(biasHeight:end-biasHeight,biasWidth:end-biasWidth,:);
-                testImgWithBias = testImg;
-                hogInputImg = testImgWithBias;
-%                 processedImage = imbinarize(rgb2gray(testImg),'adaptive','Sensitivity',1);
-                %                 se1 = strel('disk', 2);
-                %                 processedImage = imdilate(processedImage, se1);
-                %                 [featureVector,hogVisualization] = extractHOGFeatures(processedImage,...
-                %                     'CellSize',[hogSize hogSize],'NumBins',9);
-                [featureVector,hogVisualization] = extractHOGFeatures(hogInputImg,...
-                    'CellSize',[hogSize hogSize],'NumBins',9);
-                figure;
-                imshow(testImg);
-                figure;
-                imshow(hogInputImg);
-                hold on;
-                plot(hogVisualization,'Color','r');
-                hold off;
-                return;
+    poolobj = gcp('nocreate'); % If no pool, do not create new one.
+    if isempty(poolobj)
+        parpool;
+    end
+
+    if contains(firstFilePathName, searchKey1,'IgnoreCase',true)
+        % added by Holy 1808281434
+        fprintf('\t Completion: ');
+        showTimeToCompletion; startTime=tic;
+        p = parfor_progress(length(fileList));
+        % end of addition 1808281434
+        parfor i = 1:length(fileList)            
+            % added by Holy 1809111615
+            if contains(featureType, gaborBWHogFeatureType,'IgnoreCase',true)
+                [data_img, data_orienslist, data_sigmaC] = readandinit_hoist_imgEdge(fileList{i, 1}, ...
+                    data_orientation, data_nroriens, data_sigma, data_wavelength, data_bandwidth, biasHRatio, biasWRatio);
+                data_convResult = gaborfilter(data_img, data_wavelength, data_sigma, data_orienslist, data_phaseoffset, data_aspectratio, data_bandwidth);
+                
+                hogWindRope = fun_calGaborBWHog(data_convResult,data_orienslist,data_sigmaC,data,hogSize);                
+                X(i,:) = hogWindRope;
             end
-            if contains(firstFilePathName, searchKey1)
-                X = [X;hogWindRope];
-            end
-            if contains(firstFilePathName, searchKey2)
-                Xval = [Xval;hogWindRope];
-            end
-            if contains(firstFilePathName, searchKey3)
-                Xtest = [Xtest;hogWindRope];
-            end
+            % end of addition 1809111615
+    
+            % added by Holy 1808281436
+            p = parfor_progress;
+            showTimeToCompletion(p/100, [], [], startTime);
+            % end of addition 1808281436
         end
     end
+
+    if contains(firstFilePathName, searchKey2,'IgnoreCase',true)
+        % added by Holy 1808281434
+        fprintf('\t Completion: ');
+        showTimeToCompletion; startTime=tic;
+        p = parfor_progress(length(fileList));
+        % end of addition 1808281434
+        parfor i = 1:length(fileList)            
+            % added by Holy 1809121544
+            if contains(featureType, gaborBWHogFeatureType,'IgnoreCase',true)
+                [data_img, data_orienslist, data_sigmaC] = readandinit_hoist_imgEdge(fileList{i, 1}, ...
+                    data_orientation, data_nroriens, data_sigma, data_wavelength, data_bandwidth, biasHRatio, biasWRatio);
+                data_convResult = gaborfilter(data_img, data_wavelength, data_sigma, data_orienslist, data_phaseoffset, data_aspectratio, data_bandwidth);
+                
+                hogWindRope = fun_calGaborBWHog(data_convResult,data_orienslist,data_sigmaC,data,hogSize);                
+                Xval(i,:) = hogWindRope;
+            end
+            % end of addition 1809121544
+            
+            % added by Holy 1808281436
+            p = parfor_progress;
+            showTimeToCompletion(p/100, [], [], startTime);
+            % end of addition 1808281436
+        end
+    end
+    if contains(firstFilePathName, searchKey3,'IgnoreCase',true)        
+        for i = 1:length(fileList)
+            if i == 1063
+                pause;
+            end
+            if contains(featureType, gaborBWHogFeatureType,'IgnoreCase',true)
+                [data_img, data_orienslist, data_sigmaC] = readandinit_hoist_imgEdge(fileList{i, 1}, ...
+                    data_orientation, data_nroriens, data_sigma, data_wavelength, data_bandwidth, biasHRatio, biasWRatio);
+                data_convResult = gaborfilter(data_img, data_wavelength, data_sigma, data_orienslist, data_phaseoffset, data_aspectratio, data_bandwidth);
+                
+                hogWindRope = fun_calGaborBWHog(data_convResult,data_orienslist,data_sigmaC,data,hogSize);                
+                Xtest(i,:) = hogWindRope;
+            end            
+        end
+    end
+%     for i = 1:length(fileList)
+%         progressbar(i, length(fileList));
+%         [~,FileName,fileExt] = fileparts(fileList{i, 1});
+%         if ~contains(FileName, searchKey) || ~strcmpi(fileExt,searchFileExt)
+%             continue;
+%         else
+%             windImgN = imread(fileList{i, 1});
+%             hogWindRope = extractHOGFeatures(windImgN,'CellSize',[hogSize hogSize]);
+%             if i == 1
+%                 testImgId = 1009;
+% %                 testImgId = 319;
+%                 testImg = imread(fileList{testImgId, 1});
+% %                 [rowTestImg, colTestImg, ~] = size(testImg);
+% %                 biasHeight = round(rowTestImg/5);
+% %                 biasWidth = round(colTestImg/11);
+% %                 testImgWithBias = testImg(biasHeight:end-biasHeight,biasWidth:end-biasWidth,:);
+%                 testImgWithBias = testImg;
+%                 hogInputImg = testImgWithBias;
+% %                 processedImage = imbinarize(rgb2gray(testImg),'adaptive','Sensitivity',1);
+%                 %                 se1 = strel('disk', 2);
+%                 %                 processedImage = imdilate(processedImage, se1);
+%                 %                 [featureVector,hogVisualization] = extractHOGFeatures(processedImage,...
+%                 %                     'CellSize',[hogSize hogSize],'NumBins',9);
+%                 [featureVector,hogVisualization] = extractHOGFeatures(hogInputImg,...
+%                     'CellSize',[hogSize hogSize],'NumBins',9);
+%                 figure;
+%                 imshow(testImg);
+%                 figure;
+%                 imshow(hogInputImg);
+%                 hold on;
+%                 plot(hogVisualization,'Color','r');
+%                 hold off;
+%                 return;
+%             end
+%             if contains(firstFilePathName, searchKey1)
+%                 X = [X;hogWindRope];
+%             end
+%             if contains(firstFilePathName, searchKey2)
+%                 Xval = [Xval;hogWindRope];
+%             end
+%             if contains(firstFilePathName, searchKey3)
+%                 Xtest = [Xtest;hogWindRope];
+%             end
+%         end
+%     end
 end
 
 % dataMLFileName = 'dataML.mat'; % hided by Holy 1808131657

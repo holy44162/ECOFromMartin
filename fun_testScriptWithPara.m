@@ -1,4 +1,4 @@
-function [F1,tp,fp,indMess,indFn] = fun_testScriptWithPara(bestParaMat,trainFolderName,CVFolderName,testFolderName,heightBias,widthBias,featureType)
+function [F1,tp,fp,indMess,indFn,indFp] = fun_testScriptWithPara(bestParaMat,trainFolderName,CVFolderName,testFolderName,heightBias,widthBias,featureType)
 load(bestParaMat,'bestPara');
 
 hogFeatureType = 'hogOnly';
@@ -27,5 +27,5 @@ dataML = realWindingFeatureDataGen(CVFolderName,hogSize,heightImgEdge,widthImgEd
 dataML = realWindingFeatureDataGen(testFolderName,hogSize,heightImgEdge,widthImgEdge,featureType,dataML);
 
 gaussianPara = fun_trainGaussian(dataML,dimInd);
-[F1,tp,fp,indMess,indFn] = fun_testGaussian(dataML,dimInd,gaussianPara);
+[F1,tp,fp,indMess,indFn,indFp] = fun_testGaussian(dataML,dimInd,gaussianPara);
 end
