@@ -15,15 +15,15 @@ maxImgEdge = 60; % hided by Holy 1809061537
 heightBias = 0; % added by Holy 1809191536
 widthBias = 0;
 % hided by Holy 1808290928
-numImgEdgeStep = 1;
-numHogSizeStep = 6;
+% numImgEdgeStep = 1;
+% numHogSizeStep = 6;
 % end of hide 1808290928
 
 % hided by Holy 1809111600
-% % added by Holy 1808290928
-% numImgEdgeStep = 25;
-% numHogSizeStep = 1;
-% % end of addition 1808290928
+% added by Holy 1808290928
+numImgEdgeStep = 6;
+numHogSizeStep = 6;
+% end of addition 1808290928
 % end of hide 1809111600
 
 % added by Holy 1809051115

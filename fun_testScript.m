@@ -10,11 +10,27 @@ function bestPara = fun_testScript(maxHogSize,maxImgEdge,heightBias,widthBias,nu
 % minImgEdge = 1; % hided by Holy 1809191524
 minImgEdge = 0; % added by Holy 1809191524
 
-stepSizeImgEdge = (maxImgEdge - minImgEdge) / numImgEdgeStep;
+% added by Holy 1809211407
+if numImgEdgeStep == 0
+    imgEdgeSteps = 0;
+else
+    stepSizeImgEdge = (maxImgEdge - minImgEdge) / numImgEdgeStep;
+    imgEdgeSteps = maxImgEdge:-stepSizeImgEdge:minImgEdge;
+end
+% end of addition 1809211407
+% stepSizeImgEdge = (maxImgEdge - minImgEdge) / numImgEdgeStep; % hided by Holy 1809211418
 
 % numHogSizeStep = 2; % hided by Holy 1808141638
 minHogSize = 8;
-stepSizeHogSize = (maxHogSize - minHogSize) / numHogSizeStep;
+% added by Holy 1809211407
+if numHogSizeStep == 0
+    hogSizeSteps = maxHogSize;
+else
+    stepSizeHogSize = (maxHogSize - minHogSize) / numHogSizeStep;
+    hogSizeSteps = maxHogSize:-stepSizeHogSize:minHogSize;
+end
+% end of addition 1809211407
+% stepSizeHogSize = (maxHogSize - minHogSize) / numHogSizeStep; % hided by Holy 1809211422
 
 hogFeatureType = 'hogOnly';
 gaborMaxFeatureType = 'gaborMax';
@@ -22,13 +38,15 @@ gaborBWHogFeatureType = 'gaborBWHog'; % added by Holy 1809111558
 
 bestPara = num2cell(zeros(1,6));
 iProgress = 1;
-for imgEdge = maxImgEdge:-stepSizeImgEdge:minImgEdge
+% for imgEdge = maxImgEdge:-stepSizeImgEdge:minImgEdge % hided by Holy 1809211418
+for imgEdge = imgEdgeSteps % added by Holy 1809211418
     progressbar(iProgress,numImgEdgeStep+1);
     heightImgEdge = round(heightBias + imgEdge);
     widthImgEdge = round(widthBias + imgEdge);
     
     if contains(featureType, hogFeatureType,'IgnoreCase',true)
-        for hogSize = maxHogSize:-stepSizeHogSize:minHogSize
+%         for hogSize = maxHogSize:-stepSizeHogSize:minHogSize % hided by Holy 1809211424
+        for hogSize = hogSizeSteps % added by Holy 1809211424
             hogSize1 = round(hogSize); % added by Holy 1809191551
             % train
             %         folder_name = 'd:\data_seq\sequences\realWindingRopesCompactTrain\imgsTarget\'; % hided by Holy 1808281445
@@ -125,7 +143,8 @@ for imgEdge = maxImgEdge:-stepSizeImgEdge:minImgEdge
     end
     
     if contains(featureType, gaborBWHogFeatureType,'IgnoreCase',true)
-        for hogSize = maxHogSize:-stepSizeHogSize:minHogSize
+%         for hogSize = maxHogSize:-stepSizeHogSize:minHogSize % hided by Holy 1809211425
+        for hogSize = hogSizeSteps % added by Holy 1809211424
             hogSize1 = round(hogSize); % added by Holy 1809191551
             % train
             %         folder_name = 'd:\data_seq\sequences\realWindingRopesCompactTrain\imgsTarget\'; % hided by Holy 1808281445
