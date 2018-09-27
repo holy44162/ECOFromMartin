@@ -54,11 +54,13 @@ pause
 fprintf('Visualizing Gaussian fit.\n\n');
 
 %  Estimate my and sigma2
-[mu sigma2] = estimateGaussian(X);
+[mu, sigma2] = estimateGaussian(X);
 
 %  Returns the density of the multivariate normal at each data point (row) 
 %  of X
 p = multivariateGaussian(X, mu, sigma2);
+
+p1 = multiplyGaussian(X, mu, sigma2); % added by Holy 1809271113
 
 %  Visualize the fit
 visualizeFit(X,  mu, sigma2);
@@ -75,19 +77,39 @@ pause;
 
 pval = multivariateGaussian(Xval, mu, sigma2);
 
-[epsilon F1] = selectThreshold(yval, pval);
+pval1 = multiplyGaussian(Xval, mu, sigma2); % added by Holy 1809271115
+
+[epsilon, F1] = selectThreshold(yval, pval);
+
+[epsilon1, F11] = selectThreshold(yval, pval1); % added by Holy 1809271115
 fprintf('Best epsilon found using cross-validation: %e\n', epsilon);
 fprintf('Best F1 on Cross Validation Set:  %f\n', F1);
+% added by Holy 1809271126
+fprintf('Best epsilon1 found using cross-validation: %e\n', epsilon1);
+fprintf('Best F11 on Cross Validation Set:  %f\n', F11);
+% end of addition 1809271126
 fprintf('   (you should see a value epsilon of about 8.99e-05)\n');
 fprintf('   (you should see a Best F1 value of  0.875000)\n\n');
 
 %  Find the outliers in the training set and plot the
 outliers = find(p < epsilon);
 
+outliers1 = find(p1 < epsilon1); % added by Holy 1809271120
+
 %  Draw a red circle around those outliers
 hold on
 plot(X(outliers, 1), X(outliers, 2), 'ro', 'LineWidth', 2, 'MarkerSize', 10);
 hold off
+
+% added by Holy 1809271121
+figure, plot(X(:, 1), X(:, 2), 'bx');
+axis([0 30 0 30]);
+xlabel('Latency (ms)');
+ylabel('Throughput (mb/s)');
+hold on
+plot(X(outliers1, 1), X(outliers1, 2), 'ro', 'LineWidth', 2, 'MarkerSize', 10);
+hold off
+% end of addition 1809271121
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
@@ -104,19 +126,30 @@ load('ex8data2.mat');
 % load('dataML.mat');
 
 %  Apply the same steps to the larger dataset
-[mu sigma2] = estimateGaussian(X);
+[mu, sigma2] = estimateGaussian(X);
 
 %  Training set 
 p = multivariateGaussian(X, mu, sigma2);
 
+p1 = multiplyGaussian(X, mu, sigma2); % added by Holy 1809271113
+
 %  Cross-validation set
 pval = multivariateGaussian(Xval, mu, sigma2);
 
+pval1 = multiplyGaussian(Xval, mu, sigma2); % added by Holy 1809271115
+
 %  Find the best threshold
-[epsilon F1] = selectThreshold(yval, pval);
+[epsilon, F1] = selectThreshold(yval, pval);
+
+[epsilon1, F11] = selectThreshold(yval, pval1); % added by Holy 1809271115
 
 fprintf('Best epsilon found using cross-validation: %e\n', epsilon);
 fprintf('Best F1 on Cross Validation Set:  %f\n', F1);
+% added by Holy 1809271126
+fprintf('Best epsilon1 found using cross-validation: %e\n', epsilon1);
+fprintf('Best F11 on Cross Validation Set:  %f\n', F11);
+fprintf('# Outliers1 found: %d\n\n', sum(p1 < epsilon1));
+% end of addition 1809271126
 fprintf('   (you should see a value epsilon of about 1.38e-18)\n');
 fprintf('   (you should see a Best F1 value of 0.615385)\n');
 fprintf('# Outliers found: %d\n\n', sum(p < epsilon));
