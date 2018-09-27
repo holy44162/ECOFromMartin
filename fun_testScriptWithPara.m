@@ -26,6 +26,14 @@ dataML = realWindingFeatureDataGen(trainFolderName,hogSize,heightImgEdge,widthIm
 dataML = realWindingFeatureDataGen(CVFolderName,hogSize,heightImgEdge,widthImgEdge,featureType,dataML);
 dataML = realWindingFeatureDataGen(testFolderName,hogSize,heightImgEdge,widthImgEdge,featureType,dataML);
 
-gaussianPara = fun_trainGaussian(dataML,dimInd);
-[F1,tp,fp,indMess,indFn,indFp] = fun_testGaussian(dataML,dimInd,gaussianPara);
+% hided by Holy 1809271357
+% gaussianPara = fun_trainGaussian(dataML,dimInd);
+% [F1,tp,fp,indMess,indFn,indFp] = fun_testGaussian(dataML,dimInd,gaussianPara);
+% end of hide 1809271357
+
+% added by Holy 1809271357
+gaussianPara = fun_trainMultiplyGaussian(dataML,dimInd);
+[F1,tp,fp,indMess,indFn,indFp] = fun_testMultiplyGaussian(dataML,dimInd,gaussianPara);
+% end of addition 1809271357
+
 end

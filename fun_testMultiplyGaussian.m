@@ -1,4 +1,4 @@
-function [F1,tp,fp,indMess,indFn,indFp] = fun_testGaussian(dataML,dimInd,gaussianPara)
+function [F1,tp,fp,indMess,indFn,indFp] = fun_testMultiplyGaussian(dataML,dimInd,gaussianPara)
 %  Loads the dataset. You should now have the
 %  variables X, Xval, yval, Xtest, ytest in your environment
 % hided by Holy 1808071110
@@ -25,15 +25,17 @@ function [F1,tp,fp,indMess,indFn,indFp] = fun_testGaussian(dataML,dimInd,gaussia
 % added by Holy 1808071112
 Xtest = dataML.Xtest(:,dimInd);
 ytest = dataML.ytest;
-detSigma = gaussianPara.detSigma;
-invSigma = gaussianPara.invSigma;
+% hided by Holy 1809271351
+% detSigma = gaussianPara.detSigma;
+% invSigma = gaussianPara.invSigma;
+% end of hide 1809271351
 epsilon = gaussianPara.epsilon;
 muValue = gaussianPara.muValue;
 % end of addition 1808071112
-ptest = multivariateGaussianFast(Xtest, muValue, detSigma, invSigma); % hided by Holy 1809271145
-% ptest = multiplyGaussian(Xtest, muValue, Sigma2); % added by Holy 1809271145
+% ptest = multivariateGaussianFast(Xtest, muValue, detSigma, invSigma); % hided by Holy 1809271145
+ptest = multiplyGaussian(Xtest, muValue, gaussianPara.sigma2); % added by Holy 1809271145
 
-numMess = sum(ptest < epsilon);
+% numMess = sum(ptest < epsilon);
 % indMess = find(ptest < epsilon)+1;
 indMess = find(ptest < epsilon);
 
