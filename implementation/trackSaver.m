@@ -639,7 +639,8 @@ while true
         windImg = imcrop(im,rect_position);
         windImgN = imresize(windImg,[numrows numcols]);
         saveFileName = fullfile(targetImgsPath, ['img' num2str(seq.frame-1,'%05d') '.jpg']);
-        imwrite(windImgN,saveFileName);
+%         pause; % added by Holy 1810241331
+%         imwrite(windImgN,saveFileName); % hided by Holy 1810240845
         % end of addition 1807121613
 %         % added by Holy 1806251121
 %         if tagGetData

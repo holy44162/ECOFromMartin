@@ -3,7 +3,8 @@
 % included "Crossing" video.
 % added by Holy 1807040912
 clear;
-functionPath = 'd:\baiduSyn\files\phd\functions\';
+% functionPath = 'd:\baiduSyn\files\phd\functions\';
+functionPath = 'm:\files\files\phd\functions\';
 addpath(functionPath);
 % end of addition 1807040912
 
@@ -16,10 +17,11 @@ setup_paths();
 
 % video_path = 'd:/data_seq/sequences/windingRopeTrain';
 % video_path = 'd:/data_seq/sequences/windingRopeCV';
-video_path = 'd:/data_seq/sequences/windingRopeTest';
+% video_path = 'd:/data_seq/sequences/windingRopeTest';
 % video_path = 'd:/data_seq/sequences/realWindingRopeTrain';
 % video_path = 'd:/data_seq/sequences/realWindingRopeCV';
 % video_path = 'd:/data_seq/sequences/realWindingRopeTest';
+video_path = 'd:/data_seq/sequences/realWindingRopeTrain';
 
 [seq, ground_truth] = load_video_info(video_path);
 
