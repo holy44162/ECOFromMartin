@@ -106,14 +106,14 @@ if contains(featureType, gaborBWHogFeatureType,'IgnoreCase',true)
     
     PhaseOffsets = [0 90];
     % PhaseOffsets = 0;
-    AspectRatio = 0.5;
-    % AspectRatio = 1;
-    Bandwidth = 1;
-    % Bandwidth = 1.5;
+    AspectRatio = 0.5; % hided by Holy 1810251428
+%     AspectRatio = 1; % added by Holy 1810251428
+    Bandwidth = 1; % hided by Holy 1810251520
+%     Bandwidth = 1.5; % added by Holy 1810251520
     % NumberOfOrientations = 4;
     NumberOfOrientations = 12;
-    EnableHWR = 0;
-    % EnableHWR = 1;
+    EnableHWR = 0; % hided by Holy 1810261441
+%     EnableHWR = 1; % added by Holy 1810261441
     EnableThinning = 0;
     EnableHysteresisThresholding = 1;
     

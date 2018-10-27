@@ -23,7 +23,7 @@ widthBias = 0;
 % added by Holy 1809051115
 trainFolderName = 'd:\data_seq\towerCraneCompact\trainWithoutP2\imgs\';
 CVFolderName = 'd:\data_seq\towerCraneCompact\CV\imgs\';
-testFolderName = 'd:\data_seq\towerCraneCompact\test\imgs\';
+testFolderName = 'd:\data_seq\towerCraneCompact\test2\imgs\';
 % end of addition 1809051115
 % end of hide 1810150848
 

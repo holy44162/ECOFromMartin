@@ -21,8 +21,12 @@ widthBias = 0;
 
 % hided by Holy 1809111600
 % added by Holy 1808290928
-numImgEdgeStep = 6;
-numHogSizeStep = 6;
+% numImgEdgeStep = 6; % hided by Holy 1810251107
+% numHogSizeStep = 6; % hided by Holy 1810251107
+numImgEdgeStep = 1; % added by Holy 1810251107
+numHogSizeStep = 1; % added by Holy 1810251107
+% numImgEdgeStep = 1; % added by Holy 1810261146
+% numHogSizeStep = 6; % added by Holy 1810261146
 % end of addition 1808290928
 % end of hide 1809111600
 
