@@ -3,6 +3,10 @@ functionPath = 'm:\files\files\phd\functions\';
 addpath(functionPath);
 
 inputImg = 'd:\data_seq\smallWinding\train\imgs\img00001.jpg';
+[pathName,fileName,fileExt] = fileparts(inputImg);
+upDirName = getUpLevelPath(pathName, 2);
+rectFilePathName = fullfile(upDirName, 'rect_anno.txt');
+rotateFilePathName = fullfile(upDirName, 'angle_rotate.txt');
 
 img = imread(inputImg);
 
@@ -51,11 +55,14 @@ while tagTestRect
     answer = questdlg('Confirmed?');
     if strcmpi(answer,'Yes')
         tagTestRect = false;
-        delete(gca);
-        close;
+%         delete(gca);
+%         close;
     else
         delete(gca);
         close;
         figure,imshow(imRotate);
     end
 end
+
+dlmwrite(rectFilePathName,positionH,'delimiter','\t');
+dlmwrite(rotateFilePathName,theta,'delimiter','\t');

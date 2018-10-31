@@ -20,11 +20,11 @@ widthBias = 0;
 % end of hide 1809051115
 
 % hided by Holy 1810150848
-% added by Holy 1809051115
-trainFolderName = 'd:\data_seq\towerCraneCompact\trainWithoutP2\imgs\';
-CVFolderName = 'd:\data_seq\towerCraneCompact\CV\imgs\';
-testFolderName = 'd:\data_seq\towerCraneCompact\test2\imgs\';
-% end of addition 1809051115
+% % added by Holy 1809051115
+% trainFolderName = 'd:\data_seq\towerCraneCompact\trainWithoutP2\imgs\';
+% CVFolderName = 'd:\data_seq\towerCraneCompact\CV\imgs\';
+% testFolderName = 'd:\data_seq\towerCraneCompact\test2\imgs\';
+% % end of addition 1809051115
 % end of hide 1810150848
 
 % added by Holy 1810150848
@@ -32,6 +32,12 @@ testFolderName = 'd:\data_seq\towerCraneCompact\test2\imgs\';
 % CVFolderName = 'd:\dataFromDell\towerCraneCompact\CV\imgs\';
 % testFolderName = 'd:\dataFromDell\towerCraneCompact\test1\imgs\';
 % end of addition 1810150848
+
+% added by Holy 1810310907
+trainFolderName = 'd:\data_seq\smallWinding\train\imgs\';
+CVFolderName = 'd:\data_seq\smallWinding\CV\imgs\';
+testFolderName = 'd:\data_seq\smallWinding\test\imgs\';
+% end of addition 1810310907
 
 % featureType = 'hogOnly'; % added by Holy 1809051546
 % featureType = 'gaborMax'; % added by Holy 1809051546

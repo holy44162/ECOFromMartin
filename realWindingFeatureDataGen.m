@@ -52,6 +52,28 @@ refImg = imread(fileList{1, 1});
 refImg = refImg(1+biasHRatio:end-biasHRatio,1+biasWRatio:end-biasWRatio,:);
 % end of addition 1808021415
 
+% added by Holy 1810310842
+[pathName,~,~] = fileparts(fileList{1, 1});
+angleRectPathName = getUpLevelPath(pathName, 2);
+rectFilePathName = fullfile(angleRectPathName, 'rect_anno.txt');
+rotateFilePathName = fullfile(angleRectPathName, 'angle_rotate.txt');
+
+if exist(rectFilePathName, 'file')
+    rectWinding = dlmread(rectFilePathName);
+    rectWinding = round(rectWinding);
+else
+    error(['couldn''t find ' rectFilePathName]);
+end
+
+if exist(rotateFilePathName, 'file')
+    theta = dlmread(rotateFilePathName);
+else
+    error(['couldn''t find ' rotateFilePathName]);
+end
+
+refImg = fun_rotateRect(refImg, theta, rectWinding);
+% end of addition 1810310842
+
 if contains(featureType, hogFeatureType,'IgnoreCase',true)
     % added by Holy 1807271328
     % refImg = imread(fileList{1, 1}); % hided by Holy 1808021349
@@ -88,16 +110,29 @@ if contains(featureType, gaborBWHogFeatureType,'IgnoreCase',true)
     hogFeature = extractHOGFeatures(refImg,'CellSize',[hogSize hogSize]);
     lenHogFeature = length(hogFeature);
     
-    Wavelength = 8;        
+    Wavelength = 10; % added by Holy 1810310850
+%     Wavelength = 8; % hided by Holy 1810310850
     % added by Holy 1809101054
+%     oriUpMin = 0;
+%     oriUpMax = 45;
+%     oriDownMin = 135;
+%     oriDownMax = 180;
+
+%     oriUpMin = 360-45;
+%     oriUpMax = 360;
+%     oriDownMin = 1;
+%     oriDownMax = 30;
+    
+%     oriUpMin = 165;
+%     oriUpMax = 180;
+%     oriDownMin = 1;
+%     oriDownMax = 15;
+    
     oriUpMin = 0;
-    oriUpMax = 45;
-    oriDownMin = 135;
+    oriUpMax = 30;
+    oriDownMin = 150;
     oriDownMax = 180;
-    % oriUpMin = 60;
-    % oriUpMax = 120;
-    % oriDownMin = 240;
-    % oriDownMax = 300;
+
     oriStepNum = 4;
     stepSizeUp = (oriUpMax - oriUpMin) / oriStepNum;
     stepSizeDown = (oriDownMax - oriDownMin) / oriStepNum;
@@ -111,11 +146,13 @@ if contains(featureType, gaborBWHogFeatureType,'IgnoreCase',true)
     Bandwidth = 1; % hided by Holy 1810251520
 %     Bandwidth = 1.5; % added by Holy 1810251520
     % NumberOfOrientations = 4;
-    NumberOfOrientations = 12;
+%     NumberOfOrientations = 12; % hided by Holy 1810311541
+    NumberOfOrientations = 1; % added by Holy 1810311542
     EnableHWR = 0; % hided by Holy 1810261441
 %     EnableHWR = 1; % added by Holy 1810261441
     EnableThinning = 0;
-    EnableHysteresisThresholding = 1;
+%     EnableHysteresisThresholding = 1; % hided by Holy 1810311542
+    EnableHysteresisThresholding = 0; % added by Holy 1810311543
     
     data_orientation = Orientations ./ (180/pi); % convert the numbers to radians
     data_nroriens = NumberOfOrientations;
@@ -381,8 +418,14 @@ if ~debug
             
             % added by Holy 1809111615
             if contains(featureType, gaborBWHogFeatureType,'IgnoreCase',true)
-                [data_img, data_orienslist, data_sigmaC] = readandinit_hoist_imgEdge(fileList{i, 1}, ...
+%                 [data_img, data_orienslist, data_sigmaC] = readandinit_hoist_imgEdge(fileList{i, 1}, ...
+%                     data_orientation, data_nroriens, data_sigma, data_wavelength, data_bandwidth, biasHRatio, biasWRatio); % hided by Holy 1810310858
+                % added by Holy 1810310901
+                img = imread(fileList{i, 1});
+                img = fun_rotateRect(img, theta, rectWinding);
+                [data_img, data_orienslist, data_sigmaC] = readandinit_smallWinding_imgEdge(img, ...
                     data_orientation, data_nroriens, data_sigma, data_wavelength, data_bandwidth, biasHRatio, biasWRatio);
+                % end of addition 1810310901
                 data_convResult = gaborfilter(data_img, data_wavelength, data_sigma, data_orienslist, data_phaseoffset, data_aspectratio, data_bandwidth);
                 
                 hogWindRope = fun_calGaborBWHog(data_convResult,data_orienslist,data_sigmaC,data,hogSize);                
@@ -486,8 +529,14 @@ if ~debug
             
             % added by Holy 1809121544
             if contains(featureType, gaborBWHogFeatureType,'IgnoreCase',true)
-                [data_img, data_orienslist, data_sigmaC] = readandinit_hoist_imgEdge(fileList{i, 1}, ...
+%                 [data_img, data_orienslist, data_sigmaC] = readandinit_hoist_imgEdge(fileList{i, 1}, ...
+%                     data_orientation, data_nroriens, data_sigma, data_wavelength, data_bandwidth, biasHRatio, biasWRatio); % hided by Holy 1810310903
+                % added by Holy 1810310901
+                img = imread(fileList{i, 1});
+                img = fun_rotateRect(img, theta, rectWinding);
+                [data_img, data_orienslist, data_sigmaC] = readandinit_smallWinding_imgEdge(img, ...
                     data_orientation, data_nroriens, data_sigma, data_wavelength, data_bandwidth, biasHRatio, biasWRatio);
+                % end of addition 1810310901
                 data_convResult = gaborfilter(data_img, data_wavelength, data_sigma, data_orienslist, data_phaseoffset, data_aspectratio, data_bandwidth);
                 
                 hogWindRope = fun_calGaborBWHog(data_convResult,data_orienslist,data_sigmaC,data,hogSize);                
@@ -590,8 +639,14 @@ if ~debug
             
             % added by Holy 1809121548
             if contains(featureType, gaborBWHogFeatureType,'IgnoreCase',true)
-                [data_img, data_orienslist, data_sigmaC] = readandinit_hoist_imgEdge(fileList{i, 1}, ...
+%                 [data_img, data_orienslist, data_sigmaC] = readandinit_hoist_imgEdge(fileList{i, 1}, ...
+%                     data_orientation, data_nroriens, data_sigma, data_wavelength, data_bandwidth, biasHRatio, biasWRatio); % hided by Holy 1810310904
+                % added by Holy 1810310901
+                img = imread(fileList{i, 1});
+                img = fun_rotateRect(img, theta, rectWinding);
+                [data_img, data_orienslist, data_sigmaC] = readandinit_smallWinding_imgEdge(img, ...
                     data_orientation, data_nroriens, data_sigma, data_wavelength, data_bandwidth, biasHRatio, biasWRatio);
+                % end of addition 1810310901
                 data_convResult = gaborfilter(data_img, data_wavelength, data_sigma, data_orienslist, data_phaseoffset, data_aspectratio, data_bandwidth);
                 
                 hogWindRope = fun_calGaborBWHog(data_convResult,data_orienslist,data_sigmaC,data,hogSize);                
@@ -650,11 +705,17 @@ else
         showTimeToCompletion; startTime=tic;
         p = parfor_progress(length(fileList));
         % end of addition 1808281434
-        parfor i = 1:length(fileList)            
+        for i = 1:length(fileList)            
             % added by Holy 1809111615
             if contains(featureType, gaborBWHogFeatureType,'IgnoreCase',true)
-                [data_img, data_orienslist, data_sigmaC] = readandinit_hoist_imgEdge(fileList{i, 1}, ...
+%                 [data_img, data_orienslist, data_sigmaC] = readandinit_hoist_imgEdge(fileList{i, 1}, ...
+%                     data_orientation, data_nroriens, data_sigma, data_wavelength, data_bandwidth, biasHRatio, biasWRatio); % hided by Holy 1810310947
+                % added by Holy 1810310901
+                img = imread(fileList{i, 1});
+                img = fun_rotateRect(img, theta, rectWinding);
+                [data_img, data_orienslist, data_sigmaC] = readandinit_smallWinding_imgEdge(img, ...
                     data_orientation, data_nroriens, data_sigma, data_wavelength, data_bandwidth, biasHRatio, biasWRatio);
+                % end of addition 1810310901
                 data_convResult = gaborfilter(data_img, data_wavelength, data_sigma, data_orienslist, data_phaseoffset, data_aspectratio, data_bandwidth);
                 
                 hogWindRope = fun_calGaborBWHog(data_convResult,data_orienslist,data_sigmaC,data,hogSize);                

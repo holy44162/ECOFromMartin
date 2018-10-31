@@ -8,7 +8,8 @@ addpath([functionPath 'SoundZone_Tools-master']);
 addpath([functionPath 'parfor_progress']);
 addpath([functionPath 'gabor']);
 
-maxHogSize = 64;
+maxHogSize = 64; % hided by Holy 1810310955
+% maxHogSize = 32; % added by Holy 1810310956
 maxImgEdge = 60; % hided by Holy 1809061537
 % maxImgEdge = 120; % added by Holy 1809061538
 % heightBias = 30; % hided by Holy 1809191536
@@ -23,18 +24,26 @@ widthBias = 0;
 % added by Holy 1808290928
 % numImgEdgeStep = 6; % hided by Holy 1810251107
 % numHogSizeStep = 6; % hided by Holy 1810251107
-numImgEdgeStep = 1; % added by Holy 1810251107
+numImgEdgeStep = 0; % added by Holy 1810251107
 numHogSizeStep = 1; % added by Holy 1810251107
 % numImgEdgeStep = 1; % added by Holy 1810261146
 % numHogSizeStep = 6; % added by Holy 1810261146
 % end of addition 1808290928
 % end of hide 1809111600
 
-% added by Holy 1809051115
-trainFolderName = 'd:\data_seq\towerCraneCompact\trainWithoutP2\imgs\';
-CVFolderName = 'd:\data_seq\towerCraneCompact\CV\imgs\';
-testFolderName = 'd:\data_seq\towerCraneCompact\test\imgs\';
-% end of addition 1809051115
+% hided by Holy 1810310906
+% % added by Holy 1809051115
+% trainFolderName = 'd:\data_seq\towerCraneCompact\trainWithoutP2\imgs\';
+% CVFolderName = 'd:\data_seq\towerCraneCompact\CV\imgs\';
+% testFolderName = 'd:\data_seq\towerCraneCompact\test\imgs\';
+% % end of addition 1809051115
+% end of hide 1810310906
+
+% added by Holy 1810310907
+trainFolderName = 'd:\data_seq\smallWinding\train\imgs\';
+CVFolderName = 'd:\data_seq\smallWinding\CV\imgs\';
+testFolderName = 'd:\data_seq\smallWinding\test\imgs\';
+% end of addition 1810310907
 
 % featureType = 'hogOnly';
 % featureType = 'gaborMax'; % added by Holy 1809051614
