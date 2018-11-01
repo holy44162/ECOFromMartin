@@ -35,6 +35,7 @@ end
 hogFeatureType = 'hogOnly';
 gaborMaxFeatureType = 'gaborMax';
 gaborBWHogFeatureType = 'gaborBWHog'; % added by Holy 1809111558
+gaborBWHogNumFeatureType = 'gaborBWNum'; % added by Holy 1811011338
 
 bestPara = num2cell(zeros(1,6));
 iProgress = 1;
@@ -223,6 +224,91 @@ for imgEdge = imgEdgeSteps % added by Holy 1809211418
             
         end
     end
+    
+    % added by Holy 1811011339
+    if contains(featureType, gaborBWHogNumFeatureType,'IgnoreCase',true)
+%         for hogSize = maxHogSize:-stepSizeHogSize:minHogSize % hided by Holy 1809211425
+        for hogSize = hogSizeSteps % added by Holy 1809211424
+            hogSize1 = round(hogSize); % added by Holy 1809191551
+            % train
+            %         folder_name = 'd:\data_seq\sequences\realWindingRopesCompactTrain\imgsTarget\'; % hided by Holy 1808281445
+            %         folder_name = 'd:\data_seq\towerCrane\train\imgs\'; % added by Holy 1808281445
+            dataML = realWindingFeatureDataGen(trainFolderName,hogSize1,heightImgEdge,widthImgEdge,featureType);
+            
+            % CV
+            %         folder_name = 'd:\data_seq\sequences\realWindingRopesCompactCV\imgsTarget\';  % hided by Holy 1808281445
+            %         folder_name = 'd:\data_seq\towerCrane\CV\imgs\'; % added by Holy 1808281445
+            dataML = realWindingFeatureDataGen(CVFolderName,hogSize1,heightImgEdge,widthImgEdge,featureType,dataML);
+            
+            % test
+            %         folder_name = 'd:\data_seq\sequences\realWindingRopesCompactTest\imgsTarget\'; % hided by Holy 1808281445
+            %         folder_name = 'd:\data_seq\towerCrane\test\imgs\'; % added by Holy 1808281445
+            dataML = realWindingFeatureDataGen(testFolderName,hogSize1,heightImgEdge,widthImgEdge,featureType,dataML);
+            
+            % get best parameters
+%             numDim = size(dataML.X,2); % hided by Holy 1811011540
+            numDim = size(dataML.X,2) - 1; % added by Holy 1811011540
+            resultMatrix = zeros(numDim,4);
+            for i = 1:numDim
+                gaussianPara = fun_trainGaussian(dataML,i);
+                
+                [resultMatrix(i,1),resultMatrix(i,2),resultMatrix(i,3)] = fun_testGaussian(dataML,i,gaussianPara);
+                resultMatrix(i,4) = i;
+            end
+            sortedResult = sortrows(resultMatrix,'descend');
+            
+            % remove lines with nan elements
+            nanTag = isnan(sortedResult);
+            nanInd = any(nanTag,2);
+            sortedResult(nanInd,:) = [];
+            
+            % perform feature selection
+            maxF1Row = num2cell(sortedResult(1,:));
+            maxF1Row = [maxF1Row {hogSize1} {imgEdge}];
+            featureIDs = maxF1Row(4);
+            resultCell = cell(1,4);
+            selectedIDs = featureIDs;
+            for i = 1:size(sortedResult,1)
+                if i > 1
+                    diff = length(featureIDs{1}) - length(selectedIDs{1});
+                    if diff == 0
+                        break;
+                    else
+                        selectedIDs = featureIDs;
+                    end
+                end
+                for j = 1:size(sortedResult,1)
+                    if sum(selectedIDs{1}==sortedResult(j,4)) == 1
+                        continue;
+                    end
+                    dimIDs = [selectedIDs{1} sortedResult(j,4)];
+                    gaussianPara = fun_trainGaussian(dataML,dimIDs);
+                    [resultCell{1,1},resultCell{1,2},resultCell{1,3}] = fun_testGaussian(dataML,dimIDs,gaussianPara);
+                    resultCell{1,4} = dimIDs;
+                    
+                    % added by Holy 1808141552
+                    if resultCell{1,1} == 1
+                        bestPara = [bestPara;[resultCell {hogSize1} {imgEdge}]];
+                    end
+                    % end of addition 1808141552
+                    
+                    if resultCell{1,1} > maxF1Row{1}
+                        %                     maxF1Row = resultCell; % hided by Holy 1808141436
+                        maxF1Row(1:4) = resultCell; % added by Holy 1808141437
+                        featureIDs = maxF1Row(4);
+                        
+                        % added by Holy 1808141447
+                        if maxF1Row{1} > bestPara{1,1}
+                            bestPara = maxF1Row;
+                        end
+                        % end of addition 1808141447
+                    end
+                end
+            end
+            
+        end
+    end
+    % end of addition 1811011339
     
     iProgress = iProgress + 1;
 end

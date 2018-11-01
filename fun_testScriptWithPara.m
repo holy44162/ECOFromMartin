@@ -4,6 +4,7 @@ load(bestParaMat,'bestPara');
 hogFeatureType = 'hogOnly';
 gaborMaxFeatureType = 'gaborMax';
 gaborBWHogFeatureType = 'gaborBWHog'; % added by Holy 1809111558
+gaborBWHogNumFeatureType = 'gaborBWNum'; % added by Holy 1811011338
 
 if contains(featureType, hogFeatureType,'IgnoreCase',true)
     dimInd = bestPara{1, 4};    
@@ -16,6 +17,12 @@ end
 if contains(featureType, gaborBWHogFeatureType,'IgnoreCase',true)
     dimInd = bestPara{1, 4};    
 end
+
+% added by Holy 1811011344
+if contains(featureType, gaborBWHogNumFeatureType,'IgnoreCase',true)
+    dimInd = bestPara{1, 4};    
+end
+% end of addition 1811011344
 
 hogSize = bestPara{1, 5};
 imgEdge = bestPara{1, 6};
@@ -30,6 +37,11 @@ dataML = realWindingFeatureDataGen(testFolderName,hogSize,heightImgEdge,widthImg
 % gaussianPara = fun_trainGaussian(dataML,dimInd);
 % [F1,tp,fp,indMess,indFn,indFp] = fun_testGaussian(dataML,dimInd,gaussianPara);
 % end of hide 1809271357
+
+% added by Holy 1811011544
+numDim = size(dataML.X,2);
+dimInd = [dimInd numDim];
+% end of addition 1811011544
 
 % added by Holy 1809271357
 gaussianPara = fun_trainMultiplyGaussian(dataML,dimInd);

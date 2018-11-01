@@ -41,7 +41,8 @@ testFolderName = 'd:\data_seq\smallWinding\test\imgs\';
 
 % featureType = 'hogOnly'; % added by Holy 1809051546
 % featureType = 'gaborMax'; % added by Holy 1809051546
-featureType = 'gaborBWHog'; % added by Holy 1809111558
+% featureType = 'gaborBWHog'; % added by Holy 1809111558
+featureType = 'gaborBWNum'; % added by Holy 1811011336
 
 [F1,tp,fp,indMess,indFn,indFp] = fun_testScriptWithPara(bestParaMat,trainFolderName,CVFolderName,testFolderName,heightBias,widthBias,featureType);
 
