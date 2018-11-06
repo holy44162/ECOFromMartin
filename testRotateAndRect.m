@@ -2,7 +2,8 @@ functionPath = 'm:\files\files\phd\functions\';
 % functionPath = 'd:\baiduSyn\files\phd\functions\';
 addpath(functionPath);
 
-inputImg = 'd:\data_seq\smallWinding\train\imgs\img00001.jpg';
+% inputImg = 'd:\data_seq\smallWinding\train\imgs\img00001.jpg';
+inputImg = 'd:\data_seq\smallWinding1\train\imgs\img00001.jpg';
 [pathName,fileName,fileExt] = fileparts(inputImg);
 upDirName = getUpLevelPath(pathName, 2);
 rectFilePathName = fullfile(upDirName, 'rect_anno.txt');

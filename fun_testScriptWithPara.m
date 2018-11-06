@@ -39,8 +39,10 @@ dataML = realWindingFeatureDataGen(testFolderName,hogSize,heightImgEdge,widthImg
 % end of hide 1809271357
 
 % added by Holy 1811011544
-numDim = size(dataML.X,2);
-dimInd = [dimInd numDim];
+if contains(featureType, gaborBWHogNumFeatureType,'IgnoreCase',true)
+    numDim = size(dataML.X,2);
+    dimInd = [dimInd numDim];
+end
 % end of addition 1811011544
 
 % added by Holy 1809271357

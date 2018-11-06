@@ -33,16 +33,24 @@ widthBias = 0;
 % testFolderName = 'd:\dataFromDell\towerCraneCompact\test1\imgs\';
 % end of addition 1810150848
 
-% added by Holy 1810310907
-trainFolderName = 'd:\data_seq\smallWinding\train\imgs\';
-CVFolderName = 'd:\data_seq\smallWinding\CV\imgs\';
-testFolderName = 'd:\data_seq\smallWinding\test\imgs\';
-% end of addition 1810310907
+% hided by Holy 1811061404
+% % added by Holy 1810310907
+% trainFolderName = 'd:\data_seq\smallWinding\train\imgs\';
+% CVFolderName = 'd:\data_seq\smallWinding\CV2\imgs\';
+% testFolderName = 'd:\data_seq\smallWinding\test\imgs\';
+% % end of addition 1810310907
+% end of hide 1811061404
 
-% featureType = 'hogOnly'; % added by Holy 1809051546
+% added by Holy 1811061405
+trainFolderName = 'd:\data_seq\smallWinding1\train\imgs\';
+CVFolderName = 'd:\data_seq\smallWinding1\CV\imgs\';
+testFolderName = 'd:\data_seq\smallWinding1\test\imgs\';
+% end of addition 1811061405
+
+featureType = 'hogOnly'; % added by Holy 1809051546
 % featureType = 'gaborMax'; % added by Holy 1809051546
 % featureType = 'gaborBWHog'; % added by Holy 1809111558
-featureType = 'gaborBWNum'; % added by Holy 1811011336
+% featureType = 'gaborBWNum'; % added by Holy 1811011336
 
 [F1,tp,fp,indMess,indFn,indFp] = fun_testScriptWithPara(bestParaMat,trainFolderName,CVFolderName,testFolderName,heightBias,widthBias,featureType);
 

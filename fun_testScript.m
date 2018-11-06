@@ -1,4 +1,4 @@
-function bestPara = fun_testScript(maxHogSize,maxImgEdge,heightBias,widthBias,numImgEdgeStep,numHogSizeStep,trainFolderName,CVFolderName,testFolderName,featureType)
+function [bestPara,paraLog] = fun_testScript(maxHogSize,maxImgEdge,heightBias,widthBias,numImgEdgeStep,numHogSizeStep,trainFolderName,CVFolderName,testFolderName,featureType)
 % clear;
 
 % hogSize = 64; % hog feature cell size % hided by Holy 1808060828
@@ -38,6 +38,7 @@ gaborBWHogFeatureType = 'gaborBWHog'; % added by Holy 1809111558
 gaborBWHogNumFeatureType = 'gaborBWNum'; % added by Holy 1811011338
 
 bestPara = num2cell(zeros(1,6));
+paraLog = []; % added by Holy 1811051339
 iProgress = 1;
 % for imgEdge = maxImgEdge:-stepSizeImgEdge:minImgEdge % hided by Holy 1809211418
 for imgEdge = imgEdgeSteps % added by Holy 1809211418
@@ -117,10 +118,11 @@ for imgEdge = imgEdgeSteps % added by Holy 1809211418
                         
                         % added by Holy 1808141447
                         if maxF1Row{1} > bestPara{1,1}
-                            bestPara = maxF1Row;
+                            bestPara = maxF1Row;                            
                         end
                         % end of addition 1808141447
                     end
+                    paraLog = [paraLog;maxF1Row]; % added by Holy 1811051342
                 end
             end
             
@@ -141,6 +143,7 @@ for imgEdge = imgEdgeSteps % added by Holy 1809211418
         if resultCell{1,1} > bestPara{1,1}
             bestPara = resultCell;
         end
+        paraLog = [paraLog;maxF1Row]; % added by Holy 1811051342
     end
     
     if contains(featureType, gaborBWHogFeatureType,'IgnoreCase',true)
@@ -219,6 +222,7 @@ for imgEdge = imgEdgeSteps % added by Holy 1809211418
                         end
                         % end of addition 1808141447
                     end
+                    paraLog = [paraLog;maxF1Row]; % added by Holy 1811051342
                 end
             end
             
@@ -303,6 +307,7 @@ for imgEdge = imgEdgeSteps % added by Holy 1809211418
                         end
                         % end of addition 1808141447
                     end
+                    paraLog = [paraLog;maxF1Row]; % added by Holy 1811051342
                 end
             end
             
