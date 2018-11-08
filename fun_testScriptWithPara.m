@@ -5,6 +5,8 @@ hogFeatureType = 'hogOnly';
 gaborMaxFeatureType = 'gaborMax';
 gaborBWHogFeatureType = 'gaborBWHog'; % added by Holy 1809111558
 gaborBWHogNumFeatureType = 'gaborBWNum'; % added by Holy 1811011338
+gaborSpecificFeatureType = 'gaborSpecific';
+gaborsBinHogFeatureType = 'gaborsBinHog'; % added by Holy 1811081435
 
 if contains(featureType, hogFeatureType,'IgnoreCase',true)
     dimInd = bestPara{1, 4};    
@@ -23,6 +25,18 @@ if contains(featureType, gaborBWHogNumFeatureType,'IgnoreCase',true)
     dimInd = bestPara{1, 4};    
 end
 % end of addition 1811011344
+
+% added by Holy 1811071621
+if contains(featureType, gaborSpecificFeatureType,'IgnoreCase',true)
+    dimInd = bestPara{1, 4};    
+end
+% end of addition 1811071621
+
+% added by Holy 1811081444
+if contains(featureType, gaborsBinHogFeatureType,'IgnoreCase',true)
+    dimInd = bestPara{1, 4};    
+end
+% end of addition 1811081444
 
 hogSize = bestPara{1, 5};
 imgEdge = bestPara{1, 6};

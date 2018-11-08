@@ -7,6 +7,7 @@ addpath([functionPath 'toolbox_general']);
 addpath([functionPath 'SoundZone_Tools-master']);
 addpath([functionPath 'parfor_progress']);
 addpath([functionPath 'gabor']);
+addpath([functionPath 'Texture-Segmentation-using-Gabor-Filters']);
 
 maxHogSize = 64; % hided by Holy 1810310955
 % maxHogSize = 32; % added by Holy 1810310956
@@ -26,7 +27,7 @@ widthBias = 0;
 % numImgEdgeStep = 6; % hided by Holy 1810251107
 % numHogSizeStep = 6; % hided by Holy 1810251107
 numImgEdgeStep = 0; % added by Holy 1810251107
-numHogSizeStep = 2; % added by Holy 1810251107
+numHogSizeStep = 1; % added by Holy 1810251107
 % numImgEdgeStep = 1; % added by Holy 1810261146
 % numHogSizeStep = 6; % added by Holy 1810261146
 % end of addition 1808290928
@@ -50,14 +51,16 @@ numHogSizeStep = 2; % added by Holy 1810251107
 
 % added by Holy 1811061405
 trainFolderName = 'd:\data_seq\smallWinding1\train\imgs\';
-CVFolderName = 'd:\data_seq\smallWinding1\CV\imgs\';
+CVFolderName = 'd:\data_seq\smallWinding1\CV1\imgs\';
 testFolderName = 'd:\data_seq\smallWinding1\test\imgs\';
 % end of addition 1811061405
 
-featureType = 'hogOnly';
+% featureType = 'hogOnly';
 % featureType = 'gaborMax'; % added by Holy 1809051614
 % featureType = 'gaborBWHog'; % added by Holy 1809111558
 % featureType = 'gaborBWNum'; % added by Holy 1811011336
+% featureType = 'gaborSpecific';
+featureType = 'gaborsBinHog'; % added by Holy 1811081435
 
 [bestPara,paraLog] = fun_testScript(maxHogSize,maxImgEdge,heightBias,widthBias,numImgEdgeStep,numHogSizeStep,trainFolderName,CVFolderName,testFolderName,featureType);
 save('bestPara.mat','bestPara','paraLog');

@@ -43,14 +43,16 @@ widthBias = 0;
 
 % added by Holy 1811061405
 trainFolderName = 'd:\data_seq\smallWinding1\train\imgs\';
-CVFolderName = 'd:\data_seq\smallWinding1\CV\imgs\';
-testFolderName = 'd:\data_seq\smallWinding1\test\imgs\';
+CVFolderName = 'd:\data_seq\smallWinding1\CV1\imgs\';
+testFolderName = 'd:\data_seq\smallWinding1\test1\imgs\';
 % end of addition 1811061405
 
-featureType = 'hogOnly'; % added by Holy 1809051546
+% featureType = 'hogOnly'; % added by Holy 1809051546
 % featureType = 'gaborMax'; % added by Holy 1809051546
 % featureType = 'gaborBWHog'; % added by Holy 1809111558
 % featureType = 'gaborBWNum'; % added by Holy 1811011336
+% featureType = 'gaborSpecific';
+featureType = 'gaborsBinHog'; % added by Holy 1811081435
 
 [F1,tp,fp,indMess,indFn,indFp] = fun_testScriptWithPara(bestParaMat,trainFolderName,CVFolderName,testFolderName,heightBias,widthBias,featureType);
 
